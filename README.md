@@ -7,7 +7,11 @@ protocol SDK, supporting Modbus, OPC UA, Profinet, EtherNet/IP, BACnet and more.
 
 | Protocol | Status | Variants |
 |----------|--------|----------|
-| Modbus   | Phase 1 | TCP, RTU, ASCII |
+| Modbus      | Phase 1 | TCP, RTU, ASCII |
+| BACnet      | Phase 3 | IP (UDP)        |
+| EtherNet/IP | Phase 3 | TCP             |
+| OPC UA      | Planned | Binary          |
+| Profinet    | Planned | NRT + RT        |
 
 ## Supported Frameworks
 
