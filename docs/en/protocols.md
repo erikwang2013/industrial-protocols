@@ -333,6 +333,169 @@ $conn = $kernel->getConnectionManager()->connect('powerlink-device', [
 | Profinet RT/IRT | Siemens ERTEC / Hilscher netX | TcpGatewayBridge |
 | TSN | TSN NIC (Intel I225-T1 / NXP SJA1110) + 802.1Qbv driver | ExternalProcessBridge |
 
+## LIN (Automotive Body Bus)
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'lin-device' => [
+        'protocol'  => 'lin',
+        'variant'   => 'master',
+        'device'    => '/dev/ttyUSB3',
+        'baud_rate' => 19200,
+        'timeout'   => 3000,
+    ],
+]
+```
+
+### Reading Frame Data
+
+```php
+$conn->read('0x3C');  // Read by LIN PID
+$conn->read('0x3D');  // Read another PID
+```
+
+## K-Line (OBD-II Diagnostics)
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'obd-ii' => [
+        'protocol' => 'k-line',
+        'device'   => '/dev/ttyUSB4',
+        'baud_rate' => 10400,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### OBD-II Diagnostic Requests
+
+```php
+$conn->read('010C');  // PID 0x0C: Engine RPM
+$conn->read('010D');  // PID 0x0D: Vehicle Speed (km/h)
+$conn->read('0105');  // PID 0x05: Coolant Temperature
+```
+
+## MQTT
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'mqtt-broker' => [
+        'protocol'   => 'mqtt',
+        'host'       => '192.168.1.100',
+        'port'       => 1883,
+        'client_id'  => 'php-client',
+        'keep_alive' => 60,
+        'timeout'    => 5000,
+    ],
+]
+```
+
+### Publish and Subscribe
+
+```php
+$conn->write(['sensors/temperature' => '23.5']); // Publish QoS 0
+$conn->read('sensors/#');    // Subscribe wildcard # (multi-level)
+$conn->read('sensors/+');    // Subscribe wildcard + (single-level)
+```
+
+## DNP3 (Power Automation)
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'rtu-001' => [
+        'protocol' => 'dnp3',
+        'host'     => '10.0.1.50',
+        'port'     => 20000,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### Reading Data
+
+```php
+$conn->read('30:1:5');   // Class 0: Group 30, Variation 1, Index 5
+$conn->read('60:1:1');   // Class 1: Group 60, Variation 1, Index 1
+```
+
+## IEC 61850 (Substation Automation)
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'ied-001' => [
+        'protocol' => 'iec61850',
+        'variant'  => 'mms',
+        'host'     => '10.0.1.100',
+        'port'     => 102,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### MMS Data Read
+
+```php
+$conn->read('IED1/MMXU1.MX.A.phsA');    // Current phasor phase A
+$conn->read('IED1/MMXU1.MX.PhV.phsA');   // Voltage phasor phase A
+```
+
+## HART-IP
+
+HART over TCP/UDP, port 5094. Unlike serial HART (`packages/hart/`), connects to HART-IP gateways via IP networks.
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'hart-ip' => [
+        'protocol' => 'hart-ip',
+        'host'     => '192.168.1.150',
+        'port'     => 5094,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### Reading
+
+```php
+$conn->read('pv');           // Primary Variable
+$conn->read('loop_current');  // Loop Current
+```
+
+## DALI (Digital Lighting)
+
+Bridged through DALI gateways (Lunatone/Helvar etc.).
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'dali-gw' => [
+        'protocol' => 'dali',
+        'bridge'   => new TcpGatewayBridge('192.168.1.200', 502),
+    ],
+]
+```
+
+### Lighting Control
+
+```php
+$conn->write(['0x00' => 254]);  // Broadcast address 0x00, dim to 100%
+$conn->write(['0x01' => 128]);  // Fixture 1, dim to 50%
+$conn->read('0x01');            // Read fixture 1 status
+```
+
 ## Connection Management
 
 ### ConnectionManager API

@@ -2,7 +2,7 @@
 
 > [English](en/vendors.md)
 
-本库通过 Bridge 层适配以下主流工业硬件厂商的 C/C++ SDK 或网关设备。
+本库通过 Bridge 层适配以下 12 家主流工业硬件厂商的 C/C++ SDK 或网关设备。
 
 ## 厂商一览
 

@@ -2,7 +2,7 @@
 
 > [Chinese version](../vendors.md)
 
-This library adapts C/C++ SDKs and gateway devices from major industrial hardware vendors through the Bridge layer.
+This library adapts C/C++ SDKs and gateway devices from 12 major industrial hardware vendors through the Bridge layer.
 
 ## Vendor Overview
 

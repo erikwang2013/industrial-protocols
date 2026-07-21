@@ -333,6 +333,169 @@ $conn = $kernel->getConnectionManager()->connect('powerlink-device', [
 | Profinet RT/IRT | Siemens ERTEC / Hilscher netX | TcpGatewayBridge |
 | TSN | TSN 网卡 (Intel I225-T1 / NXP SJA1110) + 802.1Qbv 驱动 | ExternalProcessBridge |
 
+## LIN（汽车车身总线）
+
+### 连接配置
+
+```php
+'devices' => [
+    'lin-device' => [
+        'protocol'  => 'lin',
+        'variant'   => 'master',
+        'device'    => '/dev/ttyUSB3',
+        'baud_rate' => 19200,
+        'timeout'   => 3000,
+    ],
+]
+```
+
+### 读取帧数据
+
+```php
+$conn->read('0x3C');  // 按 LIN PID 读取
+$conn->read('0x3D');  // 读取另一个 PID
+```
+
+## K-Line（OBD-II 诊断）
+
+### 连接配置
+
+```php
+'devices' => [
+    'obd-ii' => [
+        'protocol' => 'k-line',
+        'device'   => '/dev/ttyUSB4',
+        'baud_rate' => 10400,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### OBD-II 诊断请求
+
+```php
+$conn->read('010C');  // PID 0x0C: 引擎转速 (RPM)
+$conn->read('010D');  // PID 0x0D: 车速 (km/h)
+$conn->read('0105');  // PID 0x05: 冷却液温度
+```
+
+## MQTT
+
+### 连接配置
+
+```php
+'devices' => [
+    'mqtt-broker' => [
+        'protocol'   => 'mqtt',
+        'host'       => '192.168.1.100',
+        'port'       => 1883,
+        'client_id'  => 'php-client',
+        'keep_alive' => 60,
+        'timeout'    => 5000,
+    ],
+]
+```
+
+### 发布与订阅
+
+```php
+$conn->write(['sensors/temperature' => '23.5']); // 发布 QoS 0
+$conn->read('sensors/#');    // 订阅通配符 # (多层匹配)
+$conn->read('sensors/+');    // 订阅通配符 + (单层匹配)
+```
+
+## DNP3（电力自动化）
+
+### 连接配置
+
+```php
+'devices' => [
+    'rtu-001' => [
+        'protocol' => 'dnp3',
+        'host'     => '10.0.1.50',
+        'port'     => 20000,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### 数据读取
+
+```php
+$conn->read('30:1:5');   // Class 0: Group 30, Variation 1, Index 5
+$conn->read('60:1:1');   // Class 1: Group 60, Variation 1, Index 1
+```
+
+## IEC 61850（变电站自动化）
+
+### 连接配置
+
+```php
+'devices' => [
+    'ied-001' => [
+        'protocol' => 'iec61850',
+        'variant'  => 'mms',
+        'host'     => '10.0.1.100',
+        'port'     => 102,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### MMS 数据读取
+
+```php
+$conn->read('IED1/MMXU1.MX.A.phsA');    // 电流相量 A 相
+$conn->read('IED1/MMXU1.MX.PhV.phsA');   // 电压相量 A 相
+```
+
+## HART-IP
+
+HART over TCP/UDP，端口 5094。与串口 HART（`packages/hart/`）不同，通过 IP 网络连接 HART-IP 网关。
+
+### 连接配置
+
+```php
+'devices' => [
+    'hart-ip' => [
+        'protocol' => 'hart-ip',
+        'host'     => '192.168.1.150',
+        'port'     => 5094,
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### 读取
+
+```php
+$conn->read('pv');           // 主变量
+$conn->read('loop_current');  // 回路电流
+```
+
+## DALI（数字照明）
+
+通过 DALI 网关（Lunatone/Helvar 等）桥接。
+
+### 连接配置
+
+```php
+'devices' => [
+    'dali-gw' => [
+        'protocol' => 'dali',
+        'bridge'   => new TcpGatewayBridge('192.168.1.200', 502),
+    ],
+]
+```
+
+### 照明控制
+
+```php
+$conn->write(['0x00' => 254]);  // 广播地址 0x00，调光至 100%
+$conn->write(['0x01' => 128]);  // 灯具 1，调光至 50%
+$conn->read('0x01');            // 读取灯具 1 状态
+```
+
 ## 连接管理
 
 ### ConnectionManager API

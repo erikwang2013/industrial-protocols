@@ -187,10 +187,10 @@ interface CoroutineAdapterInterface
 │  FrameInterface    │ DataPointInterface │ GatewayRuleInterface│
 ├─────────────────────────────────────────────────────────────┤
 │              Protocol Packages (SDK Implementations)          │
-│  Modbus    │  BACnet/IP   │ EtherNet/IP │  OPC UA     │
-│  Profinet  │  EtherCAT*   │ POWERLINK*  │ SERCOS III* │
-│  pure PHP  │  UDP socket  │ TCP ENIP    │ UA Binary   │
-│  *via bridge│*via bridge  │*via bridge  │*via bridge  │
+│  Modbus(TCP/RTU)│ BACnet/IP│ EtherNet/IP  │ OPC UA (TCP) │
+│  Profinet(NRT)  │ HART     │ CC-Link      │ MQTT · DNP3  │
+│  IEC 61850(MMS) │ LIN      │ K-Line       │ HART-IP      │
+│  EtherCAT*      │ POWERLINK*│ SERCOS III* │ PROFIBUS*    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -1427,11 +1427,11 @@ return [
 
 ## 文档
 
-- [协议 API 参考](docs/protocols.md) — Modbus、BACnet、EtherNet/IP 连接配置、读写操作、地址格式
-- [框架集成指南](docs/framework-integration.md) — Plain PHP、Laravel、Webman、Hyperf、ThinkPHP、Yii2 集成详述
-- [网关引擎指南](docs/gateway.md) — 规则配置、触发模式、熔断器、数据变换管道
-- [安全指南](docs/security.md) — 输入校验、网络安全、异常参考
-- [厂商适配参考](docs/vendors.md) — 12 大厂商的预置配置、设备型号、SDK 路径
+- [协议 API 参考](docs/protocols.md) — 42 个协议的连接配置、读写操作、地址格式
+- [框架集成指南](docs/framework-integration.md) — 6 框架集成详述
+- [网关引擎指南](docs/gateway.md) — 规则、触发模式、熔断器
+- [安全指南](docs/security.md) — 输入校验、最佳实践、异常参考
+- [厂商适配参考](docs/vendors.md) — 12 厂商预置配置、设备型号、SDK 路径
 
 ---
 
@@ -1441,8 +1441,9 @@ return [
 - Composer
 - 可选：ext-swoole（Swoole 协程加速）
 - 可选：ext-pdo（数据库配置存储）
-- 可选：C/C++ SDK 可执行文件（EtherCAT/POWERLINK 桥接）
-- 可选：网关硬件（SERCOS III/Profinet RT/TSN 桥接）
+- 可选：串口权限（Modbus RTU / HART / LIN / K-Line / CC-Link）
+- 可选：C/C++ SDK（EtherCAT / POWERLINK / FlexRay 桥接）
+- 可选：网关硬件（PROFIBUS / SERCOS / DALI / IO-Link / 现场总线桥接）
 
 ---
 

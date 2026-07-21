@@ -189,10 +189,10 @@ Detection priority: `Swoole → Swow → Fiber → Sync`. Higher-level component
 │  FrameInterface    │ DataPointInterface │ GatewayRuleInterface│
 ├─────────────────────────────────────────────────────────────┤
 │              Protocol Packages (SDK Implementations)          │
-│  Modbus    │  BACnet/IP   │ EtherNet/IP │  OPC UA     │
-│  Profinet  │  EtherCAT*   │ POWERLINK*  │ SERCOS III* │
-│  pure PHP  │  UDP socket  │ TCP ENIP    │ UA Binary   │
-│  *via bridge│*via bridge  │*via bridge  │*via bridge  │
+│  Modbus(TCP/RTU)│ BACnet/IP│ EtherNet/IP  │ OPC UA (TCP) │
+│  Profinet(NRT)  │ HART     │ CC-Link      │ MQTT · DNP3  │
+│  IEC 61850(MMS) │ LIN      │ K-Line       │ HART-IP      │
+│  EtherCAT*      │ POWERLINK*│ SERCOS III* │ PROFIBUS*    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -1138,11 +1138,11 @@ return [
 
 ## Documentation
 
-- [Protocol API Reference](docs/en/protocols.md)
-- [Framework Integration Guide](docs/en/framework-integration.md)
-- [Gateway Engine Guide](docs/en/gateway.md)
-- [Security Guide](docs/en/security.md)
-- [Vendor Adapters Reference](docs/en/vendors.md) — Pre-configured profiles, device models, and SDK paths for 12 major vendors
+- [Protocol API Reference](docs/en/protocols.md) — Connection config, read/write ops, address formats for 42 protocols
+- [Framework Integration Guide](docs/en/framework-integration.md) — Detailed integration for 6 frameworks
+- [Gateway Engine Guide](docs/en/gateway.md) — Rules, trigger modes, circuit breaker
+- [Security Guide](docs/en/security.md) — Input validation, best practices, exception reference
+- [Vendor Adapters Reference](docs/en/vendors.md) — Pre-configured profiles, device models, and SDK paths for 12 vendors
 
 ---
 
@@ -1152,8 +1152,9 @@ return [
 - Composer
 - Optional: ext-swoole (Swoole coroutine acceleration)
 - Optional: ext-pdo (database config storage)
-- Optional: C/C++ SDK executables (EtherCAT/POWERLINK bridge)
-- Optional: Gateway hardware (SERCOS III/Profinet RT/TSN bridge)
+- Optional: serial port permissions (Modbus RTU / HART / LIN / K-Line / CC-Link)
+- Optional: C/C++ SDK (EtherCAT / POWERLINK / FlexRay bridge)
+- Optional: gateway hardware (PROFIBUS / SERCOS / DALI / IO-Link / fieldbus bridging)
 
 ---
 
