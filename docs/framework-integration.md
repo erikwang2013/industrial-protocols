@@ -1,4 +1,4 @@
-# Framework Integration Guide
+# 框架集成指南
 
 > [English](en/framework-integration.md)
 
@@ -19,7 +19,7 @@ $result = $conn->read('40001');
 $kernel->shutdown();
 ```
 
-For multiple protocols, register each before booting:
+注册多个协议后再启动：
 
 ```php
 $kernel->getProtocolRegistry()
@@ -28,46 +28,43 @@ $kernel->getProtocolRegistry()
     ->register(new EtherNetIPProtocol());
 ```
 
-The Plain PHP adapter auto-detects when no known framework is present.
+Plain PHP 适配器会在未检测到任何已知框架时自动回退生效。
 
 ---
 
 ## Laravel
 
-### Installation
+### 安装
 
-Publish the configuration file:
+发布配置文件：
 
 ```bash
 php artisan vendor:publish --tag=industrial-protocols-config
 ```
 
-This creates `config/industrial-protocols.php`.
+生成 `config/industrial-protocols.php`。
 
-### Service Provider Registration
+### 服务注册
 
-The `IndustrialProtocolsServiceProvider` auto-registers the Kernel as a singleton and binds it as `'industrial-protocols'`. It publishes config on `vendor:publish` and registers console commands.
+`IndustrialProtocolsServiceProvider` 自动将 Kernel 注册为单例并绑定到 `'industrial-protocols'`。`vendor:publish` 时发布配置文件，同时注册 Artisan 命令。
 
-### Register Protocols
+### 注册协议
 
-In your `AppServiceProvider`, register protocol implementations:
+在 `AppServiceProvider` 中注册协议实现：
 
 ```php
 use Erikwang2013\IndustrialProtocols\Kernel;
 use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
-use Erikwang2013\IndustrialProtocols\Bacnet\BacnetProtocol;
 
 public function boot(): void
 {
     $kernel = app(Kernel::class);
-    $kernel->getProtocolRegistry()
-        ->register(new ModbusProtocol())
-        ->register(new BacnetProtocol());
+    $kernel->getProtocolRegistry()->register(new ModbusProtocol());
     $kernel->boot();
 }
 ```
 
-### Using the Facade
+### 使用 Facade
 
 ```php
 use Erikwang2013\IndustrialProtocols\Framework\Laravel\IndustrialProtocolsFacade;
@@ -75,33 +72,33 @@ use Erikwang2013\IndustrialProtocols\Framework\Laravel\IndustrialProtocolsFacade
 $result = IndustrialProtocolsFacade::connect('plc-001')->read('40001');
 ```
 
-The facade proxies to `app('industrial-protocols')` which returns the booted Kernel.
+Facade 代理到 `app('industrial-protocols')`，返回已启动的 Kernel 实例。
 
-### Artisan Commands
+### Artisan 命令
 
 ```bash
-# Connect to a device and show health
+# 连接设备并显示健康状态
 php artisan industrial:connect plc-001
 
-# List all configured gateway rules
+# 列出所有网关规则
 php artisan industrial:gateway:list
 ```
 
-### Octane Compatibility
+### Octane 兼容
 
-The Laravel adapter detects Octane via `Laravel\Octane\Octane` and configures the kernel for long-running operation.
+Laravel 适配器通过 `Laravel\Octane\Octane` 检测 Octane 并配置内核以适配常驻运行。
 
 ---
 
 ## Webman
 
-### Auto-Discovery
+### 自动发现
 
-Configuration is auto-discovered from `config/plugin/industrial-protocols/kernel/`. Create the config file at that path.
+配置通过 `config/plugin/industrial-protocols/kernel/` 自动发现。在此路径下创建配置文件即可。
 
 ### ProtocolProcess
 
-The `ProtocolProcess` class auto-boots on worker start:
+`ProtocolProcess` 在 Worker 启动时自动初始化：
 
 ```php
 // config/plugin/industrial-protocols/kernel/process.php
@@ -112,12 +109,12 @@ return [
 ];
 ```
 
-Protocol auto-discovery scans `vendor/composer/installed.json` for installed protocol packages.
+协议自动发现扫描 `vendor/composer/installed.json` 中的已安装协议包。
 
-### Usage
+### 使用方式
 
 ```php
-$kernel = \Erikwang2013\IndustrialProtocols\Kernel::getInstance(); // singleton access
+$kernel = \Erikwang2013\IndustrialProtocols\Kernel::getInstance(); // 单例访问
 $conn = $kernel->getConnectionManager()->connect('plc-001');
 ```
 
@@ -127,33 +124,32 @@ $conn = $kernel->getConnectionManager()->connect('plc-001');
 
 ### ConfigProvider
 
-The ConfigProvider auto-registers DI bindings. Create configuration at `config/autoload/industrial-protocols.php`.
+ConfigProvider 自动注册 DI 绑定。在 `config/autoload/` 下创建 `industrial-protocols.php`。
 
-### DI Container Access
+### DI 容器访问
 
 ```php
 use Erikwang2013\IndustrialProtocols\Kernel;
 use Hyperf\Context\ApplicationContext;
 
 $kernel = ApplicationContext::getContainer()->get(Kernel::class);
-$kernel->boot();
 $conn = $kernel->getConnectionManager()->connect('plc-001');
 ```
 
-### Commands
+### 命令
 
 ```bash
 php bin/hyperf.php industrial:connect plc-001
 php bin/hyperf.php industrial:gateway:list
 ```
 
-The Hyperf adapter leverages coroutine support and pooled connection strategies for optimal performance in long-running workers.
+Hyperf 适配器利用协程支持和连接池策略，在常驻 Worker 中获得最佳性能。
 
 ---
 
 ## ThinkPHP
 
-### Service Boot
+### 服务启动
 
 ```php
 use Erikwang2013\IndustrialProtocols\Framework\ThinkPHP\IndustrialProtocolsService;
@@ -161,22 +157,22 @@ use Erikwang2013\IndustrialProtocols\Framework\ThinkPHP\IndustrialProtocolsServi
 $kernel = IndustrialProtocolsService::boot();
 $conn = $kernel->getConnectionManager()->connect('plc-001');
 
-// Access the singleton later
+// 后续获取单例
 $kernel = IndustrialProtocolsService::kernel();
 
-// Shutdown when done
+// 使用完毕后关闭
 IndustrialProtocolsService::shutdown();
 ```
 
-The service class maintains a static Kernel singleton. Protocol auto-discovery scans `vendor/composer/installed.json`.
+服务类内部维护一个静态 Kernel 单例。协议自动发现扫描 `vendor/composer/installed.json`。
 
 ---
 
 ## Yii2
 
-### Bootstrap Registration
+### Bootstrap 注册
 
-Add the bootstrap class to your Yii2 application config:
+将 Bootstrap 类添加到 Yii2 应用配置：
 
 ```php
 'bootstrap' => [
@@ -184,33 +180,33 @@ Add the bootstrap class to your Yii2 application config:
 ],
 ```
 
-### Using the Component
+### 使用组件
 
 ```php
 $kernel = Yii::$app->get('industrial-protocols');
 $conn = $kernel->getConnectionManager()->connect('plc-001');
 ```
 
-The Bootstrap class auto-discovers protocols from `vendor/composer/installed.json` and sets the Kernel as a Yii application component.
+Bootstrap 类自动从 `vendor/composer/installed.json` 发现协议，并将 Kernel 注册为 Yii 应用组件。
 
 ---
 
-## Framework Detection
+## 框架检测
 
-The kernel auto-detects the active framework using the following precedence:
+内核按以下优先级自动检测运行的框架：
 
 ```
-Laravel → Webman → ThinkPHP → Yii2 → Plain PHP
+Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Plain PHP
 ```
 
-Each adapter implements `FrameworkAdapterInterface`:
+每个适配器实现 `FrameworkAdapterInterface`：
 
-| Method | Purpose |
+| 方法 | 用途 |
 |--------|---------|
-| `detect()` | Returns true if the framework is active |
-| `getName()` | Framework identifier string |
-| `registerConfig()` | Config path registration |
-| `registerServices()` | Service container registration |
-| `registerCommands()` | Console command registration |
-| `getConfigPath()` | Returns the resolved config path |
-| `isLongRunning()` | True for Swoole/Octane/Workerman environments |
+| `detect()` | 当前是否该框架 |
+| `getName()` | 框架标识字符串 |
+| `registerConfig()` | 注册/发布配置文件 |
+| `registerServices()` | 注册容器绑定 |
+| `registerCommands()` | 注册 CLI 命令 |
+| `getConfigPath()` | 返回解析后的配置路径 |
+| `isLongRunning()` | Swoole/Octane/Workerman 环境返回 true |

@@ -1,10 +1,10 @@
-# Gateway Engine Guide
+# 网关引擎指南
 
 > [English](en/gateway.md)
 
-The Gateway Engine forwards data between industrial devices, translating between different protocols, value ranges, and trigger modes. It is a core Phase 2 component of the kernel.
+网关引擎用于在工业设备之间转发数据，支持跨协议转换、数值变换和多种触发模式。是内核 Phase 2 的核心组件。
 
-## Configuration
+## 配置方式
 
 ```php
 'gateway' => [
@@ -15,15 +15,15 @@ The Gateway Engine forwards data between industrial devices, translating between
             'source_point'   => '40001',
             'target_device'  => 'opcua-server',
             'target_point'   => 'ns=1;s=Temperature',
-            'transform'      => null,       // callable for value transform
+            'transform'      => null,       // 可选的数值转换回调
             'trigger'        => 'poll',     // poll | change | cron
-            'interval'       => 1000,       // ms
+            'interval'       => 1000,       // 毫秒
         ],
     ],
 ],
 ```
 
-## GatewayRule Constructor
+## GatewayRule 构造函数
 
 ```php
 use Erikwang2013\IndustrialProtocols\Gateway\GatewayRule;
@@ -34,30 +34,30 @@ $rule = new GatewayRule(
     sourcePoint: '40001',
     targetDevice: 'opcua-server',
     targetPoint: 'ns=1;s=Temperature',
-    transform: fn($v) => $v / 10,     // optional value transform
+    transform: fn($v) => $v / 10,     // 可选的数值转换
     trigger: 'poll',                   // 'poll' | 'change' | 'cron'
-    interval: 1000,                    // ms
-    cronExpression: null,              // cron syntax for 'cron' trigger
-    failureThreshold: 5,               // circuit breaker trip count
-    cooldownSeconds: 30.0,             // circuit breaker cooldown
+    interval: 1000,                    // 毫秒
+    cronExpression: null,              // cron 语法（cron 触发模式用）
+    failureThreshold: 5,               // 熔断阈值（连续失败次数）
+    cooldownSeconds: 30.0,             // 熔断冷却时间（秒）
 );
 ```
 
-All constructor parameters are `readonly` public properties.
+所有构造函数参数均为 `readonly` 公开属性。
 
-## Trigger Modes
+## 触发模式
 
-| Mode | Behavior |
+| 模式 | 行为 |
 |------|----------|
-| `poll` | Read source every N ms, write to target unconditionally |
-| `change` | Write to target only when source value changes from previous read |
-| `cron` | Execute on cron schedule (requires `cronExpression`) |
+| `poll` | 每隔 N 毫秒读取源数据并写入目标（无条件写入） |
+| `change` | 仅当源数据值相比上次读取发生变化时才写入目标 |
+| `cron` | 按 cron 表达式定时批量同步（需设置 `cronExpression`） |
 
-For `change` trigger, the engine tracks the last seen value per rule and skips the write when the value is identical to the previous read.
+`change` 模式下，引擎记录每条规则上次读取的值，值与上次相同时跳过写入。
 
-## Engine Lifecycle
+## 引擎生命周期
 
-### Instantiation
+### 实例化
 
 ```php
 use Erikwang2013\IndustrialProtocols\Gateway\GatewayEngine;
@@ -70,7 +70,7 @@ $engine = new GatewayEngine(
 );
 ```
 
-### Adding and Removing Rules
+### 添加和移除规则
 
 ```php
 $engine->addRule(new GatewayRule(
@@ -86,100 +86,100 @@ $engine->addRule(new GatewayRule(
 $engine->removeRule('temp-fwd');
 ```
 
-### Execution Modes
+### 执行模式
 
 ```php
-// Single rule on-demand execution
+// 按需执行单条规则
 $result = $engine->executeOnce('temp-fwd');
-// Returns: ['status' => 'ok', 'rule' => 'temp-fwd', 'value' => 42, 'latency_ms' => 3.2]
+// 返回：['status' => 'ok', 'rule' => 'temp-fwd', 'value' => 42, 'latency_ms' => 3.2]
 
-// Tick: execute all poll-triggered rules once
+// 批量执行所有 poll 规则
 $results = $engine->tick();
-// Returns array of results keyed by rule ID
+// 返回按规则 ID 索引的结果数组
 
-// Continuous loop with tick interval
+// 持续循环运行
 $engine->run(tickIntervalMs: 100);
 ```
 
-### Stopping
+### 停止引擎
 
 ```php
-$engine->stop();  // stops the run() loop
+$engine->stop();  // 终止 run() 循环
 ```
 
-## Value Translation Pipeline
+## 数值变换管道
 
-Each rule execution follows this pipeline:
+每条规则按以下管道执行：
 
 ```
-Source Frame → Parse → Read Value → Transform Callable → Write Target Frame
+读取源帧 → 解析 → 提取值 → 变换回调 → 构造目标帧 → 写入目标
 ```
 
-### Transform Examples
+### 变换示例
 
 ```php
-// Celsius to Fahrenheit
+// 摄氏度转华氏度
 'transform' => fn($celsius) => $celsius * 9 / 5 + 32,
 
-// Scale raw integer to decimal
+// 原始整数缩放为小数
 'transform' => fn($raw) => $raw / 10,
 
-// Clamp within range
+// 限幅
 'transform' => fn($v) => min(max($v, 0), 100),
 
-// String formatting
+// 格式化字符串
 'transform' => fn($v) => number_format($v, 2),
 ```
 
-Set `transform` to `null` to pass the raw value through unchanged.
+`transform` 设为 `null` 时直接透传原始值。
 
-## Circuit Breaker
+## 熔断器
 
-Every rule has an associated circuit breaker that prevents cascading failures when a device is unreachable.
+每条规则自动关联一个熔断器，防止设备不可达时产生级联故障。
 
-### States
+### 状态
 
-| State | Meaning |
+| 状态 | 含义 |
 |-------|---------|
-| `CLOSED` | Normal operation, requests pass through |
-| `OPEN` | Failure threshold exceeded, requests are blocked |
-| `HALF_OPEN` | Cooldown period has elapsed, next request probes recovery |
+| `CLOSED`（闭合）| 正常运行，请求放行 |
+| `OPEN`（断开）| 失败次数超过阈值，请求被拦截 |
+| `HALF_OPEN`（半开）| 冷却时间到，下次请求试探恢复 |
 
-### Default Parameters
+### 默认参数
 
-- **Failure threshold**: 5 consecutive failures
-- **Cooldown period**: 30 seconds
-- After cooldown, the breaker transitions to HALF_OPEN; the next execution attempt determines whether it resets to CLOSED (on success) or re-opens (on failure).
+- **熔断阈值**：连续 5 次失败
+- **冷却时间**：30 秒
+- 冷却后进入 HALF_OPEN 状态；下次执行成功则恢复到 CLOSED，失败则重新 OPEN
 
-### Events
+### 事件
 
-| Event | Fires When |
+| 事件 | 触发时机 |
 |-------|------------|
-| `GatewayRuleStartedEvent` | Rule execution begins |
-| `GatewayRuleCompletedEvent` | Rule execution succeeds (includes latency) |
-| `GatewayRuleFailedEvent` | Rule execution fails (includes failure count) |
-| `GatewayCircuitBreakerEvent` | Circuit breaker transitions state |
+| `GatewayRuleStartedEvent` | 规则开始执行 |
+| `GatewayRuleCompletedEvent` | 规则执行成功（含延迟数据） |
+| `GatewayRuleFailedEvent` | 规则执行失败（含失败计数） |
+| `GatewayCircuitBreakerEvent` | 熔断器状态变化 |
 
-### Monitoring
+### 监控
 
-Repeated circuit breaker trips indicate persistent device issues. You can monitor failures through the event dispatcher:
+重复的熔断器跳闸表明设备存在持续性问题：
 
 ```php
 $eventDispatcher->addListener(
     Erikwang2013\IndustrialProtocols\Event\GatewayCircuitBreakerEvent::class,
     function ($event) {
-        // Log, alert, or notify
+        // 记录日志、发送告警或通知
     }
 );
 ```
 
-## Coroutine Parallelism
+## 协程并发
 
-In coroutine-supported environments (Swoole, Fiber), all poll rules execute in parallel during a `tick()` call. In synchronous environments, rules execute sequentially.
+在支持协程的环境（Swoole、Fiber）中，`tick()` 调用时所有 poll 规则并发执行。同步环境则顺序执行。
 
-## Use Case Examples
+## 使用案例
 
-### Forward Modbus Register to BACnet
+### 将 Modbus 寄存器转发到 BACnet
 
 ```php
 $engine->addRule(new GatewayRule(
@@ -189,11 +189,11 @@ $engine->addRule(new GatewayRule(
     targetDevice: 'bacnet-scada',
     targetPoint: '0:1:85',
     transform: fn($v) => (int)($v * 100),
-    trigger: 'change',       // only forward on change
+    trigger: 'change',       // 仅在值变化时转发
 ));
 ```
 
-### Periodic Data Logging
+### 定时数据记录
 
 ```php
 $engine->addRule(new GatewayRule(
@@ -203,6 +203,6 @@ $engine->addRule(new GatewayRule(
     targetDevice: 'logger-db',
     targetPoint: 'temperature',
     trigger: 'poll',
-    interval: 60000,  // every 60 seconds
+    interval: 60000,  // 每 60 秒
 ));
 ```
