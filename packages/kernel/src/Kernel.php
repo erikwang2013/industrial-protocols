@@ -1,0 +1,125 @@
+<?php
+
+namespace IndustrialProtocols;
+
+use IndustrialProtocols\Config\ConfigRepositoryInterface;
+use IndustrialProtocols\Config\FileConfigRepository;
+use IndustrialProtocols\Connection\ConnectionManager;
+use IndustrialProtocols\Connection\Strategy\LazyStrategy;
+use IndustrialProtocols\Coroutine\CoroutineFactory;
+use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use IndustrialProtocols\Event\KernelBootedEvent;
+use IndustrialProtocols\Framework\FrameworkAdapterInterface;
+use IndustrialProtocols\Framework\PlainPhpAdapter;
+use IndustrialProtocols\Log\LogDriverInterface;
+use IndustrialProtocols\Log\PsrLogDriver;
+use IndustrialProtocols\Protocol\ProtocolRegistry;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\NullLogger;
+
+class Kernel
+{
+    private ProtocolRegistry $protocolRegistry;
+    private ConnectionManager $connectionManager;
+    private ConfigRepositoryInterface $configRepository;
+    private CoroutineAdapterInterface $coroutine;
+    private LogDriverInterface $log;
+    private FrameworkAdapterInterface $framework;
+    private bool $booted = false;
+
+    public function __construct(
+        private array $options = [],
+        private ?EventDispatcherInterface $eventDispatcher = null,
+    ) {
+        $this->protocolRegistry = new ProtocolRegistry();
+        $this->coroutine = CoroutineFactory::create();
+        $this->log = new PsrLogDriver(new NullLogger());
+    }
+
+    public function boot(): void
+    {
+        $configPath = $this->options['config_path']
+            ?? dirname(__DIR__) . '/config/industrial-protocols.php';
+
+        $this->configRepository = new FileConfigRepository($configPath);
+        $this->framework = $this->detectFramework();
+        $this->framework->registerConfig();
+        $this->framework->registerServices();
+        $this->framework->registerCommands();
+
+        $this->connectionManager = new ConnectionManager(
+            $this->protocolRegistry->all(),
+            $this->configRepository,
+            $this->eventDispatcher ?? new class implements EventDispatcherInterface {
+                public function dispatch(object $event): object { return $event; }
+            },
+            $this->coroutine,
+            $this->log,
+            new LazyStrategy(),
+        );
+
+        $this->booted = true;
+
+        if ($this->eventDispatcher) {
+            $this->eventDispatcher->dispatch(new KernelBootedEvent(
+                array_keys($this->protocolRegistry->all()),
+                $this->framework->getName(),
+            ));
+        }
+    }
+
+    public function shutdown(): void
+    {
+        $this->connectionManager?->shutdown();
+        $this->booted = false;
+    }
+
+    public function getConnectionManager(): ConnectionManager
+    {
+        $this->ensureBooted();
+        return $this->connectionManager;
+    }
+
+    public function getProtocolRegistry(): ProtocolRegistry
+    {
+        return $this->protocolRegistry;
+    }
+
+    public function getConfigRepository(): ConfigRepositoryInterface
+    {
+        $this->ensureBooted();
+        return $this->configRepository;
+    }
+
+    public function getCoroutineAdapter(): CoroutineAdapterInterface
+    {
+        return $this->coroutine;
+    }
+
+    public function getLogDriver(): LogDriverInterface
+    {
+        return $this->log;
+    }
+
+    public function getFramework(): FrameworkAdapterInterface
+    {
+        return $this->framework;
+    }
+
+    private function detectFramework(): FrameworkAdapterInterface
+    {
+        $default = new PlainPhpAdapter(
+            $this->options['config_path']
+            ?? dirname(__DIR__) . '/config/industrial-protocols.php'
+        );
+
+        return $default;
+    }
+
+    private function ensureBooted(): void
+    {
+        if (!$this->booted) {
+            throw new \RuntimeException('Kernel must be booted before using. Call boot() first.');
+        }
+    }
+}
