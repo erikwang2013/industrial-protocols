@@ -24,13 +24,13 @@ class SecureChannel
     private int $requestId = 1;
 
     // Service TypeIds (namespace 0)
-    private const SERVICE_OPEN_SECURE_CHANNEL  = 446; // OpenSecureChannelRequest
-    private const SERVICE_CLOSE_SECURE_CHANNEL = 452; // CloseSecureChannelRequest
-    private const SERVICE_CREATE_SESSION       = 461; // CreateSessionRequest
-    private const SERVICE_ACTIVATE_SESSION     = 467; // ActivateSessionRequest
-    private const SERVICE_READ                 = 631; // ReadRequest
-    private const SERVICE_WRITE                = 673; // WriteRequest
-    private const SERVICE_BROWSE               = 527; // BrowseRequest
+    public const SERVICE_OPEN_SECURE_CHANNEL  = 446; // OpenSecureChannelRequest
+    public const SERVICE_CLOSE_SECURE_CHANNEL = 452; // CloseSecureChannelRequest
+    public const SERVICE_CREATE_SESSION       = 461; // CreateSessionRequest
+    public const SERVICE_ACTIVATE_SESSION     = 467; // ActivateSessionRequest
+    public const SERVICE_READ                 = 631; // ReadRequest
+    public const SERVICE_WRITE                = 673; // WriteRequest
+    public const SERVICE_BROWSE               = 527; // BrowseRequest
 
     /**
      * @param resource $socket       TCP socket stream
