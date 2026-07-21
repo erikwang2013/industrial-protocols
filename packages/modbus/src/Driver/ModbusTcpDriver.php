@@ -21,6 +21,9 @@ class ModbusTcpDriver implements DriverInterface
 
     public function connect(): void
     {
+        if ($this->socket !== null) {
+            return;
+        }
         $this->socket = @stream_socket_client(
             "tcp://{$this->host}:{$this->port}",
             $errno, $errstr, $this->timeout,
