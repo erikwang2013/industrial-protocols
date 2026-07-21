@@ -1,0 +1,23 @@
+{
+    "name": "industrial-protocols/mqtt",
+    "type": "industrial-protocol",
+    "require": {
+        "php": ">=8.1",
+        "industrial-protocols/kernel": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Erikwang2013\\IndustrialProtocols\\Mqtt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Erikwang2013\\IndustrialProtocols\\Mqtt\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "industrial-protocols": {
+            "protocol": "Erikwang2013\\IndustrialProtocols\\Mqtt\\MqttProtocol"
+        }
+    }
+}
