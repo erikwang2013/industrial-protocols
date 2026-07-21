@@ -159,7 +159,7 @@ Detection priority: `Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Pla
 ## Quick Start
 
 ```bash
-composer require industrial-protocols/kernel industrial-protocols/modbus
+composer require erikwang2013/kernel erikwang2013/modbus
 ```
 
 ```php
@@ -384,10 +384,10 @@ $result = IndustrialProtocolsFacade::connect('plc-001')->read('40001');
 
 ### Webman
 
-Works out of the box after installation. Create `config/plugin/industrial-protocols/kernel/config/industrial-protocols.php`. ProtocolProcess auto-initializes the Kernel, registers protocol packages, and establishes connections on worker start — no extra code required.
+Works out of the box after installation. Create `config/plugin/erikwang2013/kernel/config/industrial-protocols.php`. ProtocolProcess auto-initializes the Kernel, registers protocol packages, and establishes connections on worker start — no extra code required.
 
 ```php
-// config/plugin/industrial-protocols/kernel/config/industrial-protocols.php
+// config/plugin/erikwang2013/kernel/config/industrial-protocols.php
 return [
     'devices' => [
         'plc-001' => [

@@ -1,9 +1,9 @@
 {
-    "name": "industrial-protocols/lonworks",
+    "name": "erikwang2013/lonworks",
     "type": "industrial-protocol",
     "require": {
         "php": ">=8.1",
-        "industrial-protocols/kernel": "*"
+        "erikwang2013/kernel": "*"
     },
     "autoload": {
         "psr-4": {

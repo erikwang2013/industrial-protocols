@@ -1,5 +1,5 @@
 {
-    "name": "industrial-protocols/kernel",
+    "name": "erikwang2013/kernel",
     "type": "library",
     "require": {
         "php": ">=8.1",

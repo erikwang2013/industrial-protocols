@@ -1,9 +1,9 @@
 {
-    "name": "industrial-protocols/isa100",
+    "name": "erikwang2013/isa100",
     "type": "industrial-protocol",
     "require": {
         "php": ">=8.1",
-        "industrial-protocols/kernel": "*"
+        "erikwang2013/kernel": "*"
     },
     "autoload": {
         "psr-4": {
