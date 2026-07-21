@@ -94,14 +94,14 @@ Laravel 适配器通过 `Laravel\Octane\Octane` 检测 Octane 并配置内核以
 
 ### 自动发现
 
-配置通过 `config/plugin/erikwang2013/kernel/` 自动发现。在此路径下创建配置文件即可。
+配置通过 `config/plugin/erikwang2013/industrial-protocols-kernel/` 自动发现。在此路径下创建配置文件即可。
 
 ### ProtocolProcess
 
 `ProtocolProcess` 在 Worker 启动时自动初始化：
 
 ```php
-// config/plugin/erikwang2013/kernel/process.php
+// config/plugin/erikwang2013/industrial-protocols-kernel/process.php
 return [
     'protocol' => [
         'handler' => Erikwang2013\IndustrialProtocols\Framework\Webman\ProtocolProcess::class,

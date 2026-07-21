@@ -159,7 +159,7 @@ Industrial Protocols 是一个面向 PHP 生态的工业通信协议集，采用
 ## 快速开始
 
 ```bash
-composer require erikwang2013/kernel erikwang2013/modbus
+composer require erikwang2013/industrial-protocols-kernel erikwang2013/industrial-protocols-modbus
 ```
 
 ```php
@@ -384,10 +384,10 @@ $result = IndustrialProtocolsFacade::connect('plc-001')->read('40001');
 
 ### Webman
 
-安装即用。创建 `config/plugin/erikwang2013/kernel/config/industrial-protocols.php`，Worker 启动时 ProtocolProcess 自动初始化 Kernel、注册协议包并建立连接。
+安装即用。创建 `config/plugin/erikwang2013/industrial-protocols-kernel/config/industrial-protocols.php`，Worker 启动时 ProtocolProcess 自动初始化 Kernel、注册协议包并建立连接。
 
 ```php
-// config/plugin/erikwang2013/kernel/config/industrial-protocols.php
+// config/plugin/erikwang2013/industrial-protocols-kernel/config/industrial-protocols.php
 return [
     'devices' => [
         'plc-001' => [

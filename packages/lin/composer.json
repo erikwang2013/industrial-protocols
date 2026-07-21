@@ -1,9 +1,9 @@
 {
-    "name": "erikwang2013/lin",
+    "name": "erikwang2013/industrial-protocols-lin",
     "type": "industrial-protocol",
     "require": {
         "php": ">=8.1",
-        "erikwang2013/kernel": "*"
+        "erikwang2013/industrial-protocols-kernel": "*"
     },
     "autoload": {
         "psr-4": {
