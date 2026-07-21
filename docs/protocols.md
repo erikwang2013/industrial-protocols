@@ -221,6 +221,8 @@ $conn->write(['0:0:1:0x0100' => 0x0001]); // 写入参数
 | `ExternalProcessBridge` | 启动 C/C++ SDK 子进程，通过 stdin/stdout 通信 | 厂商提供命令行 SDK 工具 |
 | `TcpGatewayBridge` | TCP/UDP 连接网关硬件 | Anybus / Hilscher / 自研网关 |
 
+详细的厂商配置、设备型号和 SDK 路径请参阅 [厂商适配参考](vendors.md)。
+
 ### 桥接配置示例
 
 ```php

@@ -21,6 +21,7 @@ PHP industrial network communication protocol plugin — micro-kernel + protocol
   - [Retry Strategy Comparison](#retry-strategy-comparison)
   - [Exception Reference](#exception-reference)
   - [Full Capability Matrix](#full-capability-matrix)
+- [Vendor Adapters](#vendor-adapters)
 - [Supported Industrial Protocols](#supported-industrial-protocols)
 - [Supported Frameworks](#supported-frameworks)
 - [Quick Start](#quick-start)
@@ -148,6 +149,9 @@ Detection priority: `Swoole → Swow → Fiber → Sync`. Higher-level component
 │  ├──────────┼──────────┼──────────┼──────────┼───────────┤  │
 │  │Coroutine │  Retry   │  Alert   │ Metrics  │ Security  │  │
 │  │ Adapter  │ Strategy │ Manager  │Collector │ Validator │  │
+│  ├──────────┼──────────┼──────────┼──────────┼───────────┤  │
+│  │  Vendor  │  Bridge  │          │          │           │  │
+│  │ Profiles │  Layer   │          │          │           │  │
 │  └──────────┴──────────┴──────────┴──────────┴───────────┘  │
 ├─────────────────────────────────────────────────────────────┤
 │                   Protocol SDK (Contracts)                   │
@@ -276,6 +280,7 @@ IndustrialProtocolsException (RuntimeException)
 | Exception Hierarchy | 20+ layered exceptions with context. |
 | Framework Adapters | 6 frameworks + plain PHP, auto-detected at boot. |
 | Hardware Bridge | BridgeInterface + ExternalProcessBridge + TcpGatewayBridge, adapts C/C++ SDKs and gateway hardware |
+| Vendor Adapters | 8 pre-configured vendors (Beckhoff/Siemens/B&R/Bosch Rexroth/Hilscher/HMS/Moxa/Phoenix Contact), VendorBridgeFactory one-click bridge creation |
 
 ### Gateway Engine
 
@@ -412,6 +417,63 @@ Detection priority: `Swoole -> Fiber -> Sync`
 | Input Validation | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Database Config | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Hardware Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge |
+| Vendor Adapters | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+---
+
+## Vendor Adapters
+
+The kernel includes pre-configured profiles for 8 major industrial hardware vendors, eliminating the need to manually look up SDK paths and port numbers.
+
+### Vendor List
+
+| Vendor | Protocol | Bridge Type | Device Count |
+|--------|----------|-----------|-------------|
+| Beckhoff | EtherCAT | ExternalProcessBridge | 6 |
+| Siemens | PROFINET | TcpGatewayBridge | 5 |
+| B&R | POWERLINK | ExternalProcessBridge | 4 |
+| Bosch Rexroth | SERCOS III | TcpGatewayBridge | 4 |
+| Hilscher | Multi-protocol | TcpGatewayBridge | 4 |
+| HMS/Anybus | Multi-protocol | TcpGatewayBridge | 4 |
+| Moxa | Multi-protocol | TcpGatewayBridge | 4 |
+| Phoenix Contact | PROFINET/EIP | TcpGatewayBridge | 4 |
+
+### Usage
+
+```php
+// Get vendor factory
+$factory = $kernel->getVendorBridgeFactory();
+
+// List all supported vendors (8 total)
+$vendors = $factory->listVendors();
+
+// View a vendor's device models
+$devices = $factory->getDevices('siemens');
+// → [S7-1200 V4.x, S7-1500 V3.x, ET 200SP V2.x, ET 200MP V2.x, S7-400 V6.x]
+
+// One-click bridge creation — specify vendor, model, version
+$bridge = $factory->create('beckhoff', 'CX2030', '3.1');
+// Returns a pre-configured ExternalProcessBridge with SDK path auto-filled
+
+// Override default parameters
+$bridge = $factory->create('siemens', 'S7-1500', 'V3.x', [
+    'host' => '192.168.1.50',
+    'port' => 34964,
+]);
+
+// Connect and read
+$conn = new BridgeConnector($bridge, 'ethercat');
+$conn->connect();
+$result = $conn->read('0x6000:0x01');
+```
+
+### Configuration Merge Priority
+
+```
+Vendor defaults → Device model overrides → User custom parameters
+```
+
+See [Vendor Adapters Reference](docs/en/vendors.md).
 
 ---
 
@@ -754,6 +816,7 @@ return [
 - [Framework Integration Guide](docs/en/framework-integration.md)
 - [Gateway Engine Guide](docs/en/gateway.md)
 - [Security Guide](docs/en/security.md)
+- [Vendor Adapters Reference](docs/en/vendors.md) — Pre-configured profiles, device models, and SDK paths for 8 major vendors
 
 ---
 

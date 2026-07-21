@@ -221,6 +221,8 @@ The following protocols require dedicated hardware chips or real-time kernels, m
 | `ExternalProcessBridge` | Launches a C/C++ SDK subprocess, communicates via stdin/stdout | Vendor provides command-line SDK tools |
 | `TcpGatewayBridge` | TCP/UDP connection to gateway hardware | Anybus / Hilscher / custom gateway |
 
+For detailed vendor configurations, device models, and SDK paths, see the [Vendor Adapters Reference](vendors.md).
+
 ### Bridge Configuration Example
 
 ```php

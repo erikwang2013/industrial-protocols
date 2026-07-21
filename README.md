@@ -21,6 +21,7 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
   - [重试策略对照](#重试策略对照)
   - [异常对照表](#异常对照表)
   - [完整能力矩阵](#完整能力矩阵)
+- [厂商适配](#厂商适配)
 - [支持的工业通信协议](#支持的工业通信协议)
 - [支持的框架](#支持的框架)
 - [快速开始](#快速开始)
@@ -146,6 +147,9 @@ interface CoroutineAdapterInterface
 │  ├──────────┼──────────┼──────────┼──────────┼───────────┤  │
 │  │Coroutine │  Retry   │  Alert   │ Metrics  │ Security  │  │
 │  │ Adapter  │ Strategy │ Manager  │Collector │ Validator │  │
+│  ├──────────┼──────────┼──────────┼──────────┼───────────┤  │
+│  │  Vendor  │  Bridge  │          │          │           │  │
+│  │ Profiles │  Layer   │          │          │           │  │
 │  └──────────┴──────────┴──────────┴──────────┴───────────┘  │
 ├─────────────────────────────────────────────────────────────┤
 │                   Protocol SDK (Contracts)                   │
@@ -314,6 +318,7 @@ industrial-protocols/
 | 异常体系 | 20+ 分层异常：Connection / Protocol / Device / Gateway，附带上下文信息 |
 | 框架适配 | 6 个框架 + 纯 PHP，安装即用，内核自动检测运行环境 |
 | 硬件桥接 | BridgeInterface + ExternalProcessBridge + TcpGatewayBridge，适配 C/C++ SDK 和网关硬件 |
+| 厂商适配 | 8 大厂商预置配置（Beckhoff/Siemens/B&R/Bosch Rexroth/Hilscher/HMS/Moxa/Phoenix Contact），VendorBridgeFactory 一键创建桥接 |
 
 ### 网关引擎
 
@@ -450,6 +455,63 @@ industrial-protocols/
 | 输入校验 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 数据库配置 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 硬件桥接 | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge |
+| 厂商适配 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+---
+
+## 厂商适配
+
+内核内置 8 家主流工业硬件厂商的预置配置，无需手动查找 SDK 路径和端口号。
+
+### 厂商列表
+
+| 厂商 | 协议 | Bridge 类型 | 设备型号数 |
+|------|------|-----------|----------|
+| Beckhoff | EtherCAT | ExternalProcessBridge | 6 |
+| Siemens | PROFINET | TcpGatewayBridge | 5 |
+| B&R | POWERLINK | ExternalProcessBridge | 4 |
+| Bosch Rexroth | SERCOS III | TcpGatewayBridge | 4 |
+| Hilscher | 多协议 | TcpGatewayBridge | 4 |
+| HMS/Anybus | 多协议 | TcpGatewayBridge | 4 |
+| Moxa | 多协议 | TcpGatewayBridge | 4 |
+| Phoenix Contact | PROFINET/EIP | TcpGatewayBridge | 4 |
+
+### 使用方式
+
+```php
+// 获取厂商工厂
+$factory = $kernel->getVendorBridgeFactory();
+
+// 列出所有支持的厂商（8 家）
+$vendors = $factory->listVendors();
+
+// 查看某厂商的设备型号
+$devices = $factory->getDevices('siemens');
+// → [S7-1200 V4.x, S7-1500 V3.x, ET 200SP V2.x, ET 200MP V2.x, S7-400 V6.x]
+
+// 一键创建桥接 — 指定厂商、型号、版本
+$bridge = $factory->create('beckhoff', 'CX2030', '3.1');
+// 返回预配置的 ExternalProcessBridge，SDK 路径已自动填充
+
+// 覆盖默认参数
+$bridge = $factory->create('siemens', 'S7-1500', 'V3.x', [
+    'host' => '192.168.1.50',
+    'port' => 34964,
+]);
+
+// 连接并读取
+$conn = new BridgeConnector($bridge, 'ethercat');
+$conn->connect();
+$result = $conn->read('0x6000:0x01');
+```
+
+### 配置合并优先级
+
+```
+厂商默认值 → 设备型号覆盖 → 用户自定义参数
+```
+
+参见 [厂商适配详细文档](docs/vendors.md)。
 
 ---
 
@@ -1025,6 +1087,7 @@ return [
 - [框架集成指南](docs/framework-integration.md) — Plain PHP、Laravel、Webman、Hyperf、ThinkPHP、Yii2 集成详述
 - [网关引擎指南](docs/gateway.md) — 规则配置、触发模式、熔断器、数据变换管道
 - [安全指南](docs/security.md) — 输入校验、网络安全、异常参考
+- [厂商适配参考](docs/vendors.md) — 8 大厂商的预置配置、设备型号、SDK 路径
 
 ---
 
