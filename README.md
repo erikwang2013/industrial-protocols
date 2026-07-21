@@ -54,6 +54,61 @@ echo $health->state->value; // HEALTHY
 $kernel->shutdown();
 ```
 
+## Gateway Engine (Phase 2)
+
+Forward data between devices using different protocols:
+
+```php
+use IndustrialProtocols\Gateway\GatewayRule;
+
+$kernel->boot();
+
+// Add a gateway rule: poll Modbus register and forward to OPC UA
+$engine = new \IndustrialProtocols\Gateway\GatewayEngine(
+    $kernel->getConnectionManager(),
+    /* eventDispatcher, coroutineAdapter, logDriver */
+);
+
+$engine->addRule(new GatewayRule(
+    id: 'modbus-to-opcua',
+    sourceDevice: 'plc-001',
+    sourcePoint: '40001',
+    targetDevice: 'opcua-server',
+    targetPoint: 'ns=1;s=Temperature',
+    transform: fn($v) => $v / 10, // scale raw value
+    trigger: 'poll',
+    interval: 1000,
+));
+
+// Execute once on demand
+$result = $engine->executeOnce('modbus-to-opcua');
+
+// Or run continuous poll loop
+$engine->run(tickIntervalMs: 1000);
+```
+
+## Laravel Integration (Phase 2)
+
+```bash
+php artisan vendor:publish --tag=industrial-protocols-config
+```
+
+```php
+// config/industrial-protocols.php
+// Register protocols in AppServiceProvider:
+use IndustrialProtocols\Modbus\ModbusProtocol;
+
+app(Kernel::class)->getProtocolRegistry()->register(new ModbusProtocol());
+app(Kernel::class)->boot();
+
+// Use the facade
+\IndustrialProtocols\Facades\IndustrialProtocols::connect('plc-001')->read('40001');
+```
+
+## Webman Integration (Phase 2)
+
+Webman auto-discovers the plugin via `config/plugin/`. Install and configure -- the ProtocolProcess auto-boots on worker start.
+
 ## Configuration
 
 ```php
