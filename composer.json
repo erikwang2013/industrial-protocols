@@ -11,14 +11,18 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\": "packages/kernel/src/"
+            "IndustrialProtocols\\": "packages/kernel/src/",
+            "IndustrialProtocols\\Bacnet\\": "packages/bacnet/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "IndustrialProtocols\\Tests\\": "packages/kernel/tests/",
             "IndustrialProtocols\\Modbus\\": "packages/modbus/src/",
-            "IndustrialProtocols\\Modbus\\Tests\\": "packages/modbus/tests/"
+            "IndustrialProtocols\\Modbus\\Tests\\": "packages/modbus/tests/",
+            "IndustrialProtocols\\Bacnet\\Tests\\": "packages/bacnet/tests/",
+            "IndustrialProtocols\\EtherNetIP\\": "packages/ethernetip/src/",
+            "IndustrialProtocols\\EtherNetIP\\Tests\\": "packages/ethernetip/tests/"
         }
     },
     "scripts": {
