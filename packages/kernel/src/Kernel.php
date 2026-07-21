@@ -10,6 +10,7 @@ use IndustrialProtocols\Coroutine\CoroutineFactory;
 use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
 use IndustrialProtocols\Event\KernelBootedEvent;
 use IndustrialProtocols\Framework\FrameworkAdapterInterface;
+use IndustrialProtocols\Framework\LaravelAdapter;
 use IndustrialProtocols\Framework\PlainPhpAdapter;
 use IndustrialProtocols\Log\LogDriverInterface;
 use IndustrialProtocols\Log\PsrLogDriver;
@@ -108,12 +109,24 @@ class Kernel
 
     private function detectFramework(): FrameworkAdapterInterface
     {
-        $default = new PlainPhpAdapter(
+        $adapters = [
+            new LaravelAdapter(),
+            new PlainPhpAdapter(
+                $this->options['config_path']
+                ?? dirname(__DIR__) . '/config/industrial-protocols.php'
+            ),
+        ];
+
+        foreach ($adapters as $adapter) {
+            if ($adapter->detect()) {
+                return $adapter;
+            }
+        }
+
+        return new PlainPhpAdapter(
             $this->options['config_path']
             ?? dirname(__DIR__) . '/config/industrial-protocols.php'
         );
-
-        return $default;
     }
 
     private function ensureBooted(): void
