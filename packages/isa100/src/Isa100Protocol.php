@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
+ */
+
 namespace Erikwang2013\IndustrialProtocols\Isa100;
 
 use Erikwang2013\IndustrialProtocols\Bridge\BridgeConnector;

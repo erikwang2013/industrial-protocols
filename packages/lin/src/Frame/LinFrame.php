@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
+ */
+
 namespace Erikwang2013\IndustrialProtocols\Lin\Frame;
 
 use Erikwang2013\IndustrialProtocols\Lin\Exception\LinException;

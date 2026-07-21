@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
+ */
+
 namespace Erikwang2013\IndustrialProtocols\Dnp3\Tests\Unit;
 
 use Erikwang2013\IndustrialProtocols\Dnp3\Frame\Dnp3Frame;
