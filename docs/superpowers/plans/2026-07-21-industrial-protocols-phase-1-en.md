@@ -1,19 +1,19 @@
-# 工业协议 — 第一阶段 MVP 实施计划
-> [English](2026-07-21-industrial-protocols-phase-1-en.md)
+# Industrial Protocols — Phase 1 MVP Implementation Plan
+> [中文](2026-07-21-industrial-protocols-phase-1.md)
 
-> **致 Agentic Worker：** 必须子技能：使用 superpowers:subagent-driven-development（推荐）或 superpowers:executing-plans 逐任务实施本计划。步骤使用复选框（`- [ ]`）语法进行跟踪。
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**目标:** 构建微内核 + Modbus TCP 协议包，具备框架自动发现能力，模拟测试覆盖率 ≥80%。
+**Goal:** Build the micro-kernel + Modbus TCP protocol package with framework auto-discovery, ≥80% simulation test coverage.
 
-**架构:** 采用 Monorepo 结构，包含 `packages/kernel/` 和 `packages/modbus/`。内核提供 SDK 接口、ProtocolRegistry、ConnectionManager、ConfigRepository、CoroutineAdapters、FrameworkAdapters、事件/日志系统。Modbus 包依赖内核，通过纯 PHP socket 实现 Modbus TCP 的 ProtocolInterface + ConnectorInterface + DriverInterface。
+**Architecture:** Monorepo with `packages/kernel/` and `packages/modbus/`. Kernel provides SDK interfaces, ProtocolRegistry, ConnectionManager, ConfigRepository, CoroutineAdapters, FrameworkAdapters, Event/Log systems. Modbus package depends on kernel, implements ProtocolInterface + ConnectorInterface + DriverInterface for Modbus TCP over pure PHP sockets.
 
-**技术栈:** PHP ≥8.1, PHPUnit 10+, PSR-3（日志）, PSR-14（事件）, PSR-4（自动加载）, Composer
+**Tech Stack:** PHP ≥8.1, PHPUnit 10+, PSR-3 (log), PSR-14 (events), PSR-4 (autoload), Composer
 
 ---
 
-### 任务 1: 项目脚手架
+### Task 1: Project Scaffolding
 
-**涉及文件:**
+**Files:**
 - Create: `composer.json` (root)
 - Create: `phpunit.xml` (root)
 - Create: `packages/kernel/composer.json`
@@ -21,7 +21,7 @@
 - Create: `packages/modbus/composer.json`
 - Create: `packages/modbus/src/` directory structure
 
-- [ ] **步骤 1: 创建根目录 composer.json**
+- [ ] **Step 1: Create root composer.json**
 
 ```json
 {
@@ -53,7 +53,7 @@
 }
 ```
 
-- [ ] **步骤 2: 创建根目录 phpunit.xml**
+- [ ] **Step 2: Create root phpunit.xml**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -81,7 +81,7 @@
 </phpunit>
 ```
 
-- [ ] **步骤 3: 创建 packages/kernel/composer.json**
+- [ ] **Step 3: Create packages/kernel/composer.json**
 
 ```json
 {
@@ -105,7 +105,7 @@
 }
 ```
 
-- [ ] **步骤 4: 创建 packages/modbus/composer.json**
+- [ ] **Step 4: Create packages/modbus/composer.json**
 
 ```json
 {
@@ -128,21 +128,21 @@
 }
 ```
 
-- [ ] **步骤 5: 创建目录结构**
+- [ ] **Step 5: Create directory structure**
 
 Run: `mkdir -p packages/kernel/src/{Protocol,Connection/Strategy,Config,Coroutine,Framework,Event,Log,Retry,Exception} packages/kernel/tests/{Unit,Simulation} packages/kernel/config packages/modbus/src/{Driver,Frame,DataType,Exception} packages/modbus/tests/{Unit,Simulation} tests/Integration`
 
-- [ ] **步骤 6: 安装依赖**
+- [ ] **Step 6: Install dependencies**
 
 Run: `composer install`
 Expected: No errors, vendor/ created
 
-- [ ] **步骤 7: 验证自动加载**
+- [ ] **Step 7: Verify autoloading**
 
 Run: `php -r "require 'vendor/autoload.php'; echo 'OK';"`
 Expected: OK
 
-- [ ] **步骤 8: 提交**
+- [ ] **Step 8: Commit**
 
 ```bash
 git add composer.json phpunit.xml packages/ tests/
@@ -151,14 +151,14 @@ git commit -m "chore: scaffold monorepo with kernel and modbus packages"
 
 ---
 
-### 任务 2: DataType 和 Access 枚举
+### Task 2: DataType and Access Enums
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Protocol/DataType.php`
 - Create: `packages/kernel/src/Protocol/Access.php`
 - Test: `packages/kernel/tests/Unit/DataTypeTest.php`
 
-- [ ] **步骤 1: 编写失败的测试**
+- [ ] **Step 1: Write the failing test**
 
 ```php
 <?php
@@ -196,12 +196,12 @@ class DataTypeTest extends TestCase
 }
 ```
 
-- [ ] **步骤 2: 运行验证失败**
+- [ ] **Step 2: Run to verify failure**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/DataTypeTest.php`
 Expected: ERROR — class DataType not found
 
-- [ ] **步骤 3: 实现 DataType 枚举**
+- [ ] **Step 3: Implement DataType enum**
 
 ```php
 <?php
@@ -236,7 +236,7 @@ enum DataType: string
 }
 ```
 
-- [ ] **步骤 4: 创建 Access 枚举**
+- [ ] **Step 4: Create Access enum**
 
 ```php
 <?php
@@ -252,12 +252,12 @@ enum Access: string
 }
 ```
 
-- [ ] **步骤 5: 运行验证通过**
+- [ ] **Step 5: Run to verify pass**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/DataTypeTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 6: 提交**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add packages/kernel/src/Protocol/DataType.php packages/kernel/src/Protocol/Access.php packages/kernel/tests/
@@ -266,9 +266,9 @@ git commit -m "feat: add DataType and Access enums"
 
 ---
 
-### 任务 3: 异常层次结构
+### Task 3: Exception Hierarchy
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Exception/IndustrialProtocolsException.php`
 - Create: `packages/kernel/src/Exception/ConnectionException.php`
 - Create: `packages/kernel/src/Exception/ConnectionTimeoutException.php`
@@ -282,7 +282,7 @@ git commit -m "feat: add DataType and Access enums"
 - Create: `packages/kernel/src/Exception/AddressOutOfRangeException.php`
 - Test: `packages/kernel/tests/Unit/ExceptionTest.php`
 
-- [ ] **步骤 1: 编写测试**
+- [ ] **Step 1: Write test**
 
 ```php
 <?php
@@ -356,12 +356,12 @@ class ExceptionTest extends TestCase
 }
 ```
 
-- [ ] **步骤 2: 运行验证失败**
+- [ ] **Step 2: Run to verify failure**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/ExceptionTest.php`
 Expected: ERROR
 
-- [ ] **步骤 3: 创建基础异常类**
+- [ ] **Step 3: Create base exception**
 
 ```php
 <?php
@@ -386,7 +386,7 @@ class IndustrialProtocolsException extends \RuntimeException
 }
 ```
 
-- [ ] **步骤 4: 创建所有子类异常**
+- [ ] **Step 4: Create all subclass exceptions**
 
 ```php
 <?php
@@ -431,12 +431,12 @@ namespace Erikwang2013\IndustrialProtocols\Exception;
 class AddressOutOfRangeException extends DeviceException {}
 ```
 
-- [ ] **步骤 5: 运行验证通过**
+- [ ] **Step 5: Run to verify pass**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/ExceptionTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 6: 提交**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add packages/kernel/src/Exception/ packages/kernel/tests/Unit/ExceptionTest.php
@@ -445,14 +445,14 @@ git commit -m "feat: add exception hierarchy"
 
 ---
 
-### 任务 4: HealthStatus 值对象 + ConnectionState 枚举
+### Task 4: HealthStatus Value Object + ConnectionState Enum
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Connection/HealthStatus.php`
 - Create: `packages/kernel/src/Connection/ConnectionState.php`
 - Test: `packages/kernel/tests/Unit/HealthStatusTest.php`
 
-- [ ] **步骤 1: 编写测试**
+- [ ] **Step 1: Write test**
 
 ```php
 <?php
@@ -497,12 +497,12 @@ class HealthStatusTest extends TestCase
 }
 ```
 
-- [ ] **步骤 2: 运行验证失败**
+- [ ] **Step 2: Run to verify failure**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/HealthStatusTest.php`
 Expected: ERROR
 
-- [ ] **步骤 3: 创建 ConnectionState 枚举**
+- [ ] **Step 3: Create ConnectionState enum**
 
 ```php
 <?php
@@ -520,7 +520,7 @@ enum ConnectionState: string
 }
 ```
 
-- [ ] **步骤 4: 创建 HealthStatus**
+- [ ] **Step 4: Create HealthStatus**
 
 ```php
 <?php
@@ -569,12 +569,12 @@ class HealthStatus implements \JsonSerializable
 }
 ```
 
-- [ ] **步骤 5: 运行验证通过**
+- [ ] **Step 5: Run to verify pass**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/HealthStatusTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 6: 提交**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add packages/kernel/src/Connection/ packages/kernel/tests/Unit/HealthStatusTest.php
@@ -583,9 +583,9 @@ git commit -m "feat: add HealthStatus value object and ConnectionState enum"
 
 ---
 
-### 任务 5: SDK 接口
+### Task 5: SDK Interfaces
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Protocol/ProtocolInterface.php`
 - Create: `packages/kernel/src/Protocol/ConnectorInterface.php`
 - Create: `packages/kernel/src/Protocol/DriverInterface.php`
@@ -594,7 +594,7 @@ git commit -m "feat: add HealthStatus value object and ConnectionState enum"
 - Create: `packages/kernel/src/Protocol/GatewayRuleInterface.php`
 - Test: `packages/kernel/tests/Unit/InterfaceExistsTest.php`
 
-- [ ] **步骤 1: 创建 ProtocolInterface**
+- [ ] **Step 1: Create ProtocolInterface**
 
 ```php
 <?php
@@ -612,7 +612,7 @@ interface ProtocolInterface
 }
 ```
 
-- [ ] **步骤 2: 创建 ConnectorInterface**
+- [ ] **Step 2: Create ConnectorInterface**
 
 ```php
 <?php
@@ -633,7 +633,7 @@ interface ConnectorInterface
 }
 ```
 
-- [ ] **步骤 3: 创建 DriverInterface**
+- [ ] **Step 3: Create DriverInterface**
 
 ```php
 <?php
@@ -650,7 +650,7 @@ interface DriverInterface
 }
 ```
 
-- [ ] **步骤 4: 创建 FrameInterface**
+- [ ] **Step 4: Create FrameInterface**
 
 ```php
 <?php
@@ -666,7 +666,7 @@ interface FrameInterface
 }
 ```
 
-- [ ] **步骤 5: 创建 DataPointInterface、GatewayRuleInterface 和测试**
+- [ ] **Step 5: Create DataPointInterface, GatewayRuleInterface, test**
 
 ```php
 <?php
@@ -726,12 +726,12 @@ class InterfaceExistsTest extends TestCase
 }
 ```
 
-- [ ] **步骤 6: 运行验证通过**
+- [ ] **Step 6: Run to verify pass**
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/InterfaceExistsTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 7: 提交**
+- [ ] **Step 7: Commit**
 
 ```bash
 git add packages/kernel/src/Protocol/ packages/kernel/tests/Unit/InterfaceExistsTest.php
@@ -740,9 +740,9 @@ git commit -m "feat: add SDK interfaces (Protocol, Connector, Driver, Frame, Dat
 
 ---
 
-### 任务 6: 事件系统 + 日志驱动
+### Task 6: Event System + Log Drivers
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Event/ConnectionConnectedEvent.php`
 - Create: `packages/kernel/src/Event/ConnectionDisconnectedEvent.php`
 - Create: `packages/kernel/src/Event/ConnectionStateChangedEvent.php`
@@ -758,7 +758,7 @@ git commit -m "feat: add SDK interfaces (Protocol, Connector, Driver, Frame, Dat
 - Test: `packages/kernel/tests/Unit/EventTest.php`
 - Test: `packages/kernel/tests/Unit/LogDriverTest.php`
 
-- [ ] **步骤 1: 创建所有事件类**
+- [ ] **Step 1: Create all event classes**
 
 ```php
 <?php
@@ -853,7 +853,7 @@ class ProtocolRegisteredEvent {
 }
 ```
 
-- [ ] **步骤 2: 创建 LogDriverInterface + 实现**
+- [ ] **Step 2: Create LogDriverInterface + implementations**
 
 ```php
 <?php
@@ -891,7 +891,7 @@ class NullLogDriver implements LogDriverInterface
 }
 ```
 
-- [ ] **步骤 3: 编写并运行测试**
+- [ ] **Step 3: Write and run tests**
 
 ```php
 <?php
@@ -985,7 +985,7 @@ class LogDriverTest extends TestCase
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/EventTest.php packages/kernel/tests/Unit/LogDriverTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 4: 提交**
+- [ ] **Step 4: Commit**
 
 ```bash
 git add packages/kernel/src/Event/ packages/kernel/src/Log/ packages/kernel/tests/Unit/EventTest.php packages/kernel/tests/Unit/LogDriverTest.php
@@ -994,15 +994,15 @@ git commit -m "feat: add event classes and log drivers (PSR-3, Null)"
 
 ---
 
-### 任务 7: 配置仓库
+### Task 7: Config Repository
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Config/ConfigRepositoryInterface.php`
 - Create: `packages/kernel/src/Config/FileConfigRepository.php`
 - Create: `packages/kernel/config/industrial-protocols.php`
 - Test: `packages/kernel/tests/Unit/FileConfigRepositoryTest.php`
 
-- [ ] **步骤 1: 创建接口**
+- [ ] **Step 1: Create interface**
 
 ```php
 <?php
@@ -1024,7 +1024,7 @@ interface ConfigRepositoryInterface
 }
 ```
 
-- [ ] **步骤 2: 创建默认配置模板**
+- [ ] **Step 2: Create default config template**
 
 ```php
 <?php
@@ -1042,14 +1042,14 @@ return [
 ];
 ```
 
-- [ ] **步骤 3: 编写测试并实现 FileConfigRepository**
+- [ ] **Step 3: Write test and implement FileConfigRepository**
 
-测试和实现遵循设计规范中的 ConfigRepository 设计 — 测试覆盖 getDeviceConfig、getAllDeviceConfigs、数据点 CRUD、网关规则 CRUD。实现使用 `require` 读写 PHP 配置数组。
+Test and implementation follow the spec's ConfigRepository design — test covers getDeviceConfig, getAllDeviceConfigs, data points CRUD, gateway rules CRUD. Implementation reads/writes PHP config arrays with `require`.
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/FileConfigRepositoryTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 4: 提交**
+- [ ] **Step 4: Commit**
 
 ```bash
 git add packages/kernel/src/Config/ packages/kernel/config/ packages/kernel/tests/Unit/FileConfigRepositoryTest.php
@@ -1058,16 +1058,16 @@ git commit -m "feat: add ConfigRepository interface and FileConfigRepository"
 
 ---
 
-### 任务 8: 协程适配器
+### Task 8: Coroutine Adapters
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Coroutine/CoroutineAdapterInterface.php`
 - Create: `packages/kernel/src/Coroutine/SyncCoroutineAdapter.php`
 - Create: `packages/kernel/src/Coroutine/FiberCoroutineAdapter.php`
 - Create: `packages/kernel/src/Coroutine/CoroutineFactory.php`
 - Test: `packages/kernel/tests/Unit/CoroutineAdapterTest.php`
 
-- [ ] **步骤 1: 创建接口**
+- [ ] **Step 1: Create interface**
 
 ```php
 <?php
@@ -1085,7 +1085,7 @@ interface CoroutineAdapterInterface
 }
 ```
 
-- [ ] **步骤 2: 实现 SyncCoroutineAdapter**
+- [ ] **Step 2: Implement SyncCoroutineAdapter**
 
 ```php
 <?php
@@ -1108,7 +1108,7 @@ class SyncCoroutineAdapter implements CoroutineAdapterInterface
 }
 ```
 
-- [ ] **步骤 3: 实现 FiberCoroutineAdapter**
+- [ ] **Step 3: Implement FiberCoroutineAdapter**
 
 ```php
 <?php
@@ -1148,7 +1148,7 @@ class FiberCoroutineAdapter implements CoroutineAdapterInterface
 }
 ```
 
-- [ ] **步骤 4: 实现 CoroutineFactory**
+- [ ] **Step 4: Implement CoroutineFactory**
 
 ```php
 <?php
@@ -1174,14 +1174,14 @@ class CoroutineFactory
 }
 ```
 
-- [ ] **步骤 5: 编写并运行测试**
+- [ ] **Step 5: Write and run test**
 
-测试覆盖：SyncAdapter 始终可用，create/call 返回结果，sleep 正确延迟，parallel 顺序执行，CoroutineFactory 返回正确的适配器。
+Test covers: SyncAdapter is always available, create/call returns result, sleep delays correctly, parallel runs sequentially, CoroutineFactory returns correct adapter.
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/CoroutineAdapterTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 6: 提交**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add packages/kernel/src/Coroutine/ packages/kernel/tests/Unit/CoroutineAdapterTest.php
@@ -1190,16 +1190,16 @@ git commit -m "feat: add coroutine adapters (Sync, Fiber) with factory"
 
 ---
 
-### 任务 9: 重试策略
+### Task 9: Retry Strategies
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Retry/RetryStrategyInterface.php`
 - Create: `packages/kernel/src/Retry/NoRetryStrategy.php`
 - Create: `packages/kernel/src/Retry/FixedRetryStrategy.php`
 - Create: `packages/kernel/src/Retry/ExponentialBackoffStrategy.php`
 - Test: `packages/kernel/tests/Unit/RetryStrategyTest.php`
 
-- [ ] **步骤 1: 创建接口 + 实现**
+- [ ] **Step 1: Create interface + implementations**
 
 ```php
 <?php
@@ -1268,14 +1268,14 @@ class ExponentialBackoffStrategy implements RetryStrategyInterface
 }
 ```
 
-- [ ] **步骤 2: 编写并运行测试**
+- [ ] **Step 2: Write and run test**
 
-测试覆盖：NoRetry 永不重试，FixedRetry 尊重最大次数，ExponentialBackoff 延迟加倍，jitter 随机化，retryableExceptions 过滤。
+Test covers: NoRetry never retries, FixedRetry respects max attempts, ExponentialBackoff doubles delay, jitter randomizes, retryableExceptions filtering.
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/RetryStrategyTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 3: 提交**
+- [ ] **Step 3: Commit**
 
 ```bash
 git add packages/kernel/src/Retry/ packages/kernel/tests/Unit/RetryStrategyTest.php
@@ -1284,15 +1284,15 @@ git commit -m "feat: add retry strategies (NoRetry, Fixed, ExponentialBackoff)"
 
 ---
 
-### 任务 10: ConnectionManager 及 LazyStrategy
+### Task 10: ConnectionManager with LazyStrategy
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Connection/Strategy/StrategyInterface.php`
 - Create: `packages/kernel/src/Connection/Strategy/LazyStrategy.php`
 - Create: `packages/kernel/src/Connection/ConnectionManager.php`
 - Test: `packages/kernel/tests/Simulation/ConnectionManagerTest.php`
 
-- [ ] **步骤 1: 创建 StrategyInterface**
+- [ ] **Step 1: Create StrategyInterface**
 
 ```php
 <?php
@@ -1311,7 +1311,7 @@ interface StrategyInterface
 }
 ```
 
-- [ ] **步骤 2: 实现 LazyStrategy**
+- [ ] **Step 2: Implement LazyStrategy**
 
 ```php
 <?php
@@ -1359,7 +1359,7 @@ class LazyStrategy implements StrategyInterface
 }
 ```
 
-- [ ] **步骤 3: 实现 ConnectionManager**
+- [ ] **Step 3: Implement ConnectionManager**
 
 ```php
 <?php
@@ -1457,14 +1457,14 @@ class ConnectionManager
 }
 ```
 
-- [ ] **步骤 4: 编写并运行测试**
+- [ ] **Step 4: Write and run test**
 
-测试使用 PHPUnit mock 模拟 ProtocolInterface、ConfigRepositoryInterface、EventDispatcherInterface。验证：connect 首次访问时创建连接，disconnect 移除连接，health 返回状态，不存在的设备抛出异常，getAllConnections 列出活跃连接。
+Test uses PHPUnit mocks for ProtocolInterface, ConfigRepositoryInterface, EventDispatcherInterface. Verifies: connect creates on first access, disconnect removes, health returns status, nonexistent device throws, getAllConnections lists active.
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Simulation/ConnectionManagerTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 5: 提交**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add packages/kernel/src/Connection/ packages/kernel/tests/Simulation/ConnectionManagerTest.php
@@ -1473,13 +1473,13 @@ git commit -m "feat: add ConnectionManager with LazyStrategy"
 
 ---
 
-### 任务 11: EagerStrategy
+### Task 11: EagerStrategy
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Connection/Strategy/EagerStrategy.php`
 - Test: `packages/kernel/tests/Unit/EagerStrategyTest.php`
 
-- [ ] **步骤 1: 实现 EagerStrategy**
+- [ ] **Step 1: Implement EagerStrategy**
 
 ```php
 <?php
@@ -1527,14 +1527,14 @@ class EagerStrategy implements StrategyInterface
 }
 ```
 
-- [ ] **步骤 2: 编写并运行测试**
+- [ ] **Step 2: Write and run test**
 
-测试验证：factory 在 getOrCreate 时立即被调用，第二次调用复用已有连接，disconnect 从连接池中移除。
+Test verifies: factory called immediately on getOrCreate, reused on second call, disconnect removes from pool.
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/EagerStrategyTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 3: 提交**
+- [ ] **Step 3: Commit**
 
 ```bash
 git add packages/kernel/src/Connection/Strategy/EagerStrategy.php packages/kernel/tests/Unit/EagerStrategyTest.php
@@ -1543,9 +1543,9 @@ git commit -m "feat: add EagerStrategy for ConnectionManager"
 
 ---
 
-### 任务 12: ProtocolRegistry + 框架适配器 + Kernel
+### Task 12: ProtocolRegistry + Framework Adapters + Kernel
 
-**涉及文件:**
+**Files:**
 - Create: `packages/kernel/src/Protocol/ProtocolRegistry.php`
 - Create: `packages/kernel/src/Framework/FrameworkAdapterInterface.php`
 - Create: `packages/kernel/src/Framework/PlainPhpAdapter.php`
@@ -1553,7 +1553,7 @@ git commit -m "feat: add EagerStrategy for ConnectionManager"
 - Test: `packages/kernel/tests/Unit/ProtocolRegistryTest.php`
 - Test: `packages/kernel/tests/Unit/KernelTest.php`
 
-- [ ] **步骤 1: 实现 ProtocolRegistry**
+- [ ] **Step 1: Implement ProtocolRegistry**
 
 ```php
 <?php
@@ -1611,7 +1611,7 @@ class ProtocolRegistry
 }
 ```
 
-- [ ] **步骤 2: 实现 FrameworkAdapterInterface + PlainPhpAdapter**
+- [ ] **Step 2: Implement FrameworkAdapterInterface + PlainPhpAdapter**
 
 ```php
 <?php
@@ -1651,7 +1651,7 @@ class PlainPhpAdapter implements FrameworkAdapterInterface
 }
 ```
 
-- [ ] **步骤 3: 实现 Kernel**
+- [ ] **Step 3: Implement Kernel**
 
 ```php
 <?php
@@ -1784,14 +1784,14 @@ class Kernel
 }
 ```
 
-- [ ] **步骤 4: 编写并运行测试**
+- [ ] **Step 4: Write and run tests**
 
-ProtocolRegistryTest：register/get/has/all/autoDiscover。KernelTest：boot 创建组件、registerProtocol、shutdown、无效配置抛出异常。
+ProtocolRegistryTest: register/get/has/all/autoDiscover. KernelTest: boot creates components, registerProtocol, shutdown, invalid config throws.
 
 Run: `vendor/bin/phpunit packages/kernel/tests/Unit/ProtocolRegistryTest.php packages/kernel/tests/Unit/KernelTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 5: 提交**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add packages/kernel/src/Protocol/ProtocolRegistry.php packages/kernel/src/Framework/ packages/kernel/src/Kernel.php packages/kernel/tests/Unit/ProtocolRegistryTest.php packages/kernel/tests/Unit/KernelTest.php
@@ -1800,16 +1800,16 @@ git commit -m "feat: add ProtocolRegistry, FrameworkAdapter, and Kernel"
 
 ---
 
-### 任务 13: Modbus 帧 + 异常
+### Task 13: Modbus Frame + Exception
 
-**涉及文件:**
+**Files:**
 - Create: `packages/modbus/src/Exception/ModbusException.php`
 - Create: `packages/modbus/src/Frame/ModbusFrame.php`
 - Create: `packages/modbus/src/Frame/ModbusRequest.php`
 - Create: `packages/modbus/src/Frame/ModbusResponse.php`
 - Test: `packages/modbus/tests/Unit/ModbusFrameTest.php`
 
-- [ ] **步骤 1: 实现 ModbusException**
+- [ ] **Step 1: Implement ModbusException**
 
 ```php
 <?php
@@ -1839,7 +1839,7 @@ class ModbusException extends ProtocolException
 }
 ```
 
-- [ ] **步骤 2: 实现 ModbusFrame（CRC16）**
+- [ ] **Step 2: Implement ModbusFrame (CRC16)**
 
 ```php
 <?php
@@ -1879,7 +1879,7 @@ abstract class ModbusFrame
 }
 ```
 
-- [ ] **步骤 3: 实现 ModbusRequest**
+- [ ] **Step 3: Implement ModbusRequest**
 
 ```php
 <?php
@@ -1956,7 +1956,7 @@ class ModbusRequest extends ModbusFrame implements FrameInterface
 }
 ```
 
-- [ ] **步骤 4: 实现 ModbusResponse**
+- [ ] **Step 4: Implement ModbusResponse**
 
 ```php
 <?php
@@ -2023,14 +2023,14 @@ class ModbusResponse extends ModbusFrame implements FrameInterface
 }
 ```
 
-- [ ] **步骤 5: 编写并运行测试**
+- [ ] **Step 5: Write and run test**
 
-测试覆盖：构建读取保持寄存器、写单个寄存器、写多个寄存器、解析响应、检测异常响应（0x80 + 错误码）、CRC16 计算、CRC 校验。
+Test covers: build read holding registers, write single register, write multiple registers, parse response, detect exception response (0x80 + error code), CRC16 calculation, CRC validation.
 
 Run: `vendor/bin/phpunit packages/modbus/tests/Unit/ModbusFrameTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 6: 提交**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add packages/modbus/
@@ -2039,15 +2039,15 @@ git commit -m "feat: add Modbus frame encode/decode with CRC16"
 
 ---
 
-### 任务 14: Modbus TCP 驱动 + 协议 + 连接器
+### Task 14: Modbus TCP Driver + Protocol + Connector
 
-**涉及文件:**
+**Files:**
 - Create: `packages/modbus/src/Driver/ModbusTcpDriver.php`
 - Create: `packages/modbus/src/ModbusProtocol.php`
 - Create: `packages/modbus/src/ModbusConnector.php`
 - Test: `packages/modbus/tests/Simulation/ModbusConnectorTest.php`
 
-- [ ] **步骤 1: 实现 ModbusTcpDriver**
+- [ ] **Step 1: Implement ModbusTcpDriver**
 
 ```php
 <?php
@@ -2126,7 +2126,7 @@ class ModbusTcpDriver implements DriverInterface
 }
 ```
 
-- [ ] **步骤 2: 实现 ModbusProtocol**
+- [ ] **Step 2: Implement ModbusProtocol**
 
 ```php
 <?php
@@ -2151,7 +2151,7 @@ class ModbusProtocol implements ProtocolInterface
 }
 ```
 
-- [ ] **步骤 3: 实现 ModbusConnector**
+- [ ] **Step 3: Implement ModbusConnector**
 
 ```php
 <?php
@@ -2232,14 +2232,14 @@ class ModbusConnector implements ConnectorInterface
 }
 ```
 
-- [ ] **步骤 4: 编写并运行模拟测试**
+- [ ] **Step 4: Write and run simulation test**
 
-测试使用 `stream_socket_server` + `pcntl_fork` 创建真实的 TCP Mock Server。测试内容：读取保持寄存器、写单个寄存器、超时检测、协议工厂创建正确的连接器、健康状态。
+Test uses `stream_socket_server` + `pcntl_fork` to create real TCP mock server. Tests: read holding register, write single register, timeout detection, protocol factory creates correct connector, health status.
 
 Run: `vendor/bin/phpunit packages/modbus/tests/Simulation/ModbusConnectorTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 5: 提交**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add packages/modbus/
@@ -2248,15 +2248,15 @@ git commit -m "feat: add Modbus TCP driver, protocol, and connector"
 
 ---
 
-### 任务 15: 端到端集成测试 + 文档
+### Task 15: End-to-End Integration Test + Documentation
 
-**涉及文件:**
+**Files:**
 - Create: `tests/Integration/KernelModbusIntegrationTest.php`
 - Create: `README.md`
 
-- [ ] **步骤 1: 编写集成测试**
+- [ ] **Step 1: Write integration test**
 
-测试流程：Kernel 启动 → 注册 ModbusProtocol → 连接 Mock TCP Server → 读取 40001 → 验证数值 → 健康检查 → 关闭。同时测试 PlainPhpAdapter 使用模式。
+Test: Kernel boot → register ModbusProtocol → connect to mock TCP server → read 40001 → verify value → health check → shutdown. Also tests PlainPhpAdapter usage pattern.
 
 ```php
 <?php
@@ -2324,19 +2324,19 @@ class KernelModbusIntegrationTest extends TestCase
 }
 ```
 
-- [ ] **步骤 2: 运行集成测试**
+- [ ] **Step 2: Run integration test**
 
 Run: `vendor/bin/phpunit tests/Integration/KernelModbusIntegrationTest.php`
 Expected: PASS (green)
 
-- [ ] **步骤 3: 运行完整测试套件（含覆盖率）**
+- [ ] **Step 3: Run full test suite with coverage**
 
 Run: `vendor/bin/phpunit --coverage-text`
 Expected: All tests pass, coverage ≥80% for kernel and modbus packages
 
-- [ ] **步骤 4: 编写 README.md**，包含项目概述、支持的协议、框架支持、快速入门示例、配置参考
+- [ ] **Step 4: Write README.md** with project overview, supported protocols, framework support, quick start example, configuration reference
 
-- [ ] **步骤 5: 最终提交**
+- [ ] **Step 5: Final commit**
 
 ```bash
 git add tests/Integration/ README.md
@@ -2345,11 +2345,11 @@ git commit -m "test: add kernel + modbus end-to-end integration tests and README
 
 ---
 
-### 第一阶段完成后验证清单
+### Post-Phase-1 Verification Checklist
 
-- [ ] `vendor/bin/phpunit` — 所有测试通过
-- [ ] `vendor/bin/phpunit --coverage-text` — kernel + modbus 覆盖率 ≥80%
-- [ ] `php -r "require 'vendor/autoload.php'; (new Erikwang2013\IndustrialProtocols\Kernel)->boot();"` — 内核正常启动无报错
-- [ ] `composer validate` — 所有 composer.json 文件有效
-- [ ] 通过 `extra.industrial-protocols.protocol` 实现 Modbus 协议自动发现
-- [ ] 未检测到框架时 PlainPhpAdapter 作为回退方案正常工作
+- [ ] `vendor/bin/phpunit` — all tests pass
+- [ ] `vendor/bin/phpunit --coverage-text` — ≥80% coverage on kernel + modbus
+- [ ] `php -r "require 'vendor/autoload.php'; (new Erikwang2013\IndustrialProtocols\Kernel)->boot();"` — kernel boots without error
+- [ ] `composer validate` — all composer.json files valid
+- [ ] Modbus protocol auto-discovery via `extra.industrial-protocols.protocol` works
+- [ ] PlainPhpAdapter serves as fallback when no framework detected
