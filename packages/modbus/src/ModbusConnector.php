@@ -5,21 +5,36 @@ namespace Erikwang2013\IndustrialProtocols\Modbus;
 use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
 use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
 use Erikwang2013\IndustrialProtocols\Exception\AddressOutOfRangeException;
+use Erikwang2013\IndustrialProtocols\Modbus\Driver\ModbusRtuDriver;
 use Erikwang2013\IndustrialProtocols\Modbus\Driver\ModbusTcpDriver;
 use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusRequest;
 use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\DriverInterface;
 
 class ModbusConnector implements ConnectorInterface
 {
-    private ModbusTcpDriver $driver;
+    private DriverInterface $driver;
 
     public function __construct(private array $config)
     {
-        $this->driver = new ModbusTcpDriver(
-            $config['host'] ?? '127.0.0.1',
-            $config['port'] ?? 502,
-            ($config['timeout'] ?? 3000) / 1000.0,
-        );
+        $variant = $config['variant'] ?? 'tcp';
+
+        if ($variant === 'rtu') {
+            $this->driver = new ModbusRtuDriver(
+                $config['device'] ?? '/dev/ttyUSB0',
+                $config['baud_rate'] ?? 19200,
+                $config['parity'] ?? 'N',
+                $config['data_bits'] ?? 8,
+                $config['stop_bits'] ?? 1,
+                ($config['timeout'] ?? 3000) / 1000.0,
+            );
+        } else {
+            $this->driver = new ModbusTcpDriver(
+                $config['host'] ?? '127.0.0.1',
+                $config['port'] ?? 502,
+                ($config['timeout'] ?? 3000) / 1000.0,
+            );
+        }
     }
 
     public function connect(): void { $this->driver->connect(); }

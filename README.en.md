@@ -322,9 +322,9 @@ The Bridge layer connects PHP applications to protocols requiring dedicated hard
 │  Pure PHP (Application-Layer Protocols)                  │
 │  ┌──────────┬──────────┬──────────┬──────────────────┐  │
 │  │ Modbus   │ BACnet   │ EIP      │ OPC UA           │  │
-│  │ (TCP)    │ (UDP)    │ (TCP)    │ (UA Binary/TCP)  │  │
-│  │ Profinet │          │          │                  │  │
-│  │ (NRT)    │          │          │                  │  │
+│  │ (TCP/RTU)│ (UDP)    │ (TCP)    │ (UA Binary/TCP)  │  │
+│  │ Profinet │ HART     │ CC-Link  │                  │  │
+│  │ (NRT)    │ (FSK)    │ (RS-485) │                  │  │
 │  └──────────┴──────────┴──────────┴──────────────────┘  │
 │  Standard sockets, full protocol stack in pure PHP      │
 ├─────────────────────────────────────────────────────────┤
@@ -358,7 +358,7 @@ The Bridge layer connects PHP applications to protocols requiring dedicated hard
 | Exception Hierarchy | 20+ layered exceptions with context. |
 | Framework Adapters | 6 frameworks + plain PHP, auto-detected at boot. |
 | Hardware Bridge | BridgeInterface + ExternalProcessBridge + TcpGatewayBridge, adapts C/C++ SDKs and gateway hardware |
-| Vendor Adapters | 8 pre-configured vendors (Beckhoff/Siemens/B&R/Bosch Rexroth/Hilscher/HMS/Moxa/Phoenix Contact), VendorBridgeFactory one-click bridge creation |
+| Vendor Adapters | 12 pre-configured vendors (Beckhoff/Siemens/B&R/Bosch Rexroth/Hilscher/HMS/Moxa/Phoenix Contact/Bihl+Wiedemann/ifm electronic/Pepperl+Fuchs/Softing), VendorBridgeFactory one-click bridge creation |
 
 ### Gateway Engine
 
@@ -501,7 +501,7 @@ Detection priority: `Swoole -> Fiber -> Sync`
 
 ## Vendor Adapters
 
-The kernel includes pre-configured profiles for 8 major industrial hardware vendors, eliminating the need to manually look up SDK paths and port numbers.
+The kernel includes pre-configured profiles for 12 major industrial hardware vendors, eliminating the need to manually look up SDK paths and port numbers.
 
 ### Vendor List
 
@@ -515,6 +515,10 @@ The kernel includes pre-configured profiles for 8 major industrial hardware vend
 | HMS/Anybus | Multi-protocol | TcpGatewayBridge | 4 |
 | Moxa | Multi-protocol | TcpGatewayBridge | 4 |
 | Phoenix Contact | PROFINET/EIP | TcpGatewayBridge | 4 |
+| Bihl+Wiedemann | AS-Interface | TcpGatewayBridge | 2 |
+| ifm electronic | IO-Link | TcpGatewayBridge | 2 |
+| Pepperl+Fuchs | AS-i / HART | TcpGatewayBridge | 2 |
+| Softing | FF / PROFIBUS | ExternalProcessBridge | 2 |
 
 ### Usage
 
@@ -522,7 +526,7 @@ The kernel includes pre-configured profiles for 8 major industrial hardware vend
 // Get vendor factory
 $factory = $kernel->getVendorBridgeFactory();
 
-// List all supported vendors (8 total)
+// List all supported vendors (12 total)
 $vendors = $factory->listVendors();
 
 // View a vendor's device models
@@ -557,16 +561,46 @@ See [Vendor Adapters Reference](docs/en/vendors.md).
 
 ## Supported Industrial Protocols
 
-| Protocol | Phase | Variants | Default Port | Implementation | Supported Operations |
-|----------|-------|----------|-------------|----------------|---------------------|
-| **Modbus** | Phase 1 | TCP, RTU, ASCII | 502 | Pure PHP Socket | FC 01/03/04/06/10 |
-| **BACnet/IP** | Phase 3 | IP (UDP) | 47808 | Pure PHP UDP Socket | Who-Is/I-Am, ReadProperty |
-| **EtherNet/IP** | Phase 3 | TCP | 44818 | Pure PHP Socket | ENIP session, CIP Read Tag |
-| **OPC UA** | Phase 4 | Binary | 4840 | Pure PHP UA Binary Stack | CreateSession / ActivateSession / Read / Write / Browse |
-| **Profinet** | Phase 4 (NRT) | NRT, RT (Bridge) | 34964 | Pure PHP UDP/TCP + BridgeConnector (RT) | DCP discovery / ReadRecord / WriteRecord / Diagnostics (RT/IRT requires dedicated hardware bridge) |
-| **EtherCAT** | Phase 4 (Bridge) | N/A | 0 | ExternalProcessBridge / TcpGatewayBridge | Adapted via C/C++ SDK or gateway hardware |
-| **POWERLINK** | Phase 4 (Bridge) | N/A | 0 | ExternalProcessBridge / TcpGatewayBridge | Adapted via C/C++ SDK or gateway hardware |
-| **SERCOS III** | Phase 4 (Bridge) | N/A | 0 | ExternalProcessBridge / TcpGatewayBridge | Adapted via C/C++ SDK or gateway hardware |
+### Industrial Ethernet Protocols
+
+| Protocol | Phase | Variant | Implementation | Operations |
+|----------|-------|---------|---------------|------------|
+| **Modbus TCP** | Phase 1 | TCP | Pure PHP Socket | FC 01/03/04/06/10 |
+| **BACnet/IP** | Phase 3 | IP (UDP) | Pure PHP UDP Socket | Who-Is/I-Am, ReadProperty |
+| **EtherNet/IP** | Phase 3 | TCP | Pure PHP Socket | ENIP session, CIP Read Tag |
+| **OPC UA** | Phase 4 | Binary | Pure PHP UA Binary Stack | CreateSession, Read, Write, Browse |
+| **Profinet NRT** | Phase 4 | NRT | Pure PHP UDP/TCP | DCP discovery, Record Data read/write |
+
+### Fieldbus Protocols
+
+| Protocol | Variant | Implementation | Description |
+|----------|---------|---------------|-------------|
+| **Modbus RTU/ASCII** | RS-485 Serial | Pure PHP Serial | CRC16 check, stty config |
+| **HART** | 4-20mA FSK | Pure PHP Serial | HART modem, PV/loop current |
+| **CC-Link** | RS-485 | Pure PHP Serial | Master-slave polling, CRC-16/XMODEM |
+| **PROFIBUS** | DP / PA / FMS | Bridge | Siemens CP 5611 / Anybus / Hilscher |
+| **CANopen** | CAN | Bridge | PCAN-USB / IXXAT / SocketCAN |
+| **DeviceNet** | CAN | Bridge | Anybus DeviceNet Scanner |
+| **Foundation Fieldbus** | H1 / HSE | Bridge | NI USB-8486 / Softing FFusb |
+| **AS-Interface** | AS-i | Bridge | Bihl+Wiedemann / Pepperl+Fuchs |
+| **IO-Link** | Point-to-Point | Bridge | ifm / Balluff IO-Link Master |
+| **CC-Link IE** | Industrial Ethernet | Bridge | CC-Link IE Field gateway |
+
+### Hardware-Dependent Protocols (Bridge)
+
+| Protocol | Hardware Required |
+|----------|------------------|
+| **EtherCAT** | ESC chip (Beckhoff TwinCAT / SOEM) |
+| **POWERLINK** | openMAC (openPOWERLINK / B&R) |
+| **SERCOS III** | FPGA IP core (Bosch Rexroth / Hilscher) |
+| **Profinet RT/IRT** | ERTEC chip (Siemens / Hilscher) |
+| **TSN** | TSN NIC (Intel I225 / NXP SJA1110) |
+| **ControlNet** | Coax token-ring interface (Allen-Bradley) |
+| **INTERBUS** | Ring network interface (Phoenix Contact) |
+| **LonWorks** | Neuron chip / interface card |
+| **WorldFIP** | FIP bus interface |
+| **Lightbus** | Fiber optic interface (Beckhoff) |
+| **Modbus Plus** | Token-ring interface (Schneider) |
 
 ---
 
@@ -744,6 +778,32 @@ $devices = $conn->discoverDevices(5);
 $result = $conn->read('0:0:1:0xAFF0');
 ```
 
+### Modbus RTU (Serial)
+
+```php
+$conn = $kernel->getConnectionManager()->connect('plc-rtu', [
+    'protocol' => 'modbus', 'variant' => 'rtu',
+    'device'   => '/dev/ttyUSB0', 'baud_rate' => 19200,
+    'unit_id'  => 1,
+]);
+$result = $conn->read('40001');
+```
+
+### HART
+
+```php
+use Erikwang2013\IndustrialProtocols\Hart\HartProtocol;
+
+$kernel->getProtocolRegistry()->register(new HartProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('hart-device', [
+    'protocol' => 'hart', 'device' => '/dev/ttyUSB1',
+]);
+$pv = $conn->read('pv');           // Primary Variable
+$current = $conn->read('loop_current'); // Loop current (mA)
+```
+
 ### Hardware Bridge Protocols
 
 ```php
@@ -894,7 +954,7 @@ return [
 - [Framework Integration Guide](docs/en/framework-integration.md)
 - [Gateway Engine Guide](docs/en/gateway.md)
 - [Security Guide](docs/en/security.md)
-- [Vendor Adapters Reference](docs/en/vendors.md) — Pre-configured profiles, device models, and SDK paths for 8 major vendors
+- [Vendor Adapters Reference](docs/en/vendors.md) — Pre-configured profiles, device models, and SDK paths for 12 major vendors
 
 ---
 

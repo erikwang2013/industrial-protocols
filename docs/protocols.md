@@ -210,6 +210,80 @@ $result = $conn->read('0:1:1:0x0001');  // 读取模块参数
 $conn->write(['0:0:1:0x0100' => 0x0001]); // 写入参数
 ```
 
+## Modbus RTU
+
+### 连接配置
+
+```php
+'devices' => [
+    'plc-rtu' => [
+        'protocol'  => 'modbus',
+        'variant'   => 'rtu',
+        'device'    => '/dev/ttyUSB0',  // Linux 串口
+        'baud_rate' => 19200,
+        'parity'    => 'N',             // N | E | O
+        'data_bits' => 8,
+        'stop_bits' => 1,
+        'unit_id'   => 1,
+        'timeout'   => 3000,
+    ],
+]
+```
+
+## HART
+
+### 连接配置
+
+```php
+'devices' => [
+    'hart-device' => [
+        'protocol' => 'hart',
+        'device'   => '/dev/ttyUSB1',  // HART 调制解调器
+        'address'  => 0,               // 轮询地址 0=单点, 1-15=多点
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### 读取
+
+```php
+$conn->read('pv');            // 主变量 (Primary Variable)
+$conn->read('loop_current');   // 回路电流 (mA)
+$conn->read('device_info');    // 设备信息 (厂商/型号/版本)
+```
+
+## CC-Link
+
+### 连接配置
+
+```php
+'devices' => [
+    'cclink-device' => [
+        'protocol'  => 'cc-link',
+        'variant'   => 'rs485',
+        'device'    => '/dev/ttyUSB2',
+        'baud_rate' => 156000,
+        'station'   => 0,  // 主站=0
+        'timeout'   => 3000,
+    ],
+]
+```
+
+## 现场总线桥接协议
+
+以下现场总线协议通过 Bridge 层适配：
+
+| 协议 | 所需硬件 | 厂商方案 |
+|------|---------|---------|
+| PROFIBUS DP/PA | RS-485 接口卡 | Siemens CP 5611, Anybus, Hilscher cifX |
+| CANopen | CAN 接口 | PCAN-USB, IXXAT, SocketCAN |
+| DeviceNet | CAN 接口 | Anybus DeviceNet Scanner |
+| Foundation Fieldbus | FF H1 接口 | NI USB-8486, Softing FFusb |
+| AS-Interface | AS-i Master | Bihl+Wiedemann, Pepperl+Fuchs |
+| IO-Link | IO-Link Master | ifm AL1330, Balluff |
+| CC-Link IE | 以太网网关 | CC-Link IE Field 网关 |
+
 ## 硬件桥接协议（EtherCAT / POWERLINK / SERCOS III / Profinet RT / TSN）
 
 以下协议需要专用硬件芯片或实时内核，PHP 无法直接实现协议栈。本库通过 **Bridge 层** 适配厂商 C/C++ SDK 或网关硬件。

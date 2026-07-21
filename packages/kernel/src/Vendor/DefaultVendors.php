@@ -91,6 +91,8 @@ class DefaultVendors
                 new DeviceProfile('netX 4000', 'V3.x', ['port' => 5000], 'Multi-channel master, any protocol'),
                 new DeviceProfile('cifX RE', 'PCI', ['port' => 5000, 'transport' => 'tcp'], 'PC card, Real-Time Ethernet'),
                 new DeviceProfile('comX', 'V1.x', ['port' => 5000], 'Communication module'),
+                new DeviceProfile('cifX DP', 'V2.x', ['port' => 5000], 'PROFIBUS DP Master'),
+                new DeviceProfile('cifX CAN', 'V1.x', ['port' => 5000], 'CANopen Master'),
             ],
         ));
 
@@ -108,6 +110,10 @@ class DefaultVendors
                 new DeviceProfile('Anybus X-gateway', 'Firmware 4.x', ['port' => 502], 'Dual-network bridge'),
                 new DeviceProfile('Anybus CompactCom', 'B40', ['port' => 502], 'Embedded communication module'),
                 new DeviceProfile('Anybus Wireless Bolt', 'V1.x', ['port' => 502, 'transport' => 'tcp'], 'Wireless IoT gateway'),
+                new DeviceProfile('Anybus PROFIBUS Slave', 'V2.x', ['port' => 502], 'PROFIBUS DP Slave interface'),
+                new DeviceProfile('Anybus DeviceNet Scanner', 'V2.x', ['port' => 502], 'DeviceNet Master/Scanner'),
+                new DeviceProfile('Anybus CANopen Slave', 'V1.x', ['port' => 502], 'CANopen Slave interface'),
+                new DeviceProfile('Anybus CC-Link Slave', 'V1.x', ['port' => 502], 'CC-Link Slave interface'),
             ],
         ));
 
@@ -125,6 +131,7 @@ class DefaultVendors
                 new DeviceProfile('MGate 5102-PBM-PN', 'V3.x', ['port' => 502], 'PROFIBUS to PROFINET'),
                 new DeviceProfile('MGate 5105-MB-EIP', 'V3.x', ['port' => 502], 'Modbus to EtherNet/IP'),
                 new DeviceProfile('MGate 5118', 'V2.x', ['port' => 502], 'EtherNet/IP to PROFINET'),
+                new DeviceProfile('MGate 4101-MB-PBS', 'V3.x', ['port' => 502], 'Modbus to PROFIBUS'),
             ],
         ));
 
@@ -142,6 +149,66 @@ class DefaultVendors
                 new DeviceProfile('AXL F IL ETH', 'V2.x', ['port' => 44818], 'EtherNet/IP bus coupler'),
                 new DeviceProfile('AXL E ETH DI16', 'V2.x', ['port' => 44818], 'EtherNet/IP digital input'),
                 new DeviceProfile('ILC 191', 'V1.x', ['port' => 34964], 'Inline controller, PROFINET'),
+            ],
+        ));
+
+        // ── Bihl+Wiedemann ─────────────────────────
+        $factory->register(new VendorProfile(
+            name:       'bihl-wiedemann',
+            protocol:   'as-interface',
+            bridgeType: 'tcp-gateway',
+            sdkPath:    '',
+            defaultPort: 502,
+            homepage:   'https://www.bihl-wiedemann.de',
+            description: 'Bihl+Wiedemann AS-Interface Safety at Work',
+            devices: [
+                new DeviceProfile('BWU3540', 'V3.x', [], 'AS-i Master, PROFINET'),
+                new DeviceProfile('BWU3675', 'V4.x', [], 'AS-i Master, EtherNet/IP'),
+            ],
+        ));
+
+        // ── ifm electronic ─────────────────────────
+        $factory->register(new VendorProfile(
+            name:       'ifm',
+            protocol:   'io-link',
+            bridgeType: 'tcp-gateway',
+            sdkPath:    '',
+            defaultPort: 502,
+            homepage:   'https://www.ifm.com',
+            description: 'ifm IO-Link Master',
+            devices: [
+                new DeviceProfile('AL1330', 'V1.x', [], 'IO-Link Master, PROFINET'),
+                new DeviceProfile('AL1340', 'V1.x', [], 'IO-Link Master, EtherNet/IP'),
+            ],
+        ));
+
+        // ── Pepperl+Fuchs ──────────────────────────
+        $factory->register(new VendorProfile(
+            name:       'pepperl-fuchs',
+            protocol:   'multi',
+            bridgeType: 'tcp-gateway',
+            sdkPath:    '',
+            defaultPort: 502,
+            homepage:   'https://www.pepperl-fuchs.com',
+            description: 'Pepperl+Fuchs AS-i Gateway / HART multiplexer',
+            devices: [
+                new DeviceProfile('VBA-4E-G20', 'V2.x', [], 'AS-i Gateway'),
+                new DeviceProfile('KFD2-HMM-16', 'V1.x', [], 'HART Multiplexer'),
+            ],
+        ));
+
+        // ── Softing ────────────────────────────────
+        $factory->register(new VendorProfile(
+            name:       'softing',
+            protocol:   'multi',
+            bridgeType: 'external-process',
+            sdkPath:    '/opt/softing/bin/',
+            defaultPort: 0,
+            homepage:   'https://www.softing.com',
+            description: 'Softing PROFIBUS/FF/HART interface cards',
+            devices: [
+                new DeviceProfile('FG-200', 'V2.x', [], 'FF H1 USB Interface'),
+                new DeviceProfile('PROFIusb', 'V3.x', [], 'PROFIBUS USB Interface'),
             ],
         ));
     }

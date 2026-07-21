@@ -18,10 +18,10 @@ class VendorBridgeFactoryTest extends TestCase
         DefaultVendors::register($this->factory);
     }
 
-    public function testListVendorsReturnsAllEight(): void
+    public function testListVendorsReturnsAllTwelve(): void
     {
         $vendors = $this->factory->listVendors();
-        $this->assertCount(8, $vendors);
+        $this->assertCount(12, $vendors);
         $this->assertArrayHasKey('beckhoff', $vendors);
         $this->assertArrayHasKey('siemens', $vendors);
         $this->assertArrayHasKey('br-automation', $vendors);
@@ -30,6 +30,10 @@ class VendorBridgeFactoryTest extends TestCase
         $this->assertArrayHasKey('hms-anybus', $vendors);
         $this->assertArrayHasKey('moxa', $vendors);
         $this->assertArrayHasKey('phoenix-contact', $vendors);
+        $this->assertArrayHasKey('bihl-wiedemann', $vendors);
+        $this->assertArrayHasKey('ifm', $vendors);
+        $this->assertArrayHasKey('pepperl-fuchs', $vendors);
+        $this->assertArrayHasKey('softing', $vendors);
     }
 
     public function testGetVendorReturnsProfile(): void

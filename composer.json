@@ -17,7 +17,22 @@
             "Erikwang2013\\IndustrialProtocols\\Profinet\\": "packages/profinet/src/",
             "Erikwang2013\\IndustrialProtocols\\EtherCat\\": "packages/ethercat/src/",
             "Erikwang2013\\IndustrialProtocols\\Powerlink\\": "packages/powerlink/src/",
-            "Erikwang2013\\IndustrialProtocols\\Sercos\\": "packages/sercos/src/"
+            "Erikwang2013\\IndustrialProtocols\\Sercos\\": "packages/sercos/src/",
+            "Erikwang2013\\IndustrialProtocols\\Hart\\": "packages/hart/src/",
+            "Erikwang2013\\IndustrialProtocols\\CcLink\\": "packages/cclink/src/",
+            "Erikwang2013\\IndustrialProtocols\\Profibus\\": "packages/profibus/src/",
+            "Erikwang2013\\IndustrialProtocols\\CanOpen\\": "packages/canopen/src/",
+            "Erikwang2013\\IndustrialProtocols\\DeviceNet\\": "packages/devicenet/src/",
+            "Erikwang2013\\IndustrialProtocols\\FoundationFieldbus\\": "packages/foundationfieldbus/src/",
+            "Erikwang2013\\IndustrialProtocols\\AsInterface\\": "packages/asinterface/src/",
+            "Erikwang2013\\IndustrialProtocols\\IoLink\\": "packages/iolink/src/",
+            "Erikwang2013\\IndustrialProtocols\\CcLinkIe\\": "packages/cclinkie/src/",
+            "Erikwang2013\\IndustrialProtocols\\ControlNet\\": "packages/controlnet/src/",
+            "Erikwang2013\\IndustrialProtocols\\Interbus\\": "packages/interbus/src/",
+            "Erikwang2013\\IndustrialProtocols\\LonWorks\\": "packages/lonworks/src/",
+            "Erikwang2013\\IndustrialProtocols\\WorldFip\\": "packages/worldfip/src/",
+            "Erikwang2013\\IndustrialProtocols\\Lightbus\\": "packages/lightbus/src/",
+            "Erikwang2013\\IndustrialProtocols\\ModbusPlus\\": "packages/modbusplus/src/"
         }
     },
     "autoload-dev": {
@@ -32,7 +47,22 @@
             "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\": "packages/ethernetip/src/",
             "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\Tests\\": "packages/ethernetip/tests/",
             "Erikwang2013\\IndustrialProtocols\\OpcUa\\Tests\\": "packages/opcua/tests/",
-            "Erikwang2013\\IndustrialProtocols\\Profinet\\Tests\\": "packages/profinet/tests/"
+            "Erikwang2013\\IndustrialProtocols\\Profinet\\Tests\\": "packages/profinet/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Hart\\Tests\\": "packages/hart/tests/",
+            "Erikwang2013\\IndustrialProtocols\\CcLink\\Tests\\": "packages/cclink/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Profibus\\Tests\\": "packages/profibus/tests/",
+            "Erikwang2013\\IndustrialProtocols\\CanOpen\\Tests\\": "packages/canopen/tests/",
+            "Erikwang2013\\IndustrialProtocols\\DeviceNet\\Tests\\": "packages/devicenet/tests/",
+            "Erikwang2013\\IndustrialProtocols\\FoundationFieldbus\\Tests\\": "packages/foundationfieldbus/tests/",
+            "Erikwang2013\\IndustrialProtocols\\AsInterface\\Tests\\": "packages/asinterface/tests/",
+            "Erikwang2013\\IndustrialProtocols\\IoLink\\Tests\\": "packages/iolink/tests/",
+            "Erikwang2013\\IndustrialProtocols\\CcLinkIe\\Tests\\": "packages/cclinkie/tests/",
+            "Erikwang2013\\IndustrialProtocols\\ControlNet\\Tests\\": "packages/controlnet/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Interbus\\Tests\\": "packages/interbus/tests/",
+            "Erikwang2013\\IndustrialProtocols\\LonWorks\\Tests\\": "packages/lonworks/tests/",
+            "Erikwang2013\\IndustrialProtocols\\WorldFip\\Tests\\": "packages/worldfip/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Lightbus\\Tests\\": "packages/lightbus/tests/",
+            "Erikwang2013\\IndustrialProtocols\\ModbusPlus\\Tests\\": "packages/modbusplus/tests/"
         }
     },
     "scripts": {

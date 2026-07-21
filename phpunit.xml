@@ -31,6 +31,51 @@
         <testsuite name="SERCOS">
             <directory>packages/sercos/tests</directory>
         </testsuite>
+        <testsuite name="HART">
+            <directory>packages/hart/tests</directory>
+        </testsuite>
+        <testsuite name="CC-Link">
+            <directory>packages/cclink/tests</directory>
+        </testsuite>
+        <testsuite name="PROFIBUS">
+            <directory>packages/profibus/tests</directory>
+        </testsuite>
+        <testsuite name="CANopen">
+            <directory>packages/canopen/tests</directory>
+        </testsuite>
+        <testsuite name="DeviceNet">
+            <directory>packages/devicenet/tests</directory>
+        </testsuite>
+        <testsuite name="FoundationFieldbus">
+            <directory>packages/foundationfieldbus/tests</directory>
+        </testsuite>
+        <testsuite name="AS-Interface">
+            <directory>packages/asinterface/tests</directory>
+        </testsuite>
+        <testsuite name="IO-Link">
+            <directory>packages/iolink/tests</directory>
+        </testsuite>
+        <testsuite name="CC-LinkIE">
+            <directory>packages/cclinkie/tests</directory>
+        </testsuite>
+        <testsuite name="ControlNet">
+            <directory>packages/controlnet/tests</directory>
+        </testsuite>
+        <testsuite name="INTERBUS">
+            <directory>packages/interbus/tests</directory>
+        </testsuite>
+        <testsuite name="LonWorks">
+            <directory>packages/lonworks/tests</directory>
+        </testsuite>
+        <testsuite name="WorldFIP">
+            <directory>packages/worldfip/tests</directory>
+        </testsuite>
+        <testsuite name="Lightbus">
+            <directory>packages/lightbus/tests</directory>
+        </testsuite>
+        <testsuite name="ModbusPlus">
+            <directory>packages/modbusplus/tests</directory>
+        </testsuite>
         <testsuite name="Integration">
             <directory>tests/Integration</directory>
         </testsuite>

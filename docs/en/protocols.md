@@ -210,6 +210,80 @@ $result = $conn->read('0:1:1:0x0001');  // Read module parameters
 $conn->write(['0:0:1:0x0100' => 0x0001]); // Write parameter
 ```
 
+## Modbus RTU
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'plc-rtu' => [
+        'protocol'  => 'modbus',
+        'variant'   => 'rtu',
+        'device'    => '/dev/ttyUSB0',  // Linux serial port
+        'baud_rate' => 19200,
+        'parity'    => 'N',             // N | E | O
+        'data_bits' => 8,
+        'stop_bits' => 1,
+        'unit_id'   => 1,
+        'timeout'   => 3000,
+    ],
+]
+```
+
+## HART
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'hart-device' => [
+        'protocol' => 'hart',
+        'device'   => '/dev/ttyUSB1',  // HART modem
+        'address'  => 0,               // polling address: 0=single, 1-15=multi-drop
+        'timeout'  => 5000,
+    ],
+]
+```
+
+### Reading
+
+```php
+$conn->read('pv');            // Primary Variable
+$conn->read('loop_current');   // Loop current (mA)
+$conn->read('device_info');    // Device info (vendor/model/revision)
+```
+
+## CC-Link
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'cclink-device' => [
+        'protocol'  => 'cc-link',
+        'variant'   => 'rs485',
+        'device'    => '/dev/ttyUSB2',
+        'baud_rate' => 156000,
+        'station'   => 0,  // master=0
+        'timeout'   => 3000,
+    ],
+]
+```
+
+## Fieldbus Bridge Protocols
+
+The following fieldbus protocols are adapted through the Bridge layer:
+
+| Protocol | Hardware Required | Vendor Solutions |
+|----------|------------------|-----------------|
+| PROFIBUS DP/PA | RS-485 interface card | Siemens CP 5611, Anybus, Hilscher cifX |
+| CANopen | CAN interface | PCAN-USB, IXXAT, SocketCAN |
+| DeviceNet | CAN interface | Anybus DeviceNet Scanner |
+| Foundation Fieldbus | FF H1 interface | NI USB-8486, Softing FFusb |
+| AS-Interface | AS-i Master | Bihl+Wiedemann, Pepperl+Fuchs |
+| IO-Link | IO-Link Master | ifm AL1330, Balluff |
+| CC-Link IE | Ethernet gateway | CC-Link IE Field gateway |
+
 ## Hardware Bridge Protocols (EtherCAT / POWERLINK / SERCOS III / Profinet RT / TSN)
 
 The following protocols require dedicated hardware chips or real-time kernels, making direct PHP protocol stack implementation infeasible. This library adapts vendor C/C++ SDKs or gateway hardware through a **Bridge layer**.

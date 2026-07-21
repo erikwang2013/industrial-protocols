@@ -16,6 +16,10 @@ This library adapts C/C++ SDKs and gateway devices from major industrial hardwar
 | HMS/Anybus | Multi-protocol | TcpGatewayBridge | Anybus Communicator |
 | Moxa | Multi-protocol | TcpGatewayBridge | MGate Series |
 | Phoenix Contact | PROFINET/EIP | TcpGatewayBridge | AXL F Series |
+| Bihl+Wiedemann | AS-Interface | TcpGatewayBridge | AS-i Gateway |
+| ifm electronic | IO-Link | TcpGatewayBridge | IO-Link Master |
+| Pepperl+Fuchs | AS-i / HART | TcpGatewayBridge | AS-i Gateway / HART Mux |
+| Softing | FF / PROFIBUS | ExternalProcessBridge | FFusb / PROFIusb |
 
 ## Architecture
 
@@ -31,7 +35,7 @@ The vendor adapter layer is built on the `BridgeInterface`, providing two bridge
 | `VendorProfile` | Vendor configuration (name, protocol, bridge type, SDK path, default port, device list) |
 | `DeviceProfile` | Device model configuration (model, version, config overrides) |
 | `VendorBridgeFactory` | Vendor registry and bridge factory |
-| `DefaultVendors` | Pre-configured profiles for 8 major industrial hardware vendors |
+| `DefaultVendors` | Pre-configured profiles for 12 major industrial hardware vendors |
 
 ## Usage
 
@@ -127,6 +131,30 @@ Supported devices: MGate 5101-PBM-MN, MGate 5102-PBM-PN, MGate 5105-MB-EIP, MGat
 AXL F series I/O systems. PROFINET default port 34964, EtherNet/IP default port 44818.
 
 Supported devices: AXL F BK PN, AXL F IL ETH, AXL E ETH DI16, ILC 191
+
+### Bihl+Wiedemann (AS-Interface)
+
+AS-i Safety at Work gateway. Default port 502.
+
+Supported devices: BWU3540, BWU3675
+
+### ifm electronic (IO-Link)
+
+IO-Link master, converts IO-Link sensor signals to Ethernet. Default port 502.
+
+Supported devices: AL1330, AL1340
+
+### Pepperl+Fuchs (AS-i / HART)
+
+AS-Interface gateway and HART multiplexer. Default port 502.
+
+Supported devices: VBA-4E-G20 (AS-i Gateway), KFD2-HMM-16 (HART Multiplexer)
+
+### Softing (PROFIBUS / FF / HART)
+
+PROFIBUS/FF/HART interface cards. Bridge type: `external-process`.
+
+Supported devices: FG-200 (FF H1 USB), PROFIusb (PROFIBUS USB)
 
 ## Custom Vendors
 

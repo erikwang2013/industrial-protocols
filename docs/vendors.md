@@ -16,6 +16,10 @@
 | HMS/Anybus | 多协议 | TcpGatewayBridge | Anybus Communicator |
 | Moxa | 多协议 | TcpGatewayBridge | MGate 系列 |
 | Phoenix Contact | PROFINET/EIP | TcpGatewayBridge | AXL F 系列 |
+| Bihl+Wiedemann | AS-Interface | TcpGatewayBridge | AS-i 网关 |
+| ifm electronic | IO-Link | TcpGatewayBridge | IO-Link 主站 |
+| Pepperl+Fuchs | AS-i / HART | TcpGatewayBridge | AS-i Gateway / HART Mux |
+| Softing | FF / PROFIBUS | ExternalProcessBridge | FFusb / PROFIusb |
 
 ## 架构
 
@@ -31,7 +35,7 @@
 | `VendorProfile` | 单个厂商的配置描述（名称、协议、桥接类型、SDK 路径、默认端口、设备列表） |
 | `DeviceProfile` | 单个设备型号的配置描述（型号、版本、配置覆盖项） |
 | `VendorBridgeFactory` | 厂商注册表和桥接创建工厂 |
-| `DefaultVendors` | 预置的 8 大主流工业硬件厂商配置 |
+| `DefaultVendors` | 预置的 12 大主流工业硬件厂商配置 |
 
 ## 使用方法
 
@@ -133,6 +137,30 @@ netX 系列 SoC 支持 EtherCAT、PROFINET、POWERLINK、SERCOS III、EtherNet/I
 AXL F 系列 I/O 系统，PROFINET 设备默认端口 34964，EtherNet/IP 设备默认端口 44818。
 
 支持设备：AXL F BK PN, AXL F IL ETH, AXL E ETH DI16, ILC 191
+
+### Bihl+Wiedemann (AS-Interface)
+
+AS-i Safety at Work 网关，默认端口 502。
+
+支持设备：BWU3540, BWU3675
+
+### ifm electronic (IO-Link)
+
+IO-Link 主站，将 IO-Link 传感器信号转换为以太网。默认端口 502。
+
+支持设备：AL1330, AL1340
+
+### Pepperl+Fuchs (AS-i / HART)
+
+AS-Interface 网关和 HART 多路复用器。默认端口 502。
+
+支持设备：VBA-4E-G20 (AS-i Gateway), KFD2-HMM-16 (HART Multiplexer)
+
+### Softing (PROFIBUS / FF / HART)
+
+PROFIBUS/FF/HART 接口卡。桥接类型为 `external-process`。
+
+支持设备：FG-200 (FF H1 USB), PROFIusb (PROFIBUS USB)
 
 ## 自定义厂商
 
