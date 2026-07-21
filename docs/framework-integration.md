@@ -1,5 +1,7 @@
 # Framework Integration Guide
 
+> [English](en/framework-integration.md)
+
 ## Plain PHP
 
 ```php

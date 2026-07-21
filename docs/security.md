@@ -1,5 +1,7 @@
 # Security Guide
 
+> [English](en/security.md)
+
 ## Input Validation
 
 Use `InputValidator` for all public-facing API inputs. All methods are static.

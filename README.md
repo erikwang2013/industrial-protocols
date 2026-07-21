@@ -2,6 +2,8 @@
 
 PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持 Modbus、BACnet、EtherNet/IP 等主流工业协议，兼容 Plain PHP、Laravel、Webman、Hyperf、ThinkPHP、Yii2 六大运行环境。
 
+> [English](README.en.md)
+
 ---
 
 ## 目录

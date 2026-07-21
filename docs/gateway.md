@@ -1,5 +1,7 @@
 # Gateway Engine Guide
 
+> [English](en/gateway.md)
+
 The Gateway Engine forwards data between industrial devices, translating between different protocols, value ranges, and trigger modes. It is a core Phase 2 component of the kernel.
 
 ## Configuration

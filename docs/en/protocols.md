@@ -1,6 +1,6 @@
 # Protocol API Reference
 
-> [English](en/protocols.md)
+> [中文](../protocols.md)
 
 ## Modbus TCP/RTU
 
@@ -123,10 +123,10 @@ The EtherNet/IP connector registers a CIP session on connect and unregisters it 
 ```php
 $manager = $kernel->getConnectionManager();
 
-// Connect to a device (lazy strategy by default)
+// Connect (lazy strategy by default)
 $conn = $manager->connect('plc-001');
 
-// Reuse an existing connection
+// Reuse existing connection
 $conn = $manager->getConnection('plc-001');
 
 // Disconnect
@@ -155,7 +155,7 @@ $manager->shutdown();
 
 ### Events
 
-The kernel dispatches PSR-14 events for key lifecycle points:
+PSR-14 events dispatched by the kernel:
 
 | Event | Fires When |
 |-------|------------|
