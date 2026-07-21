@@ -153,8 +153,10 @@ interface CoroutineAdapterInterface
 │  FrameInterface    │ DataPointInterface │ GatewayRuleInterface│
 ├─────────────────────────────────────────────────────────────┤
 │              Protocol Packages (SDK Implementations)          │
-│  Modbus    │  BACnet/IP   │  EtherNet/IP   │  OPC UA (TCP) │
-│  pure PHP  │  UDP socket  │  TCP ENIP+CIP  │  Binary stack  │
+│  Modbus    │  BACnet/IP   │ EtherNet/IP │  OPC UA     │
+│  Profinet  │  EtherCAT*   │ POWERLINK*  │ SERCOS III* │
+│  pure PHP  │  UDP socket  │ TCP ENIP    │ UA Binary   │
+│  *via bridge│*via bridge  │*via bridge  │*via bridge  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -311,6 +313,7 @@ industrial-protocols/
 | 重试策略 | 4 种策略 — NoRetry、FixedRetry、ExponentialBackoff、ExponentialBackoff + Jitter |
 | 异常体系 | 20+ 分层异常：Connection / Protocol / Device / Gateway，附带上下文信息 |
 | 框架适配 | 6 个框架 + 纯 PHP，安装即用，内核自动检测运行环境 |
+| 硬件桥接 | BridgeInterface + ExternalProcessBridge + TcpGatewayBridge，适配 C/C++ SDK 和网关硬件 |
 
 ### 网关引擎
 
@@ -446,6 +449,7 @@ industrial-protocols/
 | 告警通道 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 输入校验 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 数据库配置 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 硬件桥接 | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge |
 
 ---
 
@@ -680,6 +684,62 @@ $conn = $kernel->getConnectionManager()->connect('eip-plc');
 
 // 读取 CIP 标签
 $result = $conn->read('MyTagName');
+```
+
+### OPC UA Binary
+
+```php
+use Erikwang2013\IndustrialProtocols\OpcUa\OpcUaProtocol;
+
+$kernel->getProtocolRegistry()->register(new OpcUaProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('opcua-server');
+
+// 读取 CurrentTime 节点
+$result = $conn->read('i=2258');
+
+// 浏览地址空间
+$children = $conn->browse('i=85');
+
+// 写入节点
+$conn->write(['ns=2;s=SetPoint' => 100.0]);
+```
+
+### Profinet NRT
+
+```php
+use Erikwang2013\IndustrialProtocols\Profinet\ProfinetProtocol;
+
+$kernel->getProtocolRegistry()->register(new ProfinetProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('pn-device');
+
+// DCP 设备发现
+$devices = $conn->discoverDevices(5);
+
+// 读取 Record Data（api:slot:subslot:index）
+$result = $conn->read('0:0:1:0xAFF0');
+```
+
+### 硬件桥接协议
+
+```php
+use IndustrialProtocols\Bridge\ExternalProcessBridge;
+use IndustrialProtocols\EtherCat\EtherCatProtocol;
+
+// 通过 C/C++ SDK 桥接 EtherCAT
+$bridge = new ExternalProcessBridge('/opt/ethercat-sdk/ecat_master');
+
+$kernel->getProtocolRegistry()->register(new EtherCatProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('ethercat-device', [
+    'protocol' => 'ethercat',
+    'bridge'   => $bridge,
+]);
+$result = $conn->read('0x6000:0x01'); // CoE SDO 读取
 ```
 
 ---
@@ -974,6 +1034,8 @@ return [
 - Composer
 - 可选：ext-swoole（Swoole 协程加速）
 - 可选：ext-pdo（数据库配置存储）
+- 可选：C/C++ SDK 可执行文件（EtherCAT/POWERLINK 桥接）
+- 可选：网关硬件（SERCOS III/Profinet RT/TSN 桥接）
 
 ---
 

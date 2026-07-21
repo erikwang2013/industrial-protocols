@@ -116,6 +116,147 @@ $result = $conn->read(['Tag1', 'Tag2']); // ['Tag1' => <v1>, 'Tag2' => <v2>]
 
 The EtherNet/IP connector registers a CIP session on connect and unregisters it on disconnect.
 
+## OPC UA Binary
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'opcua-server' => [
+        'protocol'        => 'opc-ua',
+        'variant'         => 'binary',
+        'host'            => '192.168.1.100',
+        'port'            => 4840,
+        'timeout'         => 5000,
+        'application_uri' => 'urn:myapp:industrial-protocols',
+        'session_name'    => 'PHP-OPCUA-Client',
+    ],
+]
+```
+
+### Reading Node Values
+
+```php
+$conn = $manager->connect('opcua-server');
+
+// Read nodes (supports multiple address formats)
+$result = $conn->read('ns=0;i=2258');        // CurrentTime
+$result = $conn->read('i=2258');              // defaults to ns=0
+$result = $conn->read('ns=2;s=Temperature');  // string identifier
+
+// Batch read
+$result = $conn->read(['ns=0;i=2258', 'ns=2;s=Temperature']);
+```
+
+### Writing Node Values
+
+```php
+$conn->write(['ns=2;s=SetPoint' => 100.0]);
+```
+
+### Browsing the Address Space
+
+```php
+$children = $conn->browse('i=85'); // Browse nodes under the Objects folder
+```
+
+### Address Formats
+
+| Format | Example | Description |
+|--------|---------|-------------|
+| `ns=N;i=N` | `ns=0;i=2258` | Numeric identifier with namespace |
+| `i=N` | `i=2258` | Numeric identifier without namespace (ns=0) |
+| `ns=N;s=X` | `ns=2;s=Temperature` | String identifier with namespace |
+| `s=X` | `s=MyVar` | String identifier without namespace |
+
+## Profinet NRT
+
+> **Note:** Profinet is divided into RT (real-time) and NRT (non-real-time) channels. The RT channel requires dedicated ERTEC hardware chips and cannot be implemented in PHP. This package implements the NRT channel: DCP device discovery, Record Data read/write, and diagnostics.
+
+### Connection Configuration
+
+```php
+'devices' => [
+    'pn-device' => [
+        'protocol'  => 'profinet',
+        'variant'   => 'nrt',
+        'host'      => '192.168.1.30',
+        'port'      => 34964,
+        'transport' => 'udp',     // UDP (DCP) or TCP (Record Data)
+        'timeout'   => 5000,
+    ],
+]
+```
+
+### Device Discovery (DCP)
+
+```php
+$conn = $manager->connect('pn-device');
+$devices = $conn->discoverDevices(5); // DCP Identify broadcast
+// Returns: [['name' => 'pn-device-1', 'ip' => '192.168.1.30'], ...]
+```
+
+### Reading Record Data
+
+```php
+// Address format: api:slot:subslot:index
+$result = $conn->read('0:0:1:0xAFF0');  // Read module diagnostic data
+$result = $conn->read('0:1:1:0x0001');  // Read module parameters
+```
+
+### Writing Record Data
+
+```php
+$conn->write(['0:0:1:0x0100' => 0x0001]); // Write parameter
+```
+
+## Hardware Bridge Protocols (EtherCAT / POWERLINK / SERCOS III / Profinet RT / TSN)
+
+The following protocols require dedicated hardware chips or real-time kernels, making direct PHP protocol stack implementation infeasible. This library adapts vendor C/C++ SDKs or gateway hardware through a **Bridge layer**.
+
+### Bridge Types
+
+| Bridge | Description | Use Case |
+|--------|-------------|----------|
+| `ExternalProcessBridge` | Launches a C/C++ SDK subprocess, communicates via stdin/stdout | Vendor provides command-line SDK tools |
+| `TcpGatewayBridge` | TCP/UDP connection to gateway hardware | Anybus / Hilscher / custom gateway |
+
+### Bridge Configuration Example
+
+```php
+use IndustrialProtocols\Bridge\ExternalProcessBridge;
+use IndustrialProtocols\Bridge\TcpGatewayBridge;
+use IndustrialProtocols\EtherCat\EtherCatProtocol;
+
+// Method 1: Via C/C++ SDK subprocess
+$bridge = new ExternalProcessBridge('/opt/ethercat-sdk/bin/ecat_master');
+$kernel->getProtocolRegistry()->register(new EtherCatProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('ethercat-device', [
+    'protocol' => 'ethercat',
+    'bridge'   => $bridge,
+]);
+$result = $conn->read('0x6000:0x01'); // CoE SDO read
+
+// Method 2: Via gateway hardware
+$bridge = new TcpGatewayBridge('192.168.1.200', 5555);
+$conn = $kernel->getConnectionManager()->connect('powerlink-device', [
+    'protocol' => 'powerlink',
+    'bridge'   => $bridge,
+]);
+```
+
+### Supported Bridge Protocols
+
+| Protocol | Hardware/SDK Required | Bridge Type |
+|----------|----------------------|-------------|
+| EtherCAT | Beckhoff TwinCAT SDK / SOEM (Simple Open EtherCAT Master) | ExternalProcessBridge |
+| POWERLINK | openPOWERLINK stack / B&R Automation Studio | ExternalProcessBridge |
+| SERCOS III | Bosch Rexroth SERCOS IP core / Hilscher netX | TcpGatewayBridge |
+| Profinet RT/IRT | Siemens ERTEC / Hilscher netX | TcpGatewayBridge |
+| TSN | TSN NIC (Intel I225-T1 / NXP SJA1110) + 802.1Qbv driver | ExternalProcessBridge |
+
 ## Connection Management
 
 ### ConnectionManager API

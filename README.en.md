@@ -155,8 +155,10 @@ Detection priority: `Swoole → Swow → Fiber → Sync`. Higher-level component
 │  FrameInterface    │ DataPointInterface │ GatewayRuleInterface│
 ├─────────────────────────────────────────────────────────────┤
 │              Protocol Packages (SDK Implementations)          │
-│  Modbus    │  BACnet/IP   │  EtherNet/IP   │  OPC UA (TCP) │
-│  pure PHP  │  UDP socket  │  TCP ENIP+CIP  │  Binary stack  │
+│  Modbus    │  BACnet/IP   │ EtherNet/IP │  OPC UA     │
+│  Profinet  │  EtherCAT*   │ POWERLINK*  │ SERCOS III* │
+│  pure PHP  │  UDP socket  │ TCP ENIP    │ UA Binary   │
+│  *via bridge│*via bridge  │*via bridge  │*via bridge  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -273,6 +275,7 @@ IndustrialProtocolsException (RuntimeException)
 | Retry Strategies | NoRetry / FixedRetry / ExponentialBackoff / Jittered. |
 | Exception Hierarchy | 20+ layered exceptions with context. |
 | Framework Adapters | 6 frameworks + plain PHP, auto-detected at boot. |
+| Hardware Bridge | BridgeInterface + ExternalProcessBridge + TcpGatewayBridge, adapts C/C++ SDKs and gateway hardware |
 
 ### Gateway Engine
 
@@ -408,6 +411,7 @@ Detection priority: `Swoole -> Fiber -> Sync`
 | Alert Channels | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Input Validation | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Database Config | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Hardware Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge | ✅ Bridge |
 
 ---
 
@@ -563,6 +567,62 @@ $result = $conn->read('0:1:85');             // AnalogInput 1, PresentValue
 $result = $conn->read('MyTagName');          // CIP Read Tag
 ```
 
+### OPC UA Binary
+
+```php
+use Erikwang2013\IndustrialProtocols\OpcUa\OpcUaProtocol;
+
+$kernel->getProtocolRegistry()->register(new OpcUaProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('opcua-server');
+
+// Read CurrentTime node
+$result = $conn->read('i=2258');
+
+// Browse address space
+$children = $conn->browse('i=85');
+
+// Write node
+$conn->write(['ns=2;s=SetPoint' => 100.0]);
+```
+
+### Profinet NRT
+
+```php
+use Erikwang2013\IndustrialProtocols\Profinet\ProfinetProtocol;
+
+$kernel->getProtocolRegistry()->register(new ProfinetProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('pn-device');
+
+// DCP device discovery
+$devices = $conn->discoverDevices(5);
+
+// Read Record Data (api:slot:subslot:index)
+$result = $conn->read('0:0:1:0xAFF0');
+```
+
+### Hardware Bridge Protocols
+
+```php
+use IndustrialProtocols\Bridge\ExternalProcessBridge;
+use IndustrialProtocols\EtherCat\EtherCatProtocol;
+
+// Bridge EtherCAT via C/C++ SDK
+$bridge = new ExternalProcessBridge('/opt/ethercat-sdk/ecat_master');
+
+$kernel->getProtocolRegistry()->register(new EtherCatProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('ethercat-device', [
+    'protocol' => 'ethercat',
+    'bridge'   => $bridge,
+]);
+$result = $conn->read('0x6000:0x01'); // CoE SDO read
+```
+
 ---
 
 ## Framework Integration Examples
@@ -703,6 +763,8 @@ return [
 - Composer
 - Optional: ext-swoole (Swoole coroutine acceleration)
 - Optional: ext-pdo (database config storage)
+- Optional: C/C++ SDK executables (EtherCAT/POWERLINK bridge)
+- Optional: Gateway hardware (SERCOS III/Profinet RT/TSN bridge)
 
 ---
 
