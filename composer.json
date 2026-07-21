@@ -32,7 +32,12 @@
             "Erikwang2013\\IndustrialProtocols\\LonWorks\\": "packages/lonworks/src/",
             "Erikwang2013\\IndustrialProtocols\\WorldFip\\": "packages/worldfip/src/",
             "Erikwang2013\\IndustrialProtocols\\Lightbus\\": "packages/lightbus/src/",
-            "Erikwang2013\\IndustrialProtocols\\ModbusPlus\\": "packages/modbusplus/src/"
+            "Erikwang2013\\IndustrialProtocols\\ModbusPlus\\": "packages/modbusplus/src/",
+            "Erikwang2013\\IndustrialProtocols\\Mqtt\\": "packages/mqtt/src/",
+            "Erikwang2013\\IndustrialProtocols\\Dnp3\\": "packages/dnp3/src/",
+            "Erikwang2013\\IndustrialProtocols\\Iec61850\\": "packages/iec61850/src/",
+            "Erikwang2013\\IndustrialProtocols\\Isa100\\": "packages/isa100/src/",
+            "Erikwang2013\\IndustrialProtocols\\WirelessHart\\": "packages/wirelesshart/src/"
         }
     },
     "autoload-dev": {
@@ -62,7 +67,12 @@
             "Erikwang2013\\IndustrialProtocols\\LonWorks\\Tests\\": "packages/lonworks/tests/",
             "Erikwang2013\\IndustrialProtocols\\WorldFip\\Tests\\": "packages/worldfip/tests/",
             "Erikwang2013\\IndustrialProtocols\\Lightbus\\Tests\\": "packages/lightbus/tests/",
-            "Erikwang2013\\IndustrialProtocols\\ModbusPlus\\Tests\\": "packages/modbusplus/tests/"
+            "Erikwang2013\\IndustrialProtocols\\ModbusPlus\\Tests\\": "packages/modbusplus/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Mqtt\\Tests\\": "packages/mqtt/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Dnp3\\Tests\\": "packages/dnp3/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Iec61850\\Tests\\": "packages/iec61850/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Isa100\\Tests\\": "packages/isa100/tests/",
+            "Erikwang2013\\IndustrialProtocols\\WirelessHart\\Tests\\": "packages/wirelesshart/tests/"
         }
     },
     "scripts": {

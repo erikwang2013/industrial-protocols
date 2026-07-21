@@ -34,6 +34,7 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
 - [支持的工业通信协议](#支持的工业通信协议)
   - [工业以太网协议](#工业以太网协议)
   - [现场总线协议](#现场总线协议)
+  - [专用及物联网协议](#专用及物联网协议)
   - [需专用硬件的协议（Bridge）](#需专用硬件的协议bridge)
 - [支持的框架](#支持的框架)
 - [快速开始](#快速开始)
@@ -47,6 +48,9 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
   - [Modbus RTU（串口）](#modbus-rtu串口)
   - [HART](#hart)
   - [CC-Link RS-485](#cc-link-rs-485)
+  - [MQTT](#mqtt)
+  - [DNP3](#dnp3)
+  - [IEC 61850 (MMS)](#iec-61850-mms)
   - [PROFIBUS / CANopen / DeviceNet](#profibus--canopen--devicenet现场总线桥接)
   - [硬件桥接协议](#硬件桥接协议ethercat--powerlink--sercos-iii)
 - [框架集成示例](#框架集成示例)
@@ -628,6 +632,16 @@ $result = $conn->read('0x6000:0x01');
 | **Modbus RTU/ASCII** | RS-485 串口 | 纯 PHP 串口 | CRC16 校验, stty 串口配置 |
 | **HART** | 4-20mA FSK | 纯 PHP 串口 | HART 调制解调器, PV/回路电流 |
 | **CC-Link** | RS-485 | 纯 PHP 串口 | 主从轮询, CRC-16/XMODEM |
+| **DNP3** | TCP/串口 | 纯 PHP | 电力自动化, Class 0 轮询, CRC-16/DNP |
+| **IEC 61850** | MMS | 纯 PHP TCP | 变电站自动化, IED 数据路径, TPKT 传输 |
+
+### 专用及物联网协议
+
+| 协议 | 用途 | 实现方式 | 端口 |
+|------|------|---------|------|
+| **MQTT** | 轻量级物联网 | 纯 PHP TCP | 1883 |
+| **ISA100.11a** | 工业无线 mesh | Bridge（802.15.4 网关） | — |
+| **WirelessHART** | HART 无线 mesh | Bridge（WirelessHART 网关） | — |
 | **PROFIBUS** | DP / PA / FMS | Bridge | Siemens CP 5611 / Anybus / Hilscher |
 | **CANopen** | CAN | Bridge | PCAN-USB / IXXAT / SocketCAN |
 | **DeviceNet** | CAN | Bridge | Anybus DeviceNet Scanner |
@@ -948,6 +962,53 @@ $conn = $kernel->getConnectionManager()->connect('cclink-device', [
     'device'    => '/dev/ttyUSB2', 'baud_rate' => 156000,
 ]);
 $result = $conn->read('RWw0'); // 读取远程寄存器
+```
+
+### MQTT
+
+```php
+use Erikwang2013\IndustrialProtocols\Mqtt\MqttProtocol;
+
+$kernel->getProtocolRegistry()->register(new MqttProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('mqtt-broker', [
+    'protocol'   => 'mqtt', 'host' => '192.168.1.100',
+    'port'       => 1883, 'client_id' => 'php-client',
+    'keep_alive' => 60,
+]);
+$conn->write(['sensors/temperature' => '23.5']);  // publish
+$result = $conn->read('sensors/#');                // subscribe wildcard
+```
+
+### DNP3
+
+```php
+use Erikwang2013\IndustrialProtocols\Dnp3\Dnp3Protocol;
+
+$kernel->getProtocolRegistry()->register(new Dnp3Protocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('rtu-001', [
+    'protocol' => 'dnp3', 'host' => '10.0.1.50', 'port' => 20000,
+]);
+$result = $conn->read('30:1:5');  // Class 0 poll: Group 30, Variation 1, Index 5
+$conn->write(['10:2:1' => 1]);   // Select-before-operate: Binary Output
+```
+
+### IEC 61850 (MMS)
+
+```php
+use Erikwang2013\IndustrialProtocols\Iec61850\Iec61850Protocol;
+
+$kernel->getProtocolRegistry()->register(new Iec61850Protocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('ied-001', [
+    'protocol' => 'iec61850', 'variant' => 'mms',
+    'host'     => '10.0.1.100', 'port' => 102,
+]);
+$result = $conn->read('IED1/MMXU1.MX.A.phsA'); // 电流相量 A 相
 ```
 
 ### PROFIBUS / CANopen / DeviceNet（现场总线桥接）

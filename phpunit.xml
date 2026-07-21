@@ -76,6 +76,21 @@
         <testsuite name="ModbusPlus">
             <directory>packages/modbusplus/tests</directory>
         </testsuite>
+        <testsuite name="MQTT">
+            <directory>packages/mqtt/tests</directory>
+        </testsuite>
+        <testsuite name="DNP3">
+            <directory>packages/dnp3/tests</directory>
+        </testsuite>
+        <testsuite name="IEC61850">
+            <directory>packages/iec61850/tests</directory>
+        </testsuite>
+        <testsuite name="ISA100">
+            <directory>packages/isa100/tests</directory>
+        </testsuite>
+        <testsuite name="WirelessHART">
+            <directory>packages/wirelesshart/tests</directory>
+        </testsuite>
         <testsuite name="Integration">
             <directory>tests/Integration</directory>
         </testsuite>

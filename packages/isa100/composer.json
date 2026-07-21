@@ -1,0 +1,23 @@
+{
+    "name": "industrial-protocols/isa100",
+    "type": "industrial-protocol",
+    "require": {
+        "php": ">=8.1",
+        "industrial-protocols/kernel": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Erikwang2013\\IndustrialProtocols\\Isa100\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Erikwang2013\\IndustrialProtocols\\Isa100\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "industrial-protocols": {
+            "protocol": "Erikwang2013\\IndustrialProtocols\\Isa100\\Isa100Protocol"
+        }
+    }
+}

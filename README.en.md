@@ -34,6 +34,7 @@ PHP industrial network communication protocol plugin — micro-kernel + protocol
 - [Supported Industrial Protocols](#supported-industrial-protocols)
   - [Industrial Ethernet](#industrial-ethernet)
   - [Fieldbus Protocols](#fieldbus-protocols)
+  - [IoT & Specialized Protocols](#iot--specialized-protocols)
   - [Hardware-Dependent (Bridge)](#hardware-dependent-bridge)
 - [Supported Frameworks](#supported-frameworks)
 - [Quick Start](#quick-start)
@@ -47,6 +48,9 @@ PHP industrial network communication protocol plugin — micro-kernel + protocol
   - [Modbus RTU (Serial)](#modbus-rtu-serial)
   - [HART](#hart)
   - [CC-Link RS-485](#cc-link-rs-485-1)
+  - [MQTT](#mqtt)
+  - [DNP3](#dnp3)
+  - [IEC 61850 (MMS)](#iec-61850-mms)
   - [PROFIBUS / CANopen / DeviceNet](#profibus--canopen--devicenet-fieldbus-bridge)
   - [Hardware Bridge](#hardware-bridge-ethercat--powerlink--sercos-iii)
 - [Framework Integration Examples](#framework-integration-examples)
@@ -591,6 +595,16 @@ See [Vendor Adapters Reference](docs/en/vendors.md).
 | **Modbus RTU/ASCII** | RS-485 Serial | Pure PHP Serial | CRC16 check, stty config |
 | **HART** | 4-20mA FSK | Pure PHP Serial | HART modem, PV/loop current |
 | **CC-Link** | RS-485 | Pure PHP Serial | Master-slave polling, CRC-16/XMODEM |
+| **DNP3** | TCP/Serial | Pure PHP | Power automation, Class 0 poll, CRC-16/DNP |
+| **IEC 61850** | MMS | Pure PHP TCP | Substation automation, IED data paths, TPKT |
+
+### IoT & Specialized Protocols
+
+| Protocol | Use Case | Method | Port |
+|----------|----------|--------|------|
+| **MQTT** | Lightweight IoT | Pure PHP TCP | 1883 |
+| **ISA100.11a** | Industrial wireless mesh | Bridge (802.15.4 gateway) | — |
+| **WirelessHART** | HART wireless mesh | Bridge (WirelessHART gateway) | — |
 | **PROFIBUS** | DP / PA / FMS | Bridge | Siemens CP 5611 / Anybus / Hilscher |
 | **CANopen** | CAN | Bridge | PCAN-USB / IXXAT / SocketCAN |
 | **DeviceNet** | CAN | Bridge | Anybus DeviceNet Scanner |
@@ -830,6 +844,51 @@ $conn = $kernel->getConnectionManager()->connect('cclink-device', [
     'device'    => '/dev/ttyUSB2', 'baud_rate' => 156000,
 ]);
 $result = $conn->read('RWw0'); // Read remote register
+```
+
+### MQTT
+
+```php
+use Erikwang2013\IndustrialProtocols\Mqtt\MqttProtocol;
+
+$kernel->getProtocolRegistry()->register(new MqttProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('mqtt-broker', [
+    'protocol' => 'mqtt', 'host' => '192.168.1.100',
+    'port' => 1883, 'client_id' => 'php-client', 'keep_alive' => 60,
+]);
+$conn->write(['sensors/temperature' => '23.5']);  // publish
+$result = $conn->read('sensors/#');                // subscribe wildcard
+```
+
+### DNP3
+
+```php
+use Erikwang2013\IndustrialProtocols\Dnp3\Dnp3Protocol;
+
+$kernel->getProtocolRegistry()->register(new Dnp3Protocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('rtu-001', [
+    'protocol' => 'dnp3', 'host' => '10.0.1.50', 'port' => 20000,
+]);
+$result = $conn->read('30:1:5'); // Class 0: Group 30, Var 1, Index 5
+```
+
+### IEC 61850 (MMS)
+
+```php
+use Erikwang2013\IndustrialProtocols\Iec61850\Iec61850Protocol;
+
+$kernel->getProtocolRegistry()->register(new Iec61850Protocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('ied-001', [
+    'protocol' => 'iec61850', 'variant' => 'mms',
+    'host' => '10.0.1.100', 'port' => 102,
+]);
+$result = $conn->read('IED1/MMXU1.MX.A.phsA');
 ```
 
 ### PROFIBUS / CANopen / DeviceNet (Fieldbus Bridge)
