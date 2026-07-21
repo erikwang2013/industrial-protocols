@@ -457,7 +457,7 @@ industrial-protocols/
 | **BACnet/IP** | Phase 3 | IP (UDP) | 47808 | 纯 PHP UDP Socket | Who-Is/I-Am 设备发现、ReadProperty |
 | **EtherNet/IP** | Phase 3 | TCP | 44818 | 纯 PHP Socket | ENIP 会话管理、CIP Read Tag |
 | **OPC UA** | Phase 4 | Binary | 4840 | 纯 PHP UA Binary 协议栈 | CreateSession / ActivateSession / Read / Write / Browse |
-| **Profinet** | 规划中 | NRT + RT | 34964 | FFI / C 库桥接 | — |
+| **Profinet** | Phase 4 (NRT) | NRT | 34964 | 纯 PHP UDP/TCP | DCP 设备发现 / ReadRecord / WriteRecord / 诊断（RT 通道需专用硬件） |
 
 ---
 

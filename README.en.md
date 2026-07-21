@@ -419,7 +419,7 @@ Detection priority: `Swoole -> Fiber -> Sync`
 | **BACnet/IP** | Phase 3 | IP (UDP) | 47808 | Pure PHP UDP Socket | Who-Is/I-Am, ReadProperty |
 | **EtherNet/IP** | Phase 3 | TCP | 44818 | Pure PHP Socket | ENIP session, CIP Read Tag |
 | **OPC UA** | Phase 4 | Binary | 4840 | Pure PHP UA Binary Stack | CreateSession / ActivateSession / Read / Write / Browse |
-| **Profinet** | Planned | NRT + RT | 34964 | FFI / C library bridge | — |
+| **Profinet** | Phase 4 (NRT) | NRT | 34964 | Pure PHP UDP/TCP | DCP discovery / ReadRecord / WriteRecord / Diagnostics (RT requires dedicated hardware) |
 
 ---
 
