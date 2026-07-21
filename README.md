@@ -53,6 +53,10 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
   - [IEC 61850 (MMS)](#iec-61850-mms)
   - [PROFIBUS / CANopen / DeviceNet](#profibus--canopen--devicenet现场总线桥接)
   - [硬件桥接协议](#硬件桥接协议ethercat--powerlink--sercos-iii)
+  - [LIN（汽车车身总线）](#lin汽车车身总线)
+  - [K-Line（OBD-II 诊断）](#k-lineobd-ii-诊断)
+  - [HART-IP](#hart-ip)
+  - [DALI（数字照明）](#dali数字照明)
 - [框架集成示例](#框架集成示例)
 - [网关引擎](#网关引擎)
 - [监控与告警](#监控与告警)
@@ -642,6 +646,37 @@ $result = $conn->read('0x6000:0x01');
 | **MQTT** | 轻量级物联网 | 纯 PHP TCP | 1883 |
 | **ISA100.11a** | 工业无线 mesh | Bridge（802.15.4 网关） | — |
 | **WirelessHART** | HART 无线 mesh | Bridge（WirelessHART 网关） | — |
+| **HART-IP** | HART over TCP/UDP | 纯 PHP TCP | 5094 |
+
+### 汽车与车载总线协议
+
+| 协议 | 用途 | 实现方式 | 说明 |
+|------|------|---------|------|
+| **LIN** | 低成本车身总线 | 纯 PHP 串口 | 19200 bps, 主从, PID 校验 |
+| **K-Line** | OBD-II 诊断 | 纯 PHP 串口 | ISO 9141/14230, 5-baud 初始化 |
+| **FlexRay** | 确定性高速总线 | Bridge | 10 Mbps, 需 FlexRay 控制器 |
+| **MOST** | 光纤多媒体 | Bridge | 需 MOST 接口 |
+| **SAE J1850** | OBD-II 早期标准 | Bridge | PWM/VPW 需 J1850 接口 |
+
+### 楼宇自动化与照明
+
+| 协议 | 用途 | 实现方式 | 说明 |
+|------|------|---------|------|
+| **DALI** | 数字可寻址照明 | Bridge | 需 DALI 网关 (Lunatone/Helvar) |
+
+### 系统总线与背板总线
+
+| 协议 | 用途 | 实现方式 | 说明 |
+|------|------|---------|------|
+| **PCI / PCIe** | 系统总线 | Bridge | 需内核驱动/库桥接 |
+| **VME / VPX** | 工控背板 | Bridge | 需 VME 桥接 |
+| **CPCI** | CompactPCI | Bridge | 需 CPCI 接口 |
+
+### 其他
+
+| 协议 | 用途 | 实现方式 | 说明 |
+|------|------|---------|------|
+| **SERCOS I/II** | 早期光纤版 SERCOS | Bridge | 与 SERCOS III 不同，需光纤接口 |
 | **PROFIBUS** | DP / PA / FMS | Bridge | Siemens CP 5611 / Anybus / Hilscher |
 | **CANopen** | CAN | Bridge | PCAN-USB / IXXAT / SocketCAN |
 | **DeviceNet** | CAN | Bridge | Anybus DeviceNet Scanner |
@@ -1051,6 +1086,66 @@ $conn = $kernel->getConnectionManager()->connect('ethercat-device', [
     'bridge'   => $bridge,
 ]);
 $result = $conn->read('0x6000:0x01'); // CoE SDO 读取
+```
+
+### LIN（汽车车身总线）
+
+```php
+use Erikwang2013\IndustrialProtocols\Lin\LinProtocol;
+
+$kernel->getProtocolRegistry()->register(new LinProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('lin-device', [
+    'protocol' => 'lin', 'variant' => 'master',
+    'device'   => '/dev/ttyUSB3', 'baud_rate' => 19200,
+]);
+$result = $conn->read('0x3C'); // 读取 LIN PID 0x3C 的数据
+```
+
+### K-Line（OBD-II 诊断）
+
+```php
+use Erikwang2013\IndustrialProtocols\KLine\KLineProtocol;
+
+$kernel->getProtocolRegistry()->register(new KLineProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('obd-ii', [
+    'protocol' => 'k-line', 'device' => '/dev/ttyUSB4',
+]);
+$result = $conn->read('010C'); // OBD-II PID 0x0C (引擎转速)
+```
+
+### HART-IP
+
+```php
+use Erikwang2013\IndustrialProtocols\HartIp\HartIpProtocol;
+
+$kernel->getProtocolRegistry()->register(new HartIpProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('hart-ip', [
+    'protocol' => 'hart-ip', 'host' => '192.168.1.150', 'port' => 5094,
+]);
+$pv = $conn->read('pv'); // 主变量 (通过 TCP/IP)
+```
+
+### DALI（数字照明）
+
+```php
+use Erikwang2013\IndustrialProtocols\Dali\DaliProtocol;
+use IndustrialProtocols\Bridge\TcpGatewayBridge;
+
+$bridge = new TcpGatewayBridge('192.168.1.200', 502);
+$kernel->getProtocolRegistry()->register(new DaliProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('dali-gw', [
+    'protocol' => 'dali', 'bridge' => $bridge,
+]);
+$conn->write(['0x00' => 254]); // 广播调光至 100%
+$result = $conn->read('0x01');  // 读取灯具 1 状态
 ```
 
 ---

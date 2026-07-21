@@ -53,6 +53,10 @@ PHP industrial network communication protocol plugin — micro-kernel + protocol
   - [IEC 61850 (MMS)](#iec-61850-mms)
   - [PROFIBUS / CANopen / DeviceNet](#profibus--canopen--devicenet-fieldbus-bridge)
   - [Hardware Bridge](#hardware-bridge-ethercat--powerlink--sercos-iii)
+  - [LIN (Automotive)](#lin-automotive-body-bus)
+  - [K-Line (OBD-II)](#k-line-obd-ii-diagnostics)
+  - [HART-IP](#hart-ip)
+  - [DALI (Lighting)](#dali-digital-lighting)
 - [Framework Integration Examples](#framework-integration-examples)
 - [Gateway Engine](#gateway-engine)
 - [Monitoring & Alerting](#monitoring--alerting)
@@ -605,6 +609,37 @@ See [Vendor Adapters Reference](docs/en/vendors.md).
 | **MQTT** | Lightweight IoT | Pure PHP TCP | 1883 |
 | **ISA100.11a** | Industrial wireless mesh | Bridge (802.15.4 gateway) | — |
 | **WirelessHART** | HART wireless mesh | Bridge (WirelessHART gateway) | — |
+| **HART-IP** | HART over TCP/UDP | Pure PHP TCP | 5094 |
+
+### Automotive & Vehicle Bus Protocols
+
+| Protocol | Use Case | Method | Notes |
+|----------|----------|--------|-------|
+| **LIN** | Low-cost body bus | Pure PHP Serial | 19200 bps, master-slave, PID parity |
+| **K-Line** | OBD-II diagnostics | Pure PHP Serial | ISO 9141/14230, 5-baud init |
+| **FlexRay** | Deterministic high-speed | Bridge | 10 Mbps, needs FlexRay controller |
+| **MOST** | Fiber multimedia | Bridge | Needs MOST interface |
+| **SAE J1850** | OBD-II early standard | Bridge | PWM/VPW, needs J1850 interface |
+
+### Building Automation & Lighting
+
+| Protocol | Use Case | Method | Notes |
+|----------|----------|--------|-------|
+| **DALI** | Digital lighting | Bridge | Needs DALI gateway (Lunatone/Helvar) |
+
+### System & Backplane Buses
+
+| Protocol | Use Case | Method | Notes |
+|----------|----------|--------|-------|
+| **PCI / PCIe** | System bus | Bridge | Needs kernel driver/library bridge |
+| **VME / VPX** | Industrial backplane | Bridge | Needs VME bridge |
+| **CPCI** | CompactPCI | Bridge | Needs CPCI interface |
+
+### Other
+
+| Protocol | Use Case | Method | Notes |
+|----------|----------|--------|-------|
+| **SERCOS I/II** | Early fiber SERCOS | Bridge | Distinct from SERCOS III, needs fiber interface |
 | **PROFIBUS** | DP / PA / FMS | Bridge | Siemens CP 5611 / Anybus / Hilscher |
 | **CANopen** | CAN | Bridge | PCAN-USB / IXXAT / SocketCAN |
 | **DeviceNet** | CAN | Bridge | Anybus DeviceNet Scanner |
@@ -930,6 +965,50 @@ $conn = $kernel->getConnectionManager()->connect('ethercat-device', [
     'bridge'   => $bridge,
 ]);
 $result = $conn->read('0x6000:0x01'); // CoE SDO read
+```
+
+### LIN (Automotive Body Bus)
+
+```php
+use Erikwang2013\IndustrialProtocols\Lin\LinProtocol;
+
+$conn = $kernel->getConnectionManager()->connect('lin-device', [
+    'protocol' => 'lin', 'variant' => 'master',
+    'device'   => '/dev/ttyUSB3', 'baud_rate' => 19200,
+]);
+$result = $conn->read('0x3C');
+```
+
+### K-Line (OBD-II Diagnostics)
+
+```php
+use Erikwang2013\IndustrialProtocols\KLine\KLineProtocol;
+
+$conn = $kernel->getConnectionManager()->connect('obd-ii', [
+    'protocol' => 'k-line', 'device' => '/dev/ttyUSB4',
+]);
+$result = $conn->read('010C'); // OBD-II PID 0x0C (engine RPM)
+```
+
+### HART-IP
+
+```php
+use Erikwang2013\IndustrialProtocols\HartIp\HartIpProtocol;
+
+$conn = $kernel->getConnectionManager()->connect('hart-ip', [
+    'protocol' => 'hart-ip', 'host' => '192.168.1.150', 'port' => 5094,
+]);
+$pv = $conn->read('pv');
+```
+
+### DALI (Digital Lighting)
+
+```php
+$bridge = new TcpGatewayBridge('192.168.1.200', 502);
+$conn = $kernel->getConnectionManager()->connect('dali-gw', [
+    'protocol' => 'dali', 'bridge' => $bridge,
+]);
+$conn->write(['0x00' => 254]); // broadcast dim to 100%
 ```
 
 ---

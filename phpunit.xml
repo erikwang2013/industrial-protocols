@@ -91,6 +91,39 @@
         <testsuite name="WirelessHART">
             <directory>packages/wirelesshart/tests</directory>
         </testsuite>
+        <testsuite name="LIN">
+            <directory>packages/lin/tests</directory>
+        </testsuite>
+        <testsuite name="K-Line">
+            <directory>packages/kline/tests</directory>
+        </testsuite>
+        <testsuite name="HART-IP">
+            <directory>packages/hartip/tests</directory>
+        </testsuite>
+        <testsuite name="FlexRay">
+            <directory>packages/flexray/tests</directory>
+        </testsuite>
+        <testsuite name="MOST">
+            <directory>packages/most/tests</directory>
+        </testsuite>
+        <testsuite name="SAEJ1850">
+            <directory>packages/saej1850/tests</directory>
+        </testsuite>
+        <testsuite name="DALI">
+            <directory>packages/dali/tests</directory>
+        </testsuite>
+        <testsuite name="PCI">
+            <directory>packages/pci/tests</directory>
+        </testsuite>
+        <testsuite name="VME">
+            <directory>packages/vme/tests</directory>
+        </testsuite>
+        <testsuite name="CPCI">
+            <directory>packages/cpci/tests</directory>
+        </testsuite>
+        <testsuite name="SERCOS1">
+            <directory>packages/sercos1/tests</directory>
+        </testsuite>
         <testsuite name="Integration">
             <directory>tests/Integration</directory>
         </testsuite>

@@ -37,7 +37,18 @@
             "Erikwang2013\\IndustrialProtocols\\Dnp3\\": "packages/dnp3/src/",
             "Erikwang2013\\IndustrialProtocols\\Iec61850\\": "packages/iec61850/src/",
             "Erikwang2013\\IndustrialProtocols\\Isa100\\": "packages/isa100/src/",
-            "Erikwang2013\\IndustrialProtocols\\WirelessHart\\": "packages/wirelesshart/src/"
+            "Erikwang2013\\IndustrialProtocols\\WirelessHart\\": "packages/wirelesshart/src/",
+            "Erikwang2013\\IndustrialProtocols\\Lin\\": "packages/lin/src/",
+            "Erikwang2013\\IndustrialProtocols\\KLine\\": "packages/kline/src/",
+            "Erikwang2013\\IndustrialProtocols\\HartIp\\": "packages/hartip/src/",
+            "Erikwang2013\\IndustrialProtocols\\FlexRay\\": "packages/flexray/src/",
+            "Erikwang2013\\IndustrialProtocols\\Most\\": "packages/most/src/",
+            "Erikwang2013\\IndustrialProtocols\\SaeJ1850\\": "packages/saej1850/src/",
+            "Erikwang2013\\IndustrialProtocols\\Dali\\": "packages/dali/src/",
+            "Erikwang2013\\IndustrialProtocols\\Pci\\": "packages/pci/src/",
+            "Erikwang2013\\IndustrialProtocols\\Vme\\": "packages/vme/src/",
+            "Erikwang2013\\IndustrialProtocols\\Cpci\\": "packages/cpci/src/",
+            "Erikwang2013\\IndustrialProtocols\\Sercos1\\": "packages/sercos1/src/"
         }
     },
     "autoload-dev": {
@@ -72,7 +83,18 @@
             "Erikwang2013\\IndustrialProtocols\\Dnp3\\Tests\\": "packages/dnp3/tests/",
             "Erikwang2013\\IndustrialProtocols\\Iec61850\\Tests\\": "packages/iec61850/tests/",
             "Erikwang2013\\IndustrialProtocols\\Isa100\\Tests\\": "packages/isa100/tests/",
-            "Erikwang2013\\IndustrialProtocols\\WirelessHart\\Tests\\": "packages/wirelesshart/tests/"
+            "Erikwang2013\\IndustrialProtocols\\WirelessHart\\Tests\\": "packages/wirelesshart/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Lin\\Tests\\": "packages/lin/tests/",
+            "Erikwang2013\\IndustrialProtocols\\KLine\\Tests\\": "packages/kline/tests/",
+            "Erikwang2013\\IndustrialProtocols\\HartIp\\Tests\\": "packages/hartip/tests/",
+            "Erikwang2013\\IndustrialProtocols\\FlexRay\\Tests\\": "packages/flexray/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Most\\Tests\\": "packages/most/tests/",
+            "Erikwang2013\\IndustrialProtocols\\SaeJ1850\\Tests\\": "packages/saej1850/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Dali\\Tests\\": "packages/dali/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Pci\\Tests\\": "packages/pci/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Vme\\Tests\\": "packages/vme/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Cpci\\Tests\\": "packages/cpci/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Sercos1\\Tests\\": "packages/sercos1/tests/"
         }
     },
     "scripts": {
