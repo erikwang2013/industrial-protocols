@@ -11,6 +11,16 @@ PHP industrial network communication protocol plugin — micro-kernel + protocol
 - [Design Philosophy](#design-philosophy)
 - [Architecture](#architecture)
 - [Feature List](#feature-list)
+- [Reference Manual](#reference-manual)
+  - [Requirements Summary](#requirements-summary)
+  - [Connection Strategy Details](#connection-strategy-details)
+  - [Built-in Implementations](#built-in-implementations)
+  - [Framework Integration Mechanisms](#framework-integration-mechanisms)
+  - [Coroutine Support Matrix](#coroutine-support-matrix)
+  - [Log Level Conventions](#log-level-conventions)
+  - [Retry Strategy Comparison](#retry-strategy-comparison)
+  - [Exception Reference](#exception-reference)
+  - [Full Capability Matrix](#full-capability-matrix)
 - [Supported Industrial Protocols](#supported-industrial-protocols)
 - [Supported Frameworks](#supported-frameworks)
 - [Quick Start](#quick-start)
@@ -280,6 +290,124 @@ IndustrialProtocolsException (RuntimeException)
 | Metrics | Counter / Gauge / Histogram with Prometheus export. |
 | Alert Channels | AlertManager + Webhook / Log channels. |
 | Input Validation | Device ID, host, port, register address, frame size, timeout. |
+
+---
+
+## Reference Manual
+
+### Requirements Summary
+
+All 14 key design decisions:
+
+| # | Decision | Choice |
+|---|----------|--------|
+| 1 | Protocol Scope | Full coverage: Modbus, Profinet, EtherNet/IP, OPC UA, BACnet |
+| 2 | Core Scenarios | Data acquisition + device control + protocol gateway/conversion |
+| 3 | Async Support | Primarily synchronous with unified kernel coroutine layer |
+| 4 | PHP Version | >= 8.1 (Fiber, enums, readonly) |
+| 5 | Protocol Implementation | Simple protocols: pure PHP sockets; complex protocols: FFI or bridging |
+| 6 | Framework Integration | Single-package auto-discovery; plug-and-play environment detection |
+| 7 | Config Management | File-based default + Repository interface for DB swap |
+| 8 | Testing Strategy | TDD-first; protocol simulation tests >=80%; gradual E2E coverage |
+| 9 | Architecture Pattern | Micro-kernel + Protocol SDK (Option C) |
+| 10 | Coroutine Support | Swoole-capable across all frameworks; unified kernel coroutine layer |
+| 11 | Gateway Triggers | poll (periodic), change (value-triggered), cron (schedule-based) |
+| 12 | Error Propagation | Dual channel: exceptions (sync) + events (async) |
+| 13 | Connection Strategies | EAGER (boot-time connect), LAZY (on-demand), POOLED (connection pool) |
+| 14 | Retry Backoff | Exponential backoff + random jitter (default), fixed interval, no retry |
+
+### Connection Strategy Details
+
+| Strategy | Class | Behavior | Use Case | FPM | Persistent Process |
+|----------|-------|----------|----------|-----|-------------------|
+| LAZY (default) | `LazyStrategy` | Connects on first read/write; caches for reuse | Many devices, intermittent access | Recommended | — |
+| EAGER | `EagerStrategy` | Connects to all configured devices at boot() | Few devices, latency-sensitive | — | Recommended |
+| POOLED | `PooledStrategy` | Pre-creates N connections (default 4); round-robin allocation | High-frequency polling, gateways | — | Recommended |
+
+### Built-in Implementations
+
+| Component | Interface | Built-in Implementations |
+|-----------|-----------|-------------------------|
+| Config Repository | `ConfigRepositoryInterface` | `FileConfigRepository` / `DatabaseConfigRepository` / `EnvConfigRepository` |
+| Coroutine Adapter | `CoroutineAdapterInterface` | `SwooleCoroutineAdapter` / `FiberCoroutineAdapter` / `SyncCoroutineAdapter` |
+| Log Driver | `LogDriverInterface` | `PsrLogDriver` / `FileLogDriver` / `NullLogDriver` |
+| Retry Strategy | `RetryStrategyInterface` | `NoRetryStrategy` / `FixedRetryStrategy` / `ExponentialBackoffStrategy` |
+| Connection Strategy | `StrategyInterface` | `LazyStrategy` / `EagerStrategy` / `PooledStrategy` |
+| Alert Channel | `AlertChannelInterface` | `WebhookAlertChannel` / `LogAlertChannel` |
+| Event Dispatch | PSR-14 `EventDispatcherInterface` | Built-in anonymous implementation / framework adapter injection |
+
+### Framework Integration Mechanisms
+
+| Framework | Detection | Config Mechanism | Service Registration | CLI Commands | Coroutine Support |
+|-----------|-----------|-----------------|---------------------|-------------|-------------------|
+| Plain PHP | Default fallback | Direct config_path | Manual new Kernel | None | Fiber |
+| Laravel | `Illuminate\Foundation\Application` | ServiceProvider::publishes() | Singleton + Facade | `industrial:connect` / `industrial:gateway:list` | Octane (Swoole) |
+| Webman | `Workerman\Worker` | config/plugin/ auto-discovery | ProtocolProcess::onWorkerStart | None | Swoole Event Driver / Fiber |
+| Hyperf | `Hyperf\Framework\ApplicationFactory` | ConfigProvider + config/autoload/ | KernelFactory DI binding | `industrial:connect` / `gateway:list` | Swoole native |
+| ThinkPHP | `think\App` | services.php auto-discovery | IndustrialProtocolsService::boot() | None | think-swoole |
+| Yii2 | `yii\base\Application` | Bootstrap + config/web.php | Application component registration | None | swoole-yii2 |
+
+### Coroutine Support Matrix
+
+| Runtime | Adapter Class | Detection | Supported Frameworks | parallel() Implementation |
+|---------|--------------|-----------|---------------------|--------------------------|
+| Swoole | `SwooleCoroutineAdapter` | `extension_loaded('swoole') && Co::getCid()>0` | Laravel / Webman / Hyperf / ThinkPHP / Yii2 | WaitGroup concurrency |
+| Fiber | `FiberCoroutineAdapter` | `PHP_VERSION_ID >= 80100` | All frameworks | Fiber::start() sequential |
+| Sync (fallback) | `SyncCoroutineAdapter` | Always available | All frameworks | foreach sequential |
+
+Detection priority: `Swoole -> Fiber -> Sync`
+
+### Log Level Conventions
+
+| Level | Scenario | Example |
+|-------|----------|---------|
+| DEBUG | Read/write operations | `Read 40001-40010 from plc-001 (23ms)` |
+| INFO | Connection established/closed | `Device plc-001 connected (Modbus TCP 192.168.1.10:502)` |
+| WARNING | Reconnection attempts | `Reconnecting plc-001, attempt 2/3` |
+| ERROR | Read/write failures | `Write 40001 failed: timeout after 3000ms` |
+| CRITICAL | Circuit breaker triggered | `Gateway rule gw-001 circuit breaker OPENED after 5 failures` |
+
+### Retry Strategy Comparison
+
+| Strategy | maxAttempts | delay (1st/2nd/3rd) | jitter | Use Case |
+|----------|------------|---------------------|--------|----------|
+| `NoRetryStrategy` | 0 | 0 / 0 / 0 | — | Write operations (idempotency risk), non-retryable exceptions |
+| `FixedRetryStrategy` | 3 | 1000 / 1000 / 1000ms | — | Simple retries at fixed intervals |
+| `ExponentialBackoffStrategy` (default) | 3 | 1000 / 2000 / 4000ms | Optional | Read operations, connection establishment |
+| ExponentialBackoff + Jitter | 3 | 500~1500 / 1000~3000 / 2000~6000ms | Enforced random | Multi-device scenarios (thundering herd prevention) |
+
+### Exception Reference
+
+| Exception Class | Layer | Trigger Condition | Retryable? | Event Triggered |
+|-----------------|-------|-------------------|-----------|-----------------|
+| `ConnectionTimeoutException` | Connection | TCP connection timeout | Yes (up to 3x) | `ConnectionRetryEvent` |
+| `ConnectionRefusedException` | Connection | Device refused connection | Yes (up to 3x) | `ConnectionRetryEvent` |
+| `ConnectionClosedException` | Connection | Connection unexpectedly closed | Yes | `ConnectionStateChangedEvent` |
+| `FrameException` | Protocol | Illegal frame format | No | `DataErrorEvent` |
+| `CrcException` | Protocol | CRC/checksum mismatch | Yes (up to 1x) | `DataErrorEvent` |
+| `DeviceBusyException` | Device | Device returned busy signal | Yes (with delay) | `DataErrorEvent` |
+| `AddressOutOfRangeException` | Device | Address exceeds valid range | No | `DataErrorEvent` |
+| `CircuitBreakerOpenException` | Gateway | Circuit breaker open | No | `GatewayCircuitBreakerEvent` |
+| `RuleValidationException` | Gateway | Gateway rule validation failed | No | `GatewayRuleFailedEvent` |
+
+### Full Capability Matrix
+
+| Capability | Plain PHP | Laravel | Webman | Hyperf | ThinkPHP | Yii2 |
+|------------|----------|---------|--------|--------|----------|------|
+| Framework Detection | Fallback | Application class | Worker class | ApplicationFactory | think\App | yii\base\Application |
+| Config Discovery | Manual | artisan vendor:publish | config/plugin auto | ConfigProvider | services.php | Bootstrap |
+| CLI Commands | — | ✅ industrial:connect / gateway:list | — | ✅ connect / gateway:list | — | — |
+| Facade/Quick Access | Kernel instance | IndustrialProtocolsFacade | N/A | DI Container | Static singleton | Yii component |
+| Swoole Coroutine | ✅ SwooleAdapter | ✅ Octane | ✅ Event Driver | ✅ Native | ✅ think-swoole | ✅ swoole-yii2 |
+| Fiber Coroutine | ✅ | ✅ Octane | ✅ workerman 5.x | — | — | — |
+| Persistent Process | — | ✅ Octane | ✅ | ✅ | — | ✅ swoole-yii2 |
+| Connection Pool | ✅ PooledStrategy | ✅ | ✅ | ✅ | — | ✅ |
+| Gateway Engine | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Circuit Breaker | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Monitoring Metrics | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Alert Channels | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Input Validation | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Database Config | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ---
 
