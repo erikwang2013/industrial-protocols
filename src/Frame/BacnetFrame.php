@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Bacnet\Frame;
+namespace Erikwang2013\IndustrialProtocols\Bacnet\Frame;
 
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class BacnetFrame implements FrameInterface
 {

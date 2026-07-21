@@ -1,11 +1,11 @@
 <?php
 
-namespace IndustrialProtocols\Bacnet;
+namespace Erikwang2013\IndustrialProtocols\Bacnet;
 
-use IndustrialProtocols\Connection\HealthStatus;
-use IndustrialProtocols\Bacnet\Driver\BacnetDriver;
-use IndustrialProtocols\Bacnet\Frame\BacnetFrame;
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Bacnet\Driver\BacnetDriver;
+use Erikwang2013\IndustrialProtocols\Bacnet\Frame\BacnetFrame;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class BacnetConnector implements ConnectorInterface
 {

@@ -7,12 +7,12 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\Bacnet\\": "src/"
+            "Erikwang2013\\IndustrialProtocols\\Bacnet\\": "src/"
         }
     },
     "extra": {
         "industrial-protocols": {
-            "protocol": "IndustrialProtocols\\Bacnet\\BacnetProtocol"
+            "protocol": "Erikwang2013\\IndustrialProtocols\\Bacnet\\BacnetProtocol"
         }
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Bacnet\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Bacnet\Tests\Unit;
 
-use IndustrialProtocols\Bacnet\Frame\BacnetFrame;
+use Erikwang2013\IndustrialProtocols\Bacnet\Frame\BacnetFrame;
 use PHPUnit\Framework\TestCase;
 
 class BacnetFrameTest extends TestCase

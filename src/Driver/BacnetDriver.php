@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Bacnet\Driver;
+namespace Erikwang2013\IndustrialProtocols\Bacnet\Driver;
 
-use IndustrialProtocols\Protocol\DriverInterface;
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\DriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class BacnetDriver implements DriverInterface
 {
