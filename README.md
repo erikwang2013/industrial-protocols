@@ -303,27 +303,32 @@ industrial-protocols/
 │   │   │   ├── Gateway/                # GatewayEngine + CircuitBreaker
 │   │   │   ├── Coroutine/              # 协程适配器 + 工厂
 │   │   │   ├── Framework/              # 框架适配器 + 各框架集成代码
-│   │   │   ├── Event/                  # 事件类
-│   │   │   ├── Log/                    # 日志驱动
-│   │   │   ├── Retry/                  # 重试策略
-│   │   │   ├── Metrics/                # 指标采集
-│   │   │   ├── Alert/                  # 告警通道
-│   │   │   ├── Security/               # 输入校验
-│   │   │   └── Exception/              # 异常层次
+│   │   │   ├── Bridge/                 # 硬件桥接层 (BridgeInterface / BridgeConnector)
+│   │   │   ├── Vendor/                 # 厂商预置配置 (12 厂商 + VendorBridgeFactory)
+│   │   │   ├── Event/                  # 13 种事件类型
+│   │   │   ├── Log/                    # 日志驱动 (PSR-3 / File / Null)
+│   │   │   ├── Retry/                  # 重试策略 (4 种)
+│   │   │   ├── Metrics/                # 指标采集 (Prometheus 导出)
+│   │   │   ├── Alert/                  # 告警通道 (Webhook / Log)
+│   │   │   ├── Security/               # 输入校验 (InputValidator)
+│   │   │   └── Exception/              # 20+ 异常层次
 │   │   ├── config/                     # 默认配置模板
 │   │   └── tests/
-│   ├── modbus/                         # Modbus 协议包
-│   │   ├── src/
-│   │   │   ├── ModbusProtocol.php
-│   │   │   ├── ModbusConnector.php
-│   │   │   ├── Driver/                 # TCP 驱动
-│   │   │   ├── Frame/                  # 帧编解码 + CRC16
-│   │   │   └── Exception/
-│   │   └── tests/
-│   ├── bacnet/                         # BACnet/IP 协议包
-│   └── ethernetip/                     # EtherNet/IP 协议包
+│   │
+│   ├── 工业以太网 (5):  modbus/  bacnet/  ethernetip/  opcua/  profinet/
+│   ├── 现场总线 (12):    hart/  cclink/  profibus/  canopen/  devicenet/
+│   │                    foundationfieldbus/  asinterface/  iolink/  cclinkie/
+│   │                    dnp3/  iec61850/
+│   ├── 汽车总线 (3):     lin/  kline/  flexray/
+│   ├── 楼宇照明 (2):     lonworks/  dali/
+│   ├── IoT (5):          mqtt/  hartip/  isa100/  wirelesshart/  saej1850/
+│   ├── 系统总线 (3):     pci/  vme/  cpci/
+│   ├── 硬件桥接 (5):     ethercat/  powerlink/  sercos/  most/  controlnet/
+│   │                    interbus/  worldfip/  lightbus/  modbusplus/
+│   └── 遗留系统 (2):     sercos1/  saej1850/
+│
 ├── docker/                             # Docker 模拟器
-├── docs/                               # 设计文档 + 使用指南
+├── docs/                               # 设计文档 + 使用指南 (中英双语)
 ├── tests/                              # 集成测试 + E2E 测试
 ├── composer.json                       # 根 monorepo 配置
 └── phpunit.xml

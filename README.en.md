@@ -291,6 +291,51 @@ IndustrialProtocolsException (RuntimeException)
     └── CircuitBreakerOpenException     — Circuit breaker open
 ```
 
+### Directory Structure
+
+```
+industrial-protocols/
+├── packages/
+│   ├── kernel/                         # Micro-kernel
+│   │   ├── src/
+│   │   │   ├── Kernel.php              # Boot entry point
+│   │   │   ├── Protocol/               # SDK interfaces + ProtocolRegistry
+│   │   │   ├── Connection/             # ConnectionManager + strategies
+│   │   │   ├── Config/                 # Config Repository
+│   │   │   ├── Gateway/                # GatewayEngine + CircuitBreaker
+│   │   │   ├── Coroutine/              # Coroutine adapters + factory
+│   │   │   ├── Framework/              # Framework adapters (6 frameworks)
+│   │   │   ├── Bridge/                 # Hardware bridge layer
+│   │   │   ├── Vendor/                 # Vendor profiles (12 vendors)
+│   │   │   ├── Event/                  # 13 event types (PSR-14)
+│   │   │   ├── Log/                    # Log drivers (PSR-3/File/Null)
+│   │   │   ├── Retry/                  # Retry strategies (4 types)
+│   │   │   ├── Metrics/                # Metrics collector (Prometheus)
+│   │   │   ├── Alert/                  # Alert channels (Webhook/Log)
+│   │   │   ├── Security/               # Input validation
+│   │   │   └── Exception/              # 20+ exception hierarchy
+│   │   ├── config/                     # Default templates
+│   │   └── tests/
+│   │
+│   ├── Industrial Ethernet (5):  modbus/  bacnet/  ethernetip/  opcua/  profinet/
+│   ├── Fieldbus (12):            hart/  cclink/  profibus/  canopen/  devicenet/
+│   │                              foundationfieldbus/  asinterface/  iolink/
+│   │                              cclinkie/  dnp3/  iec61850/
+│   ├── Automotive (3):           lin/  kline/  flexray/
+│   ├── Building (2):             lonworks/  dali/
+│   ├── IoT (5):                  mqtt/  hartip/  isa100/  wirelesshart/  saej1850/
+│   ├── System Bus (3):           pci/  vme/  cpci/
+│   ├── Hardware Bridge (8):      ethercat/  powerlink/  sercos/  most/
+│   │                              controlnet/  interbus/  worldfip/  lightbus/
+│   └── Legacy (2):               modbusplus/  sercos1/
+│
+├── docker/                         # Docker simulators
+├── docs/                           # Design docs + guides (bilingual)
+├── tests/                          # Integration + E2E tests
+├── composer.json                   # Root monorepo config
+└── phpunit.xml
+```
+
 ### Bridge Layer Architecture
 
 The Bridge layer connects PHP applications to protocols requiring dedicated hardware, adapting vendor C/C++ SDKs and gateway devices through a unified interface.
