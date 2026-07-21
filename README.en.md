@@ -261,6 +261,75 @@ IndustrialProtocolsException (RuntimeException)
     └── CircuitBreakerOpenException     — Circuit breaker open
 ```
 
+### Bridge Layer Architecture
+
+The Bridge layer connects PHP applications to protocols requiring dedicated hardware, adapting vendor C/C++ SDKs and gateway devices through a unified interface.
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    Protocol Packages                          │
+│  EtherCAT · POWERLINK · SERCOS III · Profinet RT · TSN       │
+│  (implement ConnectorInterface via BridgeConnector)            │
+├──────────────────────────────────────────────────────────────┤
+│                     BridgeConnector                           │
+│  implements ConnectorInterface, delegates to BridgeInterface   │
+├──────────────────────────────────────────────────────────────┤
+│                     BridgeInterface                           │
+│  open() · close() · execute(command, data) · isReady()       │
+├─────────────────────┬────────────────────────────────────────┤
+│ ExternalProcessBridge│         TcpGatewayBridge                │
+│ ┌─────────────────┐  │  ┌──────────────────────────────────┐  │
+│ │ C/C++ SDK proc   │  │  │ Gateway Hardware (Anybus/netX)   │  │
+│ │ proc_open()      │  │  │ stream_socket_client()           │  │
+│ │ stdin/stdout     │  │  │ TCP/UDP                          │  │
+│ └────────┬────────┘  │  └───────────────┬──────────────────┘  │
+│          │            │                  │                      │
+│   ┌──────▼──────┐     │     ┌───────────▼──────────┐          │
+│   │ TwinCAT ADS  │     │     │ Anybus · netX · MGate│          │
+│   │ openPOWERLINK│     │     │ ctrlX CORE · AXL F   │          │
+│   │ SOEM         │     │     │ S7-1500 · IndraDrive │          │
+│   └─────────────┘     │     └──────────────────────┘          │
+│   (Local C/C++ SDK)   │     (Remote/Embedded Gateway HW)      │
+└─────────────────────┴────────────────────────────────────────┘
+                              │
+                    ┌─────────▼─────────┐
+                    │  VendorBridgeFactory │
+                    │  8 pre-configured    │
+                    │  vendor profiles     │
+                    │  create(vendor,      │
+                    │    device, version)  │
+                    └─────────────────────┘
+```
+
+| Bridge | Class | Transport | Use Case |
+|--------|-------|-----------|----------|
+| External Process | `ExternalProcessBridge` | `proc_open` stdin/stdout | Local C/C++ SDK (Beckhoff TwinCAT, openPOWERLINK) |
+| Gateway Hardware | `TcpGatewayBridge` | TCP/UDP Socket | Remote gateway (Hilscher netX, HMS Anybus, Moxa MGate) |
+
+### Protocol Implementation Comparison
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Pure PHP (Application-Layer Protocols)                  │
+│  ┌──────────┬──────────┬──────────┬──────────────────┐  │
+│  │ Modbus   │ BACnet   │ EIP      │ OPC UA           │  │
+│  │ (TCP)    │ (UDP)    │ (TCP)    │ (UA Binary/TCP)  │  │
+│  │ Profinet │          │          │                  │  │
+│  │ (NRT)    │          │          │                  │  │
+│  └──────────┴──────────┴──────────┴──────────────────┘  │
+│  Standard sockets, full protocol stack in pure PHP      │
+├─────────────────────────────────────────────────────────┤
+│  Bridge (Hardware-Dependent Protocols)                   │
+│  ┌──────────┬──────────┬──────────┬──────────────────┐  │
+│  │ EtherCAT │ POWERLINK│ SERCOS   │ Profinet RT      │  │
+│  │ (ESC chip)│(openMAC)│(FPGA IP) │ (ERTEC)          │  │
+│  │ TSN      │          │          │                  │  │
+│  │ (TSN NIC)│          │          │                  │  │
+│  └──────────┴──────────┴──────────┴──────────────────┘  │
+│  Hardware-layer, adapted via BridgeInterface to SDK/HW  │
+└─────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## Feature List

@@ -299,6 +299,74 @@ industrial-protocols/
 └── phpunit.xml
 ```
 
+### Bridge Layer 架构
+
+Bridge 层桥接 PHP 应用与需要专用硬件的工业协议，通过统一接口适配厂商 C/C++ SDK 和网关设备。
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    Protocol Packages                          │
+│  EtherCAT · POWERLINK · SERCOS III · Profinet RT · TSN       │
+│  (通过 BridgeConnector 实现 ConnectorInterface)                 │
+├──────────────────────────────────────────────────────────────┤
+│                     BridgeConnector                           │
+│  实现 ConnectorInterface，内部委托给 BridgeInterface             │
+├──────────────────────────────────────────────────────────────┤
+│                     BridgeInterface                           │
+│  open() · close() · execute(command, data) · isReady()       │
+├─────────────────────┬────────────────────────────────────────┤
+│ ExternalProcessBridge│         TcpGatewayBridge                │
+│ ┌─────────────────┐  │  ┌──────────────────────────────────┐  │
+│ │ C/C++ SDK 子进程  │  │  │ 网关硬件 (Anybus/Hilscher/netX)   │  │
+│ │ proc_open()      │  │  │ stream_socket_client()           │  │
+│ │ stdin/stdout     │  │  │ TCP/UDP                          │  │
+│ └────────┬────────┘  │  └───────────────┬──────────────────┘  │
+│          │            │                  │                      │
+│   ┌──────▼──────┐     │     ┌───────────▼──────────┐          │
+│   │ TwinCAT ADS  │     │     │ Anybus · netX · MGate│          │
+│   │ openPOWERLINK│     │     │ ctrlX CORE · AXL F   │          │
+│   │ SOEM (EtherCAT)│   │     │ S7-1500 · IndraDrive │          │
+│   └─────────────┘     │     └──────────────────────┘          │
+│   (本地 C/C++ SDK)    │     (远程/嵌入式网关硬件)               │
+└─────────────────────┴────────────────────────────────────────┘
+                              │
+                    ┌─────────▼─────────┐
+                    │  VendorBridgeFactory │
+                    │  8 厂商预置配置      │
+                    │  create(vendor,      │
+                    │    device, version)  │
+                    └─────────────────────┘
+```
+
+| 桥接方式 | 类 | 通信方式 | 适用场景 |
+|---------|------|---------|---------|
+| 外部进程 | `ExternalProcessBridge` | `proc_open` stdin/stdout | 本地 C/C++ SDK（Beckhoff TwinCAT、openPOWERLINK） |
+| 网关硬件 | `TcpGatewayBridge` | TCP/UDP Socket | 远程网关设备（Hilscher netX、HMS Anybus、Moxa MGate） |
+
+### 协议实现方式对照
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  纯 PHP 实现（应用层协议）                                │
+│  ┌──────────┬──────────┬──────────┬──────────────────┐  │
+│  │ Modbus   │ BACnet   │ EIP      │ OPC UA           │  │
+│  │ (TCP)    │ (UDP)    │ (TCP)    │ (UA Binary/TCP)  │  │
+│  │ Profinet │          │          │                  │  │
+│  │ (NRT)    │          │          │                  │  │
+│  └──────────┴──────────┴──────────┴──────────────────┘  │
+│  标准 Socket 通信，pure PHP 完整实现协议栈                │
+├─────────────────────────────────────────────────────────┤
+│  Bridge 桥接（需专用硬件）                                │
+│  ┌──────────┬──────────┬──────────┬──────────────────┐  │
+│  │ EtherCAT │ POWERLINK│ SERCOS   │ Profinet RT      │  │
+│  │ (ESC芯片)│ (openMAC)│ (FPGA IP)│ (ERTEC)          │  │
+│  │ TSN      │          │          │                  │  │
+│  │ (TSN网卡)│          │          │                  │  │
+│  └──────────┴──────────┴──────────┴──────────────────┘  │
+│  硬件层协议，通过 BridgeInterface 适配厂商 SDK/网关      │
+└─────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## 功能清单
