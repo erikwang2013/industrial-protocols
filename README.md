@@ -6,6 +6,8 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
 
 ## 目录
 
+- [设计说明](#设计说明)
+- [架构](#架构)
 - [功能清单](#功能清单)
 - [支持的工业通信协议](#支持的工业通信协议)
 - [支持的框架](#支持的框架)
@@ -19,6 +21,265 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
 - [文档](#文档)
 - [系统要求](#系统要求)
 - [License](#license)
+
+---
+
+## 设计说明
+
+### 为什么是微内核？
+
+工业通信协议种类繁多（Modbus、BACnet、OPC UA、Profinet、EtherNet/IP...），每个协议又有多种变体（TCP/RTU/ASCII、Client/Server）。如果将所有协议编码在一个包里，会导致：
+
+- **包体积膨胀** — 用户只需 Modbus 却要安装全部协议
+- **协议间耦合** — 一个协议的 bug 修复迫使全局发版
+- **扩展困难** — 第三方想贡献新协议需要修改核心代码
+
+微内核方案将系统拆分为两层：
+
+```
+┌─────────────────────────────────────────────────┐
+│  协议层（可变）                                    │
+│  modbus-pkg · bacnet-pkg · ethernetip-pkg · ...  │
+│  每个协议是独立的 Composer 包，遵守统一 SDK 合约      │
+├─────────────────────────────────────────────────┤
+│  内核层（稳定）                                    │
+│  industrial-protocols-kernel                     │
+│  连接管理 · 配置管理 · 网关引擎 · 事件/日志/协程       │
+│  SDK 接口 · 框架适配 · 监控告警                     │
+└─────────────────────────────────────────────────┘
+```
+
+**内核只定义「协议是什么」，不包含任何具体的协议实现。** 协议包通过实现 SDK 接口接入，用户按需安装。
+
+### 协议 SDK 合约
+
+所有协议包必须实现的 6 个核心接口：
+
+```php
+interface ProtocolInterface    // 协议身份：名称、版本、变体、创建连接器
+interface ConnectorInterface   // 设备连接：connect / disconnect / read / write / health
+interface DriverInterface      // 底层通信：send frame → receive frame
+interface FrameInterface       // 协议帧：toBytes / fromBytes / getData
+interface DataPointInterface   // 数据点位：地址、类型、访问权限
+interface GatewayRuleInterface // 网关规则：源 → 目标映射 + 转换函数
+```
+
+协议包只需依赖 kernel，实现上述接口后，通过 composer.json 的 `extra` 字段声明协议类：
+
+```json
+{
+    "extra": {
+        "industrial-protocols": {
+            "protocol": "IndustrialProtocols\\Modbus\\ModbusProtocol"
+        }
+    }
+}
+```
+
+Kernel 启动时自动扫描已安装包的 `extra` 字段，发现并注册协议，用户零配置。
+
+### 框架适配策略
+
+每个 PHP 框架有不同的服务容器、配置加载、命令行机制。内核通过 `FrameworkAdapterInterface` 统一抽象：
+
+```php
+interface FrameworkAdapterInterface
+{
+    public function detect(): bool;               // 检测当前是否该框架
+    public function getName(): string;            // 框架名称
+    public function registerConfig(): void;       // 注册/发布配置
+    public function registerServices(): void;     // 注册容器绑定
+    public function registerCommands(): void;     // 注册 CLI 命令
+    public function getConfigPath(): string;      // 配置文件路径
+    public function isLongRunning(): bool;        // 是否常驻进程
+}
+```
+
+Kernel 启动时按优先级遍历所有 Adapter，第一个 `detect()` 返回 true 的即命中。未命中任何框架时回退到 PlainPhpAdapter。
+
+### 协程统一抽象
+
+PHP 生态中有多种协程运行时（Swoole、Swow、Fiber），各自 API 不同。内核提供统一的 `CoroutineAdapterInterface`：
+
+```php
+interface CoroutineAdapterInterface
+{
+    public function isAvailable(): bool;
+    public function create(callable $fn): mixed;        // 创建协程
+    public function sleep(float $seconds): void;        // 协程休眠
+    public function parallel(array $callables): array;  // 并发执行
+}
+```
+
+探测优先级：`Swoole → Swow → Fiber → Sync`。上层组件（ConnectionManager、GatewayEngine）通过该接口实现协程无关的逻辑。
+
+---
+
+## 架构
+
+### 总体架构图
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      User Application                        │
+├─────────────────────────────────────────────────────────────┤
+│              Framework Adapters (auto-discovery)             │
+│    Laravel  │  Webman  │  Hyperf  │  ThinkPHP  │  Yii2      │
+│    ServiceProvider  config/plugin  ConfigProvider  ...      │
+├─────────────────────────────────────────────────────────────┤
+│                     Micro-Kernel                             │
+│  ┌──────────┬──────────┬──────────┬──────────┬───────────┐  │
+│  │ Protocol │Connection│  Config  │ Gateway  │  Logging  │  │
+│  │ Registry │ Manager  │Repository│ Engine   │  /Event   │  │
+│  ├──────────┼──────────┼──────────┼──────────┼───────────┤  │
+│  │Coroutine │  Retry   │  Alert   │ Metrics  │ Security  │  │
+│  │ Adapter  │ Strategy │ Manager  │Collector │ Validator │  │
+│  └──────────┴──────────┴──────────┴──────────┴───────────┘  │
+├─────────────────────────────────────────────────────────────┤
+│                   Protocol SDK (Contracts)                   │
+│  ProtocolInterface │ ConnectorInterface │ DriverInterface    │
+│  FrameInterface    │ DataPointInterface │ GatewayRuleInterface│
+├─────────────────────────────────────────────────────────────┤
+│              Protocol Packages (SDK Implementations)          │
+│  Modbus    │  BACnet/IP   │  EtherNet/IP   │  (OPC UA ...)  │
+│  pure PHP  │  UDP socket  │  TCP ENIP+CIP  │  (planned)     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 包依赖关系（单向）
+
+```
+  protocol-modbus ──┐
+  protocol-bacnet ──┼──→ industrial-protocols-kernel
+  protocol-eip ────┘              ↑
+                    user-app ─────┘
+```
+
+用户项目只需 `composer require industrial-protocols/kernel industrial-protocols/modbus`，kernel 自动发现已安装的协议包。
+
+### 连接生命周期
+
+```
+                    ┌──────────────┐
+        connect() → │  CONNECTING  │ → (fail) → FAULT → retry? → CONNECTING
+                    └──────┬───────┘
+                           ↓ (success)
+                    ┌──────────────┐
+                    │   CONNECTED  │ ← → disconnect()
+                    └──────┬───────┘
+                           ↓ (error detected)
+                    ┌──────────────┐
+                    │   DEGRADED   │ → (recover) → CONNECTED
+                    └──────┬───────┘    (fail)    → FAULT
+                           ↓
+                    ┌──────────────┐
+                    │    FAULT     │ → retry → CONNECTING
+                    └──────┬───────┘
+                           ↓ (max retries exceeded)
+                    ┌──────────────┐
+                    │    CLOSED    │
+                    └──────────────┘
+```
+
+### 网关引擎数据流
+
+```
+  Source Device                Target Device
+       │                            │
+  ┌────▼────┐                  ┌────▼────┐
+  │ Modbus  │                  │ OPC UA  │
+  │ PLC     │                  │ Server  │
+  └────┬────┘                  └────▲────┘
+       │                            │
+  ┌────▼────────────────────────────▲────┐
+  │           Gateway Engine              │
+  │                                       │
+  │  Rule Loader → Rule Scheduler         │
+  │       │            │                  │
+  │       ▼            ▼                  │
+  │  ┌─────────────────────┐              │
+  │  │  Transform Pipeline  │              │
+  │  │  Read → Cast → Map  │              │
+  │  │  → Transform → Write│              │
+  │  └─────────────────────┘              │
+  │       │                               │
+  │  ┌────▼────┐  ┌────────────┐          │
+  │  │ Metrics │  │  Circuit   │          │
+  │  │Collector│  │  Breaker   │          │
+  │  └─────────┘  └────────────┘          │
+  └───────────────────────────────────────┘
+```
+
+### 数据变换管道
+
+```
+Source Frame (raw bytes)
+  → Driver::send(read_frame)
+    → Frame::fromBytes(response)
+      → Frame::getData()              // 提取结构化数据
+        → Transform callable?          // 可选自定义转换（缩放、单位换算...）
+          → Target Frame::toBytes()    // 构造目标协议帧
+            → Target Driver::send()    // 写入目标设备
+```
+
+### 异常层次
+
+```
+IndustrialProtocolsException (RuntimeException)
+├── ConnectionException
+│   ├── ConnectionTimeoutException     — TCP 连接超时
+│   ├── ConnectionRefusedException     — 连接被拒绝
+│   └── ConnectionClosedException      — 连接已关闭
+├── ProtocolException
+│   ├── FrameException                  — 帧格式非法
+│   └── CrcException                    — 校验码不匹配
+├── DeviceException
+│   ├── DeviceBusyException             — 设备忙
+│   └── AddressOutOfRangeException      — 地址越界
+└── GatewayException
+    ├── RuleValidationException         — 规则校验失败
+    └── CircuitBreakerOpenException     — 熔断器开启
+```
+
+### 目录结构
+
+```
+industrial-protocols/
+├── packages/
+│   ├── kernel/                         # 微内核
+│   │   ├── src/
+│   │   │   ├── Kernel.php              # 启动入口
+│   │   │   ├── Protocol/               # SDK 接口 + ProtocolRegistry
+│   │   │   ├── Connection/             # ConnectionManager + 连接策略
+│   │   │   ├── Config/                 # 配置 Repository 接口与实现
+│   │   │   ├── Gateway/                # GatewayEngine + CircuitBreaker
+│   │   │   ├── Coroutine/              # 协程适配器 + 工厂
+│   │   │   ├── Framework/              # 框架适配器 + 各框架集成代码
+│   │   │   ├── Event/                  # 事件类
+│   │   │   ├── Log/                    # 日志驱动
+│   │   │   ├── Retry/                  # 重试策略
+│   │   │   ├── Metrics/                # 指标采集
+│   │   │   ├── Alert/                  # 告警通道
+│   │   │   ├── Security/               # 输入校验
+│   │   │   └── Exception/              # 异常层次
+│   │   ├── config/                     # 默认配置模板
+│   │   └── tests/
+│   ├── modbus/                         # Modbus 协议包
+│   │   ├── src/
+│   │   │   ├── ModbusProtocol.php
+│   │   │   ├── ModbusConnector.php
+│   │   │   ├── Driver/                 # TCP 驱动
+│   │   │   ├── Frame/                  # 帧编解码 + CRC16
+│   │   │   └── Exception/
+│   │   └── tests/
+│   ├── bacnet/                         # BACnet/IP 协议包
+│   └── ethernetip/                     # EtherNet/IP 协议包
+├── docker/                             # Docker 模拟器
+├── docs/                               # 设计文档 + 使用指南
+├── tests/                              # 集成测试 + E2E 测试
+├── composer.json                       # 根 monorepo 配置
+└── phpunit.xml
+```
 
 ---
 
