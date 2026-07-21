@@ -145,6 +145,13 @@ return [
 - ext-sockets (for Modbus TCP)
 - Composer
 
+## Documentation
+
+- [Protocol API Reference](docs/protocols.md) -- Modbus, BACnet, EtherNet/IP connection config, read/write, health checks
+- [Framework Integration Guide](docs/framework-integration.md) -- Plain PHP, Laravel, Webman, Hyperf, ThinkPHP, Yii2
+- [Gateway Engine Guide](docs/gateway.md) -- rules, triggers, circuit breaker, value transforms
+- [Security Guide](docs/security.md) -- input validation, best practices, exception reference
+
 ## License
 
 MIT
