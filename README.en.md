@@ -32,10 +32,23 @@ PHP industrial network communication protocol plugin — micro-kernel + protocol
   - [Full Capability Matrix](#full-capability-matrix)
 - [Vendor Adapters](#vendor-adapters)
 - [Supported Industrial Protocols](#supported-industrial-protocols)
+  - [Industrial Ethernet](#industrial-ethernet)
+  - [Fieldbus Protocols](#fieldbus-protocols)
+  - [Hardware-Dependent (Bridge)](#hardware-dependent-bridge)
 - [Supported Frameworks](#supported-frameworks)
 - [Quick Start](#quick-start)
 - [Usage Guide](#usage-guide)
 - [Protocol Examples](#protocol-examples)
+  - [Modbus TCP](#modbus-tcp)
+  - [BACnet/IP](#bacnetip-1)
+  - [EtherNet/IP](#ethernetip-2)
+  - [OPC UA Binary](#opc-ua-binary-1)
+  - [Profinet NRT](#profinet-nrt-2)
+  - [Modbus RTU (Serial)](#modbus-rtu-serial)
+  - [HART](#hart)
+  - [CC-Link RS-485](#cc-link-rs-485-1)
+  - [PROFIBUS / CANopen / DeviceNet](#profibus--canopen--devicenet-fieldbus-bridge)
+  - [Hardware Bridge](#hardware-bridge-ethercat--powerlink--sercos-iii)
 - [Framework Integration Examples](#framework-integration-examples)
 - [Gateway Engine](#gateway-engine)
 - [Monitoring & Alerting](#monitoring--alerting)
@@ -804,7 +817,44 @@ $pv = $conn->read('pv');           // Primary Variable
 $current = $conn->read('loop_current'); // Loop current (mA)
 ```
 
-### Hardware Bridge Protocols
+### CC-Link RS-485
+
+```php
+use Erikwang2013\IndustrialProtocols\CcLink\CcLinkProtocol;
+
+$kernel->getProtocolRegistry()->register(new CcLinkProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('cclink-device', [
+    'protocol'  => 'cc-link', 'variant' => 'rs485',
+    'device'    => '/dev/ttyUSB2', 'baud_rate' => 156000,
+]);
+$result = $conn->read('RWw0'); // Read remote register
+```
+
+### PROFIBUS / CANopen / DeviceNet (Fieldbus Bridge)
+
+```php
+use Erikwang2013\IndustrialProtocols\Profibus\ProfibusProtocol;
+use IndustrialProtocols\Bridge\TcpGatewayBridge;
+
+// Connect to PROFIBUS via Anybus gateway
+$bridge = new TcpGatewayBridge('192.168.1.200', 502);
+$kernel->getProtocolRegistry()->register(new ProfibusProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('profibus-device', [
+    'protocol' => 'profibus', 'variant' => 'dp', 'bridge' => $bridge,
+]);
+$result = $conn->read('0x0000:0x0001');
+
+// Or one-click via vendor factory
+$bridge = $kernel->getVendorBridgeFactory()->create('siemens', 'S7-1500', 'V3.x', [
+    'host' => '192.168.1.50',
+]);
+```
+
+### Hardware Bridge Protocols (EtherCAT / POWERLINK / SERCOS III)
 
 ```php
 use IndustrialProtocols\Bridge\ExternalProcessBridge;

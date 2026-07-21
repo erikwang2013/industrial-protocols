@@ -32,10 +32,23 @@ PHP 工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持
   - [完整能力矩阵](#完整能力矩阵)
 - [厂商适配](#厂商适配)
 - [支持的工业通信协议](#支持的工业通信协议)
+  - [工业以太网协议](#工业以太网协议)
+  - [现场总线协议](#现场总线协议)
+  - [需专用硬件的协议（Bridge）](#需专用硬件的协议bridge)
 - [支持的框架](#支持的框架)
 - [快速开始](#快速开始)
 - [使用说明](#使用说明)
 - [协议使用示例](#协议使用示例)
+  - [Modbus TCP](#modbus-tcp)
+  - [BACnet/IP](#bacnetip)
+  - [EtherNet/IP](#ethernetip-1)
+  - [OPC UA Binary](#opc-ua-binary)
+  - [Profinet NRT](#profinet-nrt-1)
+  - [Modbus RTU（串口）](#modbus-rtu串口)
+  - [HART](#hart)
+  - [CC-Link RS-485](#cc-link-rs-485)
+  - [PROFIBUS / CANopen / DeviceNet](#profibus--canopen--devicenet现场总线桥接)
+  - [硬件桥接协议](#硬件桥接协议ethercat--powerlink--sercos-iii)
 - [框架集成示例](#框架集成示例)
 - [网关引擎](#网关引擎)
 - [监控与告警](#监控与告警)
@@ -922,7 +935,45 @@ $pv = $conn->read('pv');           // 主变量
 $current = $conn->read('loop_current'); // 回路电流 (mA)
 ```
 
-### 硬件桥接协议
+### CC-Link RS-485
+
+```php
+use Erikwang2013\IndustrialProtocols\CcLink\CcLinkProtocol;
+
+$kernel->getProtocolRegistry()->register(new CcLinkProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('cclink-device', [
+    'protocol'  => 'cc-link', 'variant' => 'rs485',
+    'device'    => '/dev/ttyUSB2', 'baud_rate' => 156000,
+]);
+$result = $conn->read('RWw0'); // 读取远程寄存器
+```
+
+### PROFIBUS / CANopen / DeviceNet（现场总线桥接）
+
+```php
+use Erikwang2013\IndustrialProtocols\Profibus\ProfibusProtocol;
+use IndustrialProtocols\Bridge\TcpGatewayBridge;
+
+// 通过 Anybus 网关连接 PROFIBUS 设备
+$bridge = new TcpGatewayBridge('192.168.1.200', 502);
+$kernel->getProtocolRegistry()->register(new ProfibusProtocol());
+$kernel->boot();
+
+$conn = $kernel->getConnectionManager()->connect('profibus-device', [
+    'protocol' => 'profibus', 'variant' => 'dp',
+    'bridge'   => $bridge,
+]);
+$result = $conn->read('0x0000:0x0001'); // 读取 DP 从站数据
+
+// 或通过厂商工厂一键创建
+$bridge = $kernel->getVendorBridgeFactory()->create('siemens', 'S7-1500', 'V3.x', [
+    'host' => '192.168.1.50',
+]);
+```
+
+### 硬件桥接协议（EtherCAT / POWERLINK / SERCOS III）
 
 ```php
 use IndustrialProtocols\Bridge\ExternalProcessBridge;
