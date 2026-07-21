@@ -72,6 +72,31 @@ class BinaryDecoder
         return $v;
     }
 
+    public function readInt64(): int
+    {
+        $v = unpack('P', substr($this->buffer, $this->offset, 8))[1];
+        $this->offset += 8;
+        return $v;
+    }
+
+    public function readUInt64(): int
+    {
+        $v = unpack('P', substr($this->buffer, $this->offset, 8))[1];
+        $this->offset += 8;
+        return $v;
+    }
+
+    public function readByteString(): string
+    {
+        $len = $this->readInt32();
+        if ($len < 0) {
+            return '';
+        }
+        $v = substr($this->buffer, $this->offset, $len);
+        $this->offset += $len;
+        return $v;
+    }
+
     public function readFloat(): float
     {
         $v = unpack('g', substr($this->buffer, $this->offset, 4))[1];
