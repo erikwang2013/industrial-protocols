@@ -1,0 +1,15 @@
+<?php
+namespace IndustrialProtocols\Alert;
+use IndustrialProtocols\Log\LogDriverInterface;
+
+class LogAlertChannel implements AlertChannelInterface
+{
+    public function __construct(private LogDriverInterface $log) {}
+
+    public function send(string $title, string $message, string $level = 'info'): void
+    {
+        $levelMap = ['info' => 'INFO', 'warning' => 'WARNING', 'critical' => 'CRITICAL'];
+        $logLevel = $levelMap[$level] ?? 'INFO';
+        $this->log->log($logLevel, "[ALERT] $title: $message");
+    }
+}
