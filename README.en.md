@@ -155,8 +155,8 @@ Detection priority: `Swoole → Swow → Fiber → Sync`. Higher-level component
 │  FrameInterface    │ DataPointInterface │ GatewayRuleInterface│
 ├─────────────────────────────────────────────────────────────┤
 │              Protocol Packages (SDK Implementations)          │
-│  Modbus    │  BACnet/IP   │  EtherNet/IP   │  (OPC UA ...)  │
-│  pure PHP  │  UDP socket  │  TCP ENIP+CIP  │  (planned)     │
+│  Modbus    │  BACnet/IP   │  EtherNet/IP   │  OPC UA (TCP) │
+│  pure PHP  │  UDP socket  │  TCP ENIP+CIP  │  Binary stack  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -418,7 +418,7 @@ Detection priority: `Swoole -> Fiber -> Sync`
 | **Modbus** | Phase 1 | TCP, RTU, ASCII | 502 | Pure PHP Socket | FC 01/03/04/06/10 |
 | **BACnet/IP** | Phase 3 | IP (UDP) | 47808 | Pure PHP UDP Socket | Who-Is/I-Am, ReadProperty |
 | **EtherNet/IP** | Phase 3 | TCP | 44818 | Pure PHP Socket | ENIP session, CIP Read Tag |
-| **OPC UA** | Planned | Binary | 4840 | FFI / C bridge | — |
+| **OPC UA** | Phase 4 | Binary | 4840 | Pure PHP UA Binary Stack | CreateSession / ActivateSession / Read / Write / Browse |
 | **Profinet** | Planned | NRT + RT | 34964 | FFI / C library bridge | — |
 
 ---
