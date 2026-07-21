@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\EtherNetIP;
+namespace Erikwang2013\IndustrialProtocols\EtherNetIP;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 
 class EtherNetIPProtocol implements ProtocolInterface
 {

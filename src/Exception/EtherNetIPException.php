@@ -1,7 +1,7 @@
 <?php
 
-namespace IndustrialProtocols\EtherNetIP\Exception;
+namespace Erikwang2013\IndustrialProtocols\EtherNetIP\Exception;
 
-use IndustrialProtocols\Exception\ProtocolException;
+use Erikwang2013\IndustrialProtocols\Exception\ProtocolException;
 
 class EtherNetIPException extends ProtocolException {}

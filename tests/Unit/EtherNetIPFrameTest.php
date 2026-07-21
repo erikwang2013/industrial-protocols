@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\EtherNetIP\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\EtherNetIP\Tests\Unit;
 
-use IndustrialProtocols\EtherNetIP\Frame\EtherNetIPFrame;
+use Erikwang2013\IndustrialProtocols\EtherNetIP\Frame\EtherNetIPFrame;
 use PHPUnit\Framework\TestCase;
 
 class EtherNetIPFrameTest extends TestCase

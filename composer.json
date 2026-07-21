@@ -7,12 +7,12 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\EtherNetIP\\": "src/"
+            "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\": "src/"
         }
     },
     "extra": {
         "industrial-protocols": {
-            "protocol": "IndustrialProtocols\\EtherNetIP\\EtherNetIPProtocol"
+            "protocol": "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\EtherNetIPProtocol"
         }
     }
 }

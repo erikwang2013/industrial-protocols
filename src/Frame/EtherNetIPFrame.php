@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\EtherNetIP\Frame;
+namespace Erikwang2013\IndustrialProtocols\EtherNetIP\Frame;
 
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class EtherNetIPFrame implements FrameInterface
 {
