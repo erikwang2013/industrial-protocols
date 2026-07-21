@@ -5,6 +5,7 @@ namespace IndustrialProtocols\Coroutine;
 class CoroutineFactory
 {
     private static array $adapters = [
+        SwooleCoroutineAdapter::class,
         FiberCoroutineAdapter::class,
         SyncCoroutineAdapter::class,
     ];
