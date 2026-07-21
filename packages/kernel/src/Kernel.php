@@ -12,7 +12,9 @@ use IndustrialProtocols\Event\KernelBootedEvent;
 use IndustrialProtocols\Framework\FrameworkAdapterInterface;
 use IndustrialProtocols\Framework\LaravelAdapter;
 use IndustrialProtocols\Framework\PlainPhpAdapter;
+use IndustrialProtocols\Framework\ThinkPHPAdapter;
 use IndustrialProtocols\Framework\WebmanAdapter;
+use IndustrialProtocols\Framework\Yii2Adapter;
 use IndustrialProtocols\Log\LogDriverInterface;
 use IndustrialProtocols\Log\PsrLogDriver;
 use IndustrialProtocols\Protocol\ProtocolRegistry;
@@ -113,6 +115,8 @@ class Kernel
         $adapters = [
             new LaravelAdapter(),
             new WebmanAdapter(),
+            new ThinkPHPAdapter(),
+            new Yii2Adapter(),
             new PlainPhpAdapter(
                 $this->options['config_path']
                 ?? dirname(__DIR__) . '/config/industrial-protocols.php'
