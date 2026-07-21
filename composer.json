@@ -1,9 +1,9 @@
 {
-    "name": "industrial-protocols/cclink",
+    "name": "erikwang2013/cclink",
     "type": "industrial-protocol",
     "require": {
         "php": ">=8.1",
-        "industrial-protocols/kernel": "*"
+        "erikwang2013/kernel": "*"
     },
     "autoload": {
         "psr-4": {
