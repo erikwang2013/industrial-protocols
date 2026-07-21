@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols;
+namespace Erikwang2013\IndustrialProtocols;
 
 use Erikwang2013\IndustrialProtocols\Config\ConfigRepositoryInterface;
 use Erikwang2013\IndustrialProtocols\Config\FileConfigRepository;
