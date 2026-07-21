@@ -1,6 +1,6 @@
 {
     "name": "industrial-protocols/industrial-protocols",
-    "description": "工业网络通信协议插件 —— 微内核 + 协议 SDK 架构，支持 Modbus、BACnet、EtherNet/IP 等主流工业协议，兼容 Plain PHP、Laravel、Webman、Hyperf、ThinkPHP、Yii2 六大运行环境。en:industrial network communication protocol plugin — micro-kernel + protocol SDK architecture supporting Modbus, BACnet, EtherNet/IP and more. Compatible with Plain PHP, Laravel, Webman, Hyperf, ThinkPHP, and Yii2.",
+    "description": "Industrial Protocols 是一个面向 PHP 生态的工业通信协议集，采用微内核 + 协议 SDK架构。内核提供连接管理、配置管理、网关引擎、事件系统、协程适配等基础设施，协议包作为独立 Composer 包按需安装，通过实现统一 SDK 接口接入内核。 42 个协议包（15 个纯 PHP 实现 + 27 个 Bridge 桥接），351 个测试用例，731 个断言；12 家厂商预置配置；6 种框架适配器；PHP >= 8.1 en:Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. The kernel provides infrastructure — connection management, configuration management, gateway engine, event system, coroutine adaptation — while protocol packages are independent Composer packages installed on-demand, plugging in by implementing unified SDK interfaces.42 protocol packages (15 pure PHP + 27 bridge implementations), 351 tests, 731 assertions; 12 pre-configured vendor profiles; 6 framework adapters; PHP >= 8.1.",
     "license": "MIT",
     "keywords": ["工业网络通信协议插件", "industrial protocols",  "主流工业协议", "laravel", "thinkphp", "webman", "hyperf"],
     "authors": [
