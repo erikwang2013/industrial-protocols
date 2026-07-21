@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Modbus\Frame;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Frame;
 
 abstract class ModbusFrame
 {

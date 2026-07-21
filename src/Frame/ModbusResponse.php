@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Modbus\Frame;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Frame;
 
-use IndustrialProtocols\Modbus\Exception\ModbusException;
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Modbus\Exception\ModbusException;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class ModbusResponse extends ModbusFrame implements FrameInterface
 {

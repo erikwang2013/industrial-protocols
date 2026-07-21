@@ -1,13 +1,13 @@
 <?php
 
-namespace IndustrialProtocols\Modbus;
+namespace Erikwang2013\IndustrialProtocols\Modbus;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Connection\HealthStatus;
-use IndustrialProtocols\Exception\AddressOutOfRangeException;
-use IndustrialProtocols\Modbus\Driver\ModbusTcpDriver;
-use IndustrialProtocols\Modbus\Frame\ModbusRequest;
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Exception\AddressOutOfRangeException;
+use Erikwang2013\IndustrialProtocols\Modbus\Driver\ModbusTcpDriver;
+use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusRequest;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class ModbusConnector implements ConnectorInterface
 {

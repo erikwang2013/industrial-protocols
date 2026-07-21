@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Modbus\Exception;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Exception;
 
-use IndustrialProtocols\Exception\ProtocolException;
+use Erikwang2013\IndustrialProtocols\Exception\ProtocolException;
 
 class ModbusException extends ProtocolException
 {

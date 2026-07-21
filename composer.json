@@ -7,12 +7,12 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\Modbus\\": "src/"
+            "Erikwang2013\\IndustrialProtocols\\Modbus\\": "src/"
         }
     },
     "extra": {
         "industrial-protocols": {
-            "protocol": "IndustrialProtocols\\Modbus\\ModbusProtocol"
+            "protocol": "Erikwang2013\\IndustrialProtocols\\Modbus\\ModbusProtocol"
         }
     }
 }

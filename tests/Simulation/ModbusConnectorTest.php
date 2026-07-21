@@ -1,11 +1,11 @@
 <?php
 
-namespace IndustrialProtocols\Modbus\Tests\Simulation;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Tests\Simulation;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Exception\ConnectionTimeoutException;
-use IndustrialProtocols\Modbus\ModbusConnector;
-use IndustrialProtocols\Modbus\ModbusProtocol;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionTimeoutException;
+use Erikwang2013\IndustrialProtocols\Modbus\ModbusConnector;
+use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
 use PHPUnit\Framework\TestCase;
 
 class ModbusConnectorTest extends TestCase

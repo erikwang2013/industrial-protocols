@@ -1,11 +1,11 @@
 <?php
 
-namespace IndustrialProtocols\Modbus\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Tests\Unit;
 
-use IndustrialProtocols\Modbus\Exception\ModbusException;
-use IndustrialProtocols\Modbus\Frame\ModbusFrame;
-use IndustrialProtocols\Modbus\Frame\ModbusRequest;
-use IndustrialProtocols\Modbus\Frame\ModbusResponse;
+use Erikwang2013\IndustrialProtocols\Modbus\Exception\ModbusException;
+use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusFrame;
+use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusRequest;
+use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusResponse;
 use PHPUnit\Framework\TestCase;
 
 class ModbusFrameTest extends TestCase
