@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 interface FrameInterface
 {

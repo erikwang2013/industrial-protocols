@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Connection\Strategy\EagerStrategy;
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\EagerStrategy;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 use PHPUnit\Framework\TestCase;
 
 class EagerStrategyTest extends TestCase

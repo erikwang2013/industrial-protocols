@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Config;
+namespace Erikwang2013\IndustrialProtocols\Config;
 
 class DatabaseConfigRepository implements ConfigRepositoryInterface
 {

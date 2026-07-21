@@ -1,5 +1,5 @@
 <?php
-namespace IndustrialProtocols\Security;
+namespace Erikwang2013\IndustrialProtocols\Security;
 
 class InputValidator
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace IndustrialProtocols\Gateway;
+namespace Erikwang2013\IndustrialProtocols\Gateway;
 
-use IndustrialProtocols\Connection\ConnectionManager;
-use IndustrialProtocols\Log\LogDriverInterface;
-use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionManager;
+use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use IndustrialProtocols\Event\GatewayRuleStartedEvent;
-use IndustrialProtocols\Event\GatewayRuleCompletedEvent;
-use IndustrialProtocols\Event\GatewayRuleFailedEvent;
-use IndustrialProtocols\Event\GatewayCircuitBreakerEvent;
+use Erikwang2013\IndustrialProtocols\Event\GatewayRuleStartedEvent;
+use Erikwang2013\IndustrialProtocols\Event\GatewayRuleCompletedEvent;
+use Erikwang2013\IndustrialProtocols\Event\GatewayRuleFailedEvent;
+use Erikwang2013\IndustrialProtocols\Event\GatewayCircuitBreakerEvent;
 
 class GatewayEngine
 {

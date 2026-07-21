@@ -1,10 +1,10 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Integration;
+namespace Erikwang2013\IndustrialProtocols\Tests\Integration;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Kernel;
-use IndustrialProtocols\Modbus\ModbusProtocol;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
 use PHPUnit\Framework\TestCase;
 
 class KernelModbusIntegrationTest extends TestCase

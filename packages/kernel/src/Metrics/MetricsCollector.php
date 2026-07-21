@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Metrics;
+namespace Erikwang2013\IndustrialProtocols\Metrics;
 
 class MetricsCollector
 {

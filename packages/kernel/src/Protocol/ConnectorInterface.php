@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
-use IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
 
 interface ConnectorInterface
 {

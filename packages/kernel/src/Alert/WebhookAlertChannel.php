@@ -1,5 +1,5 @@
 <?php
-namespace IndustrialProtocols\Alert;
+namespace Erikwang2013\IndustrialProtocols\Alert;
 
 class WebhookAlertChannel implements AlertChannelInterface
 {

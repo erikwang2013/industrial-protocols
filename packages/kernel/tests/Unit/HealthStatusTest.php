@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
 use PHPUnit\Framework\TestCase;
 
 class HealthStatusTest extends TestCase

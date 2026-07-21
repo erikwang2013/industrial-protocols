@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Framework;
+namespace Erikwang2013\IndustrialProtocols\Framework;
 
 class Yii2Adapter implements FrameworkAdapterInterface
 {

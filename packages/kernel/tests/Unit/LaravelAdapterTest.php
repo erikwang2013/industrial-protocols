@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Framework\LaravelAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\LaravelAdapter;
 use PHPUnit\Framework\TestCase;
 
 class LaravelAdapterTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Gateway;
+namespace Erikwang2013\IndustrialProtocols\Gateway;
 
 class CircuitBreaker
 {

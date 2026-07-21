@@ -1,5 +1,5 @@
 <?php
-namespace IndustrialProtocols\Log;
+namespace Erikwang2013\IndustrialProtocols\Log;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 class PsrLogDriver implements LogDriverInterface

@@ -1,11 +1,11 @@
 <?php
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Connection\HealthStatus;
-use IndustrialProtocols\Event\ConnectionConnectedEvent;
-use IndustrialProtocols\Event\ConnectionStateChangedEvent;
-use IndustrialProtocols\Event\DataReadEvent;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionConnectedEvent;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionStateChangedEvent;
+use Erikwang2013\IndustrialProtocols\Event\DataReadEvent;
 use PHPUnit\Framework\TestCase;
 
 class EventTest extends TestCase

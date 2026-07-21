@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Framework\Webman;
+namespace Erikwang2013\IndustrialProtocols\Framework\Webman;
 
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 use Workerman\Worker;
 
 class ProtocolProcess

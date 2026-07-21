@@ -11,18 +11,18 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\": "packages/kernel/src/",
-            "IndustrialProtocols\\Bacnet\\": "packages/bacnet/src/"
+            "Erikwang2013\\IndustrialProtocols\\": "packages/kernel/src/",
+            "Erikwang2013\\IndustrialProtocols\\Bacnet\\": "packages/bacnet/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "IndustrialProtocols\\Tests\\": "packages/kernel/tests/",
-            "IndustrialProtocols\\Modbus\\": "packages/modbus/src/",
-            "IndustrialProtocols\\Modbus\\Tests\\": "packages/modbus/tests/",
-            "IndustrialProtocols\\Bacnet\\Tests\\": "packages/bacnet/tests/",
-            "IndustrialProtocols\\EtherNetIP\\": "packages/ethernetip/src/",
-            "IndustrialProtocols\\EtherNetIP\\Tests\\": "packages/ethernetip/tests/"
+            "Erikwang2013\\IndustrialProtocols\\Tests\\": "packages/kernel/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Modbus\\": "packages/modbus/src/",
+            "Erikwang2013\\IndustrialProtocols\\Modbus\\Tests\\": "packages/modbus/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Bacnet\\Tests\\": "packages/bacnet/tests/",
+            "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\": "packages/ethernetip/src/",
+            "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\Tests\\": "packages/ethernetip/tests/"
         }
     },
     "scripts": {

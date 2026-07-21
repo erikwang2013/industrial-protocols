@@ -1,16 +1,16 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Simulation;
+namespace Erikwang2013\IndustrialProtocols\Tests\Simulation;
 
-use IndustrialProtocols\Connection\ConnectionManager;
-use IndustrialProtocols\Connection\Strategy\LazyStrategy;
-use IndustrialProtocols\Config\ConfigRepositoryInterface;
-use IndustrialProtocols\Coroutine\SyncCoroutineAdapter;
-use IndustrialProtocols\Gateway\GatewayEngine;
-use IndustrialProtocols\Gateway\GatewayRule;
-use IndustrialProtocols\Log\NullLogDriver;
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionManager;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\LazyStrategy;
+use Erikwang2013\IndustrialProtocols\Config\ConfigRepositoryInterface;
+use Erikwang2013\IndustrialProtocols\Coroutine\SyncCoroutineAdapter;
+use Erikwang2013\IndustrialProtocols\Gateway\GatewayEngine;
+use Erikwang2013\IndustrialProtocols\Gateway\GatewayRule;
+use Erikwang2013\IndustrialProtocols\Log\NullLogDriver;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Connection\Strategy;
+namespace Erikwang2013\IndustrialProtocols\Connection\Strategy;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class LazyStrategy implements StrategyInterface
 {

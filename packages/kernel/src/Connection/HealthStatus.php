@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Connection;
+namespace Erikwang2013\IndustrialProtocols\Connection;
 
 class HealthStatus implements \JsonSerializable
 {

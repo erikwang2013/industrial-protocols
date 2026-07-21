@@ -1,10 +1,10 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
-use IndustrialProtocols\Protocol\ProtocolRegistry;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolRegistry;
 use PHPUnit\Framework\TestCase;
 
 class ProtocolRegistryTest extends TestCase

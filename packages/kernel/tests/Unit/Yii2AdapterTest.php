@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Framework\Yii2Adapter;
+use Erikwang2013\IndustrialProtocols\Framework\Yii2Adapter;
 use PHPUnit\Framework\TestCase;
 
 class Yii2AdapterTest extends TestCase

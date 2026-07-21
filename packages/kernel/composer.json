@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\": "src/"
+            "Erikwang2013\\IndustrialProtocols\\": "src/"
         }
     },
     "extra": {

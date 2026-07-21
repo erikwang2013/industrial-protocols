@@ -1,5 +1,5 @@
 <?php
-namespace IndustrialProtocols\Log;
+namespace Erikwang2013\IndustrialProtocols\Log;
 class NullLogDriver implements LogDriverInterface
 {
     public function log(string $level, string $message, array $context = []): void {}

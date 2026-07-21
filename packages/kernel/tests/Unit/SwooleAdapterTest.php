@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Coroutine\SwooleCoroutineAdapter;
+use Erikwang2013\IndustrialProtocols\Coroutine\SwooleCoroutineAdapter;
 use PHPUnit\Framework\TestCase;
 
 class SwooleAdapterTest extends TestCase

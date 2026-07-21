@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Framework;
+namespace Erikwang2013\IndustrialProtocols\Framework;
 
 class LaravelAdapter implements FrameworkAdapterInterface
 {

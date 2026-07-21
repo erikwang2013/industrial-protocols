@@ -24,7 +24,7 @@ The Gateway Engine forwards data between industrial devices, translating between
 ## GatewayRule Constructor
 
 ```php
-use IndustrialProtocols\Gateway\GatewayRule;
+use Erikwang2013\IndustrialProtocols\Gateway\GatewayRule;
 
 $rule = new GatewayRule(
     id: 'modbus-to-opcua',
@@ -58,7 +58,7 @@ For `change` trigger, the engine tracks the last seen value per rule and skips t
 ### Instantiation
 
 ```php
-use IndustrialProtocols\Gateway\GatewayEngine;
+use Erikwang2013\IndustrialProtocols\Gateway\GatewayEngine;
 
 $engine = new GatewayEngine(
     $kernel->getConnectionManager(),
@@ -164,7 +164,7 @@ Repeated circuit breaker trips indicate persistent device issues. You can monito
 
 ```php
 $eventDispatcher->addListener(
-    IndustrialProtocols\Event\GatewayCircuitBreakerEvent::class,
+    Erikwang2013\IndustrialProtocols\Event\GatewayCircuitBreakerEvent::class,
     function ($event) {
         // Log, alert, or notify
     }

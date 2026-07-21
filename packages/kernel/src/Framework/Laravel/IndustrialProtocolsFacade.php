@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Framework\Laravel;
+namespace Erikwang2013\IndustrialProtocols\Framework\Laravel;
 
 use Illuminate\Support\Facades\Facade;
 

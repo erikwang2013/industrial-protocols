@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Framework\Laravel;
+namespace Erikwang2013\IndustrialProtocols\Framework\Laravel;
 
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 use Illuminate\Support\ServiceProvider;
 
 class IndustrialProtocolsServiceProvider extends ServiceProvider

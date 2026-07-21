@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Framework\ThinkPHP;
+namespace Erikwang2013\IndustrialProtocols\Framework\ThinkPHP;
 
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 
 class IndustrialProtocolsService
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Protocol\DataType;
+use Erikwang2013\IndustrialProtocols\Protocol\DataType;
 use PHPUnit\Framework\TestCase;
 
 class DataTypeTest extends TestCase

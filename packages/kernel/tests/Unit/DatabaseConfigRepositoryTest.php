@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Config\DatabaseConfigRepository;
+use Erikwang2013\IndustrialProtocols\Config\DatabaseConfigRepository;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseConfigRepositoryTest extends TestCase

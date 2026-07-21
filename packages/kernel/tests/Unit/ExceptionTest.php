@@ -1,18 +1,18 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Exception\ConnectionException;
-use IndustrialProtocols\Exception\ConnectionTimeoutException;
-use IndustrialProtocols\Exception\ConnectionRefusedException;
-use IndustrialProtocols\Exception\ConnectionClosedException;
-use IndustrialProtocols\Exception\ProtocolException;
-use IndustrialProtocols\Exception\FrameException;
-use IndustrialProtocols\Exception\CrcException;
-use IndustrialProtocols\Exception\DeviceException;
-use IndustrialProtocols\Exception\DeviceBusyException;
-use IndustrialProtocols\Exception\AddressOutOfRangeException;
-use IndustrialProtocols\Exception\IndustrialProtocolsException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionTimeoutException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionRefusedException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionClosedException;
+use Erikwang2013\IndustrialProtocols\Exception\ProtocolException;
+use Erikwang2013\IndustrialProtocols\Exception\FrameException;
+use Erikwang2013\IndustrialProtocols\Exception\CrcException;
+use Erikwang2013\IndustrialProtocols\Exception\DeviceException;
+use Erikwang2013\IndustrialProtocols\Exception\DeviceBusyException;
+use Erikwang2013\IndustrialProtocols\Exception\AddressOutOfRangeException;
+use Erikwang2013\IndustrialProtocols\Exception\IndustrialProtocolsException;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionTest extends TestCase

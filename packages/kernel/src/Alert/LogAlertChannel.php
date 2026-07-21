@@ -1,6 +1,6 @@
 <?php
-namespace IndustrialProtocols\Alert;
-use IndustrialProtocols\Log\LogDriverInterface;
+namespace Erikwang2013\IndustrialProtocols\Alert;
+use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
 
 class LogAlertChannel implements AlertChannelInterface
 {

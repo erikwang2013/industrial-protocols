@@ -1,13 +1,13 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\DataPointInterface;
-use IndustrialProtocols\Protocol\DriverInterface;
-use IndustrialProtocols\Protocol\FrameInterface;
-use IndustrialProtocols\Protocol\GatewayRuleInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\DataPointInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\DriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\GatewayRuleInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 use PHPUnit\Framework\TestCase;
 
 class InterfaceExistsTest extends TestCase

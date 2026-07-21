@@ -1,10 +1,10 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Kernel;
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 use PHPUnit\Framework\TestCase;
 
 class KernelTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Coroutine;
+namespace Erikwang2013\IndustrialProtocols\Coroutine;
 
 interface CoroutineAdapterInterface
 {

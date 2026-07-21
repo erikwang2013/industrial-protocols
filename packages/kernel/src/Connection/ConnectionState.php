@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Connection;
+namespace Erikwang2013\IndustrialProtocols\Connection;
 
 enum ConnectionState: string
 {

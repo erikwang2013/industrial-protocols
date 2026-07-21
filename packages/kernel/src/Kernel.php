@@ -2,22 +2,22 @@
 
 namespace IndustrialProtocols;
 
-use IndustrialProtocols\Config\ConfigRepositoryInterface;
-use IndustrialProtocols\Config\FileConfigRepository;
-use IndustrialProtocols\Connection\ConnectionManager;
-use IndustrialProtocols\Connection\Strategy\LazyStrategy;
-use IndustrialProtocols\Coroutine\CoroutineFactory;
-use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
-use IndustrialProtocols\Event\KernelBootedEvent;
-use IndustrialProtocols\Framework\FrameworkAdapterInterface;
-use IndustrialProtocols\Framework\LaravelAdapter;
-use IndustrialProtocols\Framework\PlainPhpAdapter;
-use IndustrialProtocols\Framework\ThinkPHPAdapter;
-use IndustrialProtocols\Framework\WebmanAdapter;
-use IndustrialProtocols\Framework\Yii2Adapter;
-use IndustrialProtocols\Log\LogDriverInterface;
-use IndustrialProtocols\Log\PsrLogDriver;
-use IndustrialProtocols\Protocol\ProtocolRegistry;
+use Erikwang2013\IndustrialProtocols\Config\ConfigRepositoryInterface;
+use Erikwang2013\IndustrialProtocols\Config\FileConfigRepository;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionManager;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\LazyStrategy;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineFactory;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Event\KernelBootedEvent;
+use Erikwang2013\IndustrialProtocols\Framework\FrameworkAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Framework\LaravelAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\PlainPhpAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\ThinkPHPAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\WebmanAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\Yii2Adapter;
+use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
+use Erikwang2013\IndustrialProtocols\Log\PsrLogDriver;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\NullLogger;
 

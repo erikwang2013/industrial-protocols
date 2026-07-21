@@ -1,12 +1,12 @@
 <?php
 
-namespace IndustrialProtocols\Modbus\Driver;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Driver;
 
-use IndustrialProtocols\Exception\ConnectionTimeoutException;
-use IndustrialProtocols\Modbus\Exception\ModbusException;
-use IndustrialProtocols\Modbus\Frame\ModbusResponse;
-use IndustrialProtocols\Protocol\DriverInterface;
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionTimeoutException;
+use Erikwang2013\IndustrialProtocols\Modbus\Exception\ModbusException;
+use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusResponse;
+use Erikwang2013\IndustrialProtocols\Protocol\DriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class ModbusTcpDriver implements DriverInterface
 {

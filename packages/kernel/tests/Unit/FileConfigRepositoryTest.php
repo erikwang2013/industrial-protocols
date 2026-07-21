@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Config\FileConfigRepository;
+use Erikwang2013\IndustrialProtocols\Config\FileConfigRepository;
 use PHPUnit\Framework\TestCase;
 
 class FileConfigRepositoryTest extends TestCase

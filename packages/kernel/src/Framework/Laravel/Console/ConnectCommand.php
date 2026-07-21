@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Framework\Laravel\Console;
+namespace Erikwang2013\IndustrialProtocols\Framework\Laravel\Console;
 
 use Illuminate\Console\Command;
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 
 class ConnectCommand extends Command
 {

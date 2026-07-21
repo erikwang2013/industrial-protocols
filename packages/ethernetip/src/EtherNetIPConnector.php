@@ -1,11 +1,11 @@
 <?php
 
-namespace IndustrialProtocols\EtherNetIP;
+namespace Erikwang2013\IndustrialProtocols\EtherNetIP;
 
-use IndustrialProtocols\Connection\HealthStatus;
-use IndustrialProtocols\EtherNetIP\Driver\EtherNetIPDriver;
-use IndustrialProtocols\EtherNetIP\Frame\EtherNetIPFrame;
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\EtherNetIP\Driver\EtherNetIPDriver;
+use Erikwang2013\IndustrialProtocols\EtherNetIP\Frame\EtherNetIPFrame;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class EtherNetIPConnector implements ConnectorInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Gateway\CircuitBreaker;
+use Erikwang2013\IndustrialProtocols\Gateway\CircuitBreaker;
 use PHPUnit\Framework\TestCase;
 
 class CircuitBreakerTest extends TestCase

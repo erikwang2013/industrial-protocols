@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Bacnet;
+namespace Erikwang2013\IndustrialProtocols\Bacnet;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 
 class BacnetProtocol implements ProtocolInterface
 {

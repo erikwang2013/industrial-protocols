@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Metrics\MetricsCollector;
+use Erikwang2013\IndustrialProtocols\Metrics\MetricsCollector;
 use PHPUnit\Framework\TestCase;
 
 class MetricsCollectorTest extends TestCase

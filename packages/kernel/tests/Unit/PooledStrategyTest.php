@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Connection\Strategy\PooledStrategy;
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\PooledStrategy;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 use PHPUnit\Framework\TestCase;
 
 class PooledStrategyTest extends TestCase

@@ -3,8 +3,8 @@
 ## Plain PHP
 
 ```php
-use IndustrialProtocols\Kernel;
-use IndustrialProtocols\Modbus\ModbusProtocol;
+use Erikwang2013\IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
 
 require 'vendor/autoload.php';
 
@@ -51,9 +51,9 @@ The `IndustrialProtocolsServiceProvider` auto-registers the Kernel as a singleto
 In your `AppServiceProvider`, register protocol implementations:
 
 ```php
-use IndustrialProtocols\Kernel;
-use IndustrialProtocols\Modbus\ModbusProtocol;
-use IndustrialProtocols\Bacnet\BacnetProtocol;
+use Erikwang2013\IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
+use Erikwang2013\IndustrialProtocols\Bacnet\BacnetProtocol;
 
 public function boot(): void
 {
@@ -68,7 +68,7 @@ public function boot(): void
 ### Using the Facade
 
 ```php
-use IndustrialProtocols\Framework\Laravel\IndustrialProtocolsFacade;
+use Erikwang2013\IndustrialProtocols\Framework\Laravel\IndustrialProtocolsFacade;
 
 $result = IndustrialProtocolsFacade::connect('plc-001')->read('40001');
 ```
@@ -105,7 +105,7 @@ The `ProtocolProcess` class auto-boots on worker start:
 // config/plugin/industrial-protocols/kernel/process.php
 return [
     'protocol' => [
-        'handler' => IndustrialProtocols\Framework\Webman\ProtocolProcess::class,
+        'handler' => Erikwang2013\IndustrialProtocols\Framework\Webman\ProtocolProcess::class,
     ],
 ];
 ```
@@ -115,7 +115,7 @@ Protocol auto-discovery scans `vendor/composer/installed.json` for installed pro
 ### Usage
 
 ```php
-$kernel = \IndustrialProtocols\Kernel::getInstance(); // singleton access
+$kernel = \Erikwang2013\IndustrialProtocols\Kernel::getInstance(); // singleton access
 $conn = $kernel->getConnectionManager()->connect('plc-001');
 ```
 
@@ -130,7 +130,7 @@ The ConfigProvider auto-registers DI bindings. Create configuration at `config/a
 ### DI Container Access
 
 ```php
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 use Hyperf\Context\ApplicationContext;
 
 $kernel = ApplicationContext::getContainer()->get(Kernel::class);
@@ -154,7 +154,7 @@ The Hyperf adapter leverages coroutine support and pooled connection strategies 
 ### Service Boot
 
 ```php
-use IndustrialProtocols\Framework\ThinkPHP\IndustrialProtocolsService;
+use Erikwang2013\IndustrialProtocols\Framework\ThinkPHP\IndustrialProtocolsService;
 
 $kernel = IndustrialProtocolsService::boot();
 $conn = $kernel->getConnectionManager()->connect('plc-001');
@@ -178,7 +178,7 @@ Add the bootstrap class to your Yii2 application config:
 
 ```php
 'bootstrap' => [
-    'industrial-protocols' => IndustrialProtocols\Framework\Yii2\Bootstrap::class,
+    'industrial-protocols' => Erikwang2013\IndustrialProtocols\Framework\Yii2\Bootstrap::class,
 ],
 ```
 

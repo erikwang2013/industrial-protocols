@@ -36,14 +36,14 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\": "packages/kernel/src/"
+            "Erikwang2013\\IndustrialProtocols\\": "packages/kernel/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "IndustrialProtocols\\Tests\\": "packages/kernel/tests/",
-            "IndustrialProtocols\\Modbus\\": "packages/modbus/src/",
-            "IndustrialProtocols\\Modbus\\Tests\\": "packages/modbus/tests/"
+            "Erikwang2013\\IndustrialProtocols\\Tests\\": "packages/kernel/tests/",
+            "Erikwang2013\\IndustrialProtocols\\Modbus\\": "packages/modbus/src/",
+            "Erikwang2013\\IndustrialProtocols\\Modbus\\Tests\\": "packages/modbus/tests/"
         }
     },
     "scripts": {
@@ -93,7 +93,7 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\": "src/"
+            "Erikwang2013\\IndustrialProtocols\\": "src/"
         }
     },
     "extra": {
@@ -116,12 +116,12 @@
     },
     "autoload": {
         "psr-4": {
-            "IndustrialProtocols\\Modbus\\": "src/"
+            "Erikwang2013\\IndustrialProtocols\\Modbus\\": "src/"
         }
     },
     "extra": {
         "industrial-protocols": {
-            "protocol": "IndustrialProtocols\\Modbus\\ModbusProtocol"
+            "protocol": "Erikwang2013\\IndustrialProtocols\\Modbus\\ModbusProtocol"
         }
     }
 }
@@ -163,9 +163,9 @@ git commit -m "chore: scaffold monorepo with kernel and modbus packages"
 <?php
 // packages/kernel/tests/Unit/DataTypeTest.php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Protocol\DataType;
+use Erikwang2013\IndustrialProtocols\Protocol\DataType;
 use PHPUnit\Framework\TestCase;
 
 class DataTypeTest extends TestCase
@@ -206,7 +206,7 @@ Expected: ERROR — class DataType not found
 <?php
 // packages/kernel/src/Protocol/DataType.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 enum DataType: string
 {
@@ -241,7 +241,7 @@ enum DataType: string
 <?php
 // packages/kernel/src/Protocol/Access.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 enum Access: string
 {
@@ -287,19 +287,19 @@ git commit -m "feat: add DataType and Access enums"
 <?php
 // packages/kernel/tests/Unit/ExceptionTest.php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Exception\ConnectionException;
-use IndustrialProtocols\Exception\ConnectionTimeoutException;
-use IndustrialProtocols\Exception\ConnectionRefusedException;
-use IndustrialProtocols\Exception\ConnectionClosedException;
-use IndustrialProtocols\Exception\ProtocolException;
-use IndustrialProtocols\Exception\FrameException;
-use IndustrialProtocols\Exception\CrcException;
-use IndustrialProtocols\Exception\DeviceException;
-use IndustrialProtocols\Exception\DeviceBusyException;
-use IndustrialProtocols\Exception\AddressOutOfRangeException;
-use IndustrialProtocols\Exception\IndustrialProtocolsException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionTimeoutException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionRefusedException;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionClosedException;
+use Erikwang2013\IndustrialProtocols\Exception\ProtocolException;
+use Erikwang2013\IndustrialProtocols\Exception\FrameException;
+use Erikwang2013\IndustrialProtocols\Exception\CrcException;
+use Erikwang2013\IndustrialProtocols\Exception\DeviceException;
+use Erikwang2013\IndustrialProtocols\Exception\DeviceBusyException;
+use Erikwang2013\IndustrialProtocols\Exception\AddressOutOfRangeException;
+use Erikwang2013\IndustrialProtocols\Exception\IndustrialProtocolsException;
 use PHPUnit\Framework\TestCase;
 
 class ExceptionTest extends TestCase
@@ -366,7 +366,7 @@ Expected: ERROR
 <?php
 // packages/kernel/src/Exception/IndustrialProtocolsException.php
 
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 
 class IndustrialProtocolsException extends \RuntimeException
 {
@@ -390,43 +390,43 @@ class IndustrialProtocolsException extends \RuntimeException
 ```php
 <?php
 // packages/kernel/src/Exception/ConnectionException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class ConnectionException extends IndustrialProtocolsException {}
 
 // packages/kernel/src/Exception/ConnectionTimeoutException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class ConnectionTimeoutException extends ConnectionException {}
 
 // packages/kernel/src/Exception/ConnectionRefusedException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class ConnectionRefusedException extends ConnectionException {}
 
 // packages/kernel/src/Exception/ConnectionClosedException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class ConnectionClosedException extends ConnectionException {}
 
 // packages/kernel/src/Exception/ProtocolException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class ProtocolException extends IndustrialProtocolsException {}
 
 // packages/kernel/src/Exception/FrameException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class FrameException extends ProtocolException {}
 
 // packages/kernel/src/Exception/CrcException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class CrcException extends ProtocolException {}
 
 // packages/kernel/src/Exception/DeviceException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class DeviceException extends IndustrialProtocolsException {}
 
 // packages/kernel/src/Exception/DeviceBusyException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class DeviceBusyException extends DeviceException {}
 
 // packages/kernel/src/Exception/AddressOutOfRangeException.php
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 class AddressOutOfRangeException extends DeviceException {}
 ```
 
@@ -457,10 +457,10 @@ git commit -m "feat: add exception hierarchy"
 <?php
 // packages/kernel/tests/Unit/HealthStatusTest.php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
 use PHPUnit\Framework\TestCase;
 
 class HealthStatusTest extends TestCase
@@ -507,7 +507,7 @@ Expected: ERROR
 <?php
 // packages/kernel/src/Connection/ConnectionState.php
 
-namespace IndustrialProtocols\Connection;
+namespace Erikwang2013\IndustrialProtocols\Connection;
 
 enum ConnectionState: string
 {
@@ -525,7 +525,7 @@ enum ConnectionState: string
 <?php
 // packages/kernel/src/Connection/HealthStatus.php
 
-namespace IndustrialProtocols\Connection;
+namespace Erikwang2013\IndustrialProtocols\Connection;
 
 class HealthStatus implements \JsonSerializable
 {
@@ -599,7 +599,7 @@ git commit -m "feat: add HealthStatus value object and ConnectionState enum"
 <?php
 // packages/kernel/src/Protocol/ProtocolInterface.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 interface ProtocolInterface
 {
@@ -617,9 +617,9 @@ interface ProtocolInterface
 <?php
 // packages/kernel/src/Protocol/ConnectorInterface.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
-use IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
 
 interface ConnectorInterface
 {
@@ -638,7 +638,7 @@ interface ConnectorInterface
 <?php
 // packages/kernel/src/Protocol/DriverInterface.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 interface DriverInterface
 {
@@ -655,7 +655,7 @@ interface DriverInterface
 <?php
 // packages/kernel/src/Protocol/FrameInterface.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 interface FrameInterface
 {
@@ -671,7 +671,7 @@ interface FrameInterface
 <?php
 // packages/kernel/src/Protocol/DataPointInterface.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 interface DataPointInterface
 {
@@ -685,7 +685,7 @@ interface DataPointInterface
 <?php
 // packages/kernel/src/Protocol/GatewayRuleInterface.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 interface GatewayRuleInterface
 {
@@ -701,14 +701,14 @@ interface GatewayRuleInterface
 <?php
 // packages/kernel/tests/Unit/InterfaceExistsTest.php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\DataPointInterface;
-use IndustrialProtocols\Protocol\DriverInterface;
-use IndustrialProtocols\Protocol\FrameInterface;
-use IndustrialProtocols\Protocol\GatewayRuleInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\DataPointInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\DriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\GatewayRuleInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 use PHPUnit\Framework\TestCase;
 
 class InterfaceExistsTest extends TestCase
@@ -762,7 +762,7 @@ git commit -m "feat: add SDK interfaces (Protocol, Connector, Driver, Frame, Dat
 ```php
 <?php
 // packages/kernel/src/Event/ConnectionConnectedEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class ConnectionConnectedEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -772,7 +772,7 @@ class ConnectionConnectedEvent {
 }
 
 // packages/kernel/src/Event/ConnectionDisconnectedEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class ConnectionDisconnectedEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -781,8 +781,8 @@ class ConnectionDisconnectedEvent {
 }
 
 // packages/kernel/src/Event/ConnectionStateChangedEvent.php
-namespace IndustrialProtocols\Event;
-use IndustrialProtocols\Connection\HealthStatus;
+namespace Erikwang2013\IndustrialProtocols\Event;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
 class ConnectionStateChangedEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -792,7 +792,7 @@ class ConnectionStateChangedEvent {
 }
 
 // packages/kernel/src/Event/ConnectionRetryEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class ConnectionRetryEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -803,7 +803,7 @@ class ConnectionRetryEvent {
 }
 
 // packages/kernel/src/Event/DataReadEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class DataReadEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -813,7 +813,7 @@ class DataReadEvent {
 }
 
 // packages/kernel/src/Event/DataWriteEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class DataWriteEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -823,7 +823,7 @@ class DataWriteEvent {
 }
 
 // packages/kernel/src/Event/DataErrorEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class DataErrorEvent {
     public function __construct(
         public readonly string $deviceId,
@@ -834,7 +834,7 @@ class DataErrorEvent {
 }
 
 // packages/kernel/src/Event/KernelBootedEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class KernelBootedEvent {
     public function __construct(
         public readonly array $registeredProtocols = [],
@@ -843,7 +843,7 @@ class KernelBootedEvent {
 }
 
 // packages/kernel/src/Event/ProtocolRegisteredEvent.php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class ProtocolRegisteredEvent {
     public function __construct(
         public readonly string $protocolName,
@@ -857,7 +857,7 @@ class ProtocolRegisteredEvent {
 ```php
 <?php
 // packages/kernel/src/Log/LogDriverInterface.php
-namespace IndustrialProtocols\Log;
+namespace Erikwang2013\IndustrialProtocols\Log;
 interface LogDriverInterface
 {
     public function log(string $level, string $message, array $context = []): void;
@@ -865,7 +865,7 @@ interface LogDriverInterface
 }
 
 // packages/kernel/src/Log/PsrLogDriver.php
-namespace IndustrialProtocols\Log;
+namespace Erikwang2013\IndustrialProtocols\Log;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 class PsrLogDriver implements LogDriverInterface
@@ -882,7 +882,7 @@ class PsrLogDriver implements LogDriverInterface
 }
 
 // packages/kernel/src/Log/NullLogDriver.php
-namespace IndustrialProtocols\Log;
+namespace Erikwang2013\IndustrialProtocols\Log;
 class NullLogDriver implements LogDriverInterface
 {
     public function log(string $level, string $message, array $context = []): void {}
@@ -895,13 +895,13 @@ class NullLogDriver implements LogDriverInterface
 ```php
 <?php
 // packages/kernel/tests/Unit/EventTest.php
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Connection\HealthStatus;
-use IndustrialProtocols\Event\ConnectionConnectedEvent;
-use IndustrialProtocols\Event\ConnectionStateChangedEvent;
-use IndustrialProtocols\Event\DataReadEvent;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionConnectedEvent;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionStateChangedEvent;
+use Erikwang2013\IndustrialProtocols\Event\DataReadEvent;
 use PHPUnit\Framework\TestCase;
 
 class EventTest extends TestCase
@@ -932,11 +932,11 @@ class EventTest extends TestCase
 ```php
 <?php
 // packages/kernel/tests/Unit/LogDriverTest.php
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Event\DataReadEvent;
-use IndustrialProtocols\Log\NullLogDriver;
-use IndustrialProtocols\Log\PsrLogDriver;
+use Erikwang2013\IndustrialProtocols\Event\DataReadEvent;
+use Erikwang2013\IndustrialProtocols\Log\NullLogDriver;
+use Erikwang2013\IndustrialProtocols\Log\PsrLogDriver;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 
@@ -1007,7 +1007,7 @@ git commit -m "feat: add event classes and log drivers (PSR-3, Null)"
 <?php
 // packages/kernel/src/Config/ConfigRepositoryInterface.php
 
-namespace IndustrialProtocols\Config;
+namespace Erikwang2013\IndustrialProtocols\Config;
 
 interface ConfigRepositoryInterface
 {
@@ -1072,7 +1072,7 @@ git commit -m "feat: add ConfigRepository interface and FileConfigRepository"
 <?php
 // packages/kernel/src/Coroutine/CoroutineAdapterInterface.php
 
-namespace IndustrialProtocols\Coroutine;
+namespace Erikwang2013\IndustrialProtocols\Coroutine;
 
 interface CoroutineAdapterInterface
 {
@@ -1090,7 +1090,7 @@ interface CoroutineAdapterInterface
 <?php
 // packages/kernel/src/Coroutine/SyncCoroutineAdapter.php
 
-namespace IndustrialProtocols\Coroutine;
+namespace Erikwang2013\IndustrialProtocols\Coroutine;
 
 class SyncCoroutineAdapter implements CoroutineAdapterInterface
 {
@@ -1113,7 +1113,7 @@ class SyncCoroutineAdapter implements CoroutineAdapterInterface
 <?php
 // packages/kernel/src/Coroutine/FiberCoroutineAdapter.php
 
-namespace IndustrialProtocols\Coroutine;
+namespace Erikwang2013\IndustrialProtocols\Coroutine;
 
 use Fiber;
 
@@ -1153,7 +1153,7 @@ class FiberCoroutineAdapter implements CoroutineAdapterInterface
 <?php
 // packages/kernel/src/Coroutine/CoroutineFactory.php
 
-namespace IndustrialProtocols\Coroutine;
+namespace Erikwang2013\IndustrialProtocols\Coroutine;
 
 class CoroutineFactory
 {
@@ -1203,7 +1203,7 @@ git commit -m "feat: add coroutine adapters (Sync, Fiber) with factory"
 ```php
 <?php
 // packages/kernel/src/Retry/RetryStrategyInterface.php
-namespace IndustrialProtocols\Retry;
+namespace Erikwang2013\IndustrialProtocols\Retry;
 interface RetryStrategyInterface
 {
     public function shouldRetry(int $attempt, \Throwable $error): bool;
@@ -1211,7 +1211,7 @@ interface RetryStrategyInterface
 }
 
 // packages/kernel/src/Retry/NoRetryStrategy.php
-namespace IndustrialProtocols\Retry;
+namespace Erikwang2013\IndustrialProtocols\Retry;
 class NoRetryStrategy implements RetryStrategyInterface
 {
     public function shouldRetry(int $attempt, \Throwable $error): bool { return false; }
@@ -1219,7 +1219,7 @@ class NoRetryStrategy implements RetryStrategyInterface
 }
 
 // packages/kernel/src/Retry/FixedRetryStrategy.php
-namespace IndustrialProtocols\Retry;
+namespace Erikwang2013\IndustrialProtocols\Retry;
 class FixedRetryStrategy implements RetryStrategyInterface
 {
     public function __construct(
@@ -1239,7 +1239,7 @@ class FixedRetryStrategy implements RetryStrategyInterface
 }
 
 // packages/kernel/src/Retry/ExponentialBackoffStrategy.php
-namespace IndustrialProtocols\Retry;
+namespace Erikwang2013\IndustrialProtocols\Retry;
 class ExponentialBackoffStrategy implements RetryStrategyInterface
 {
     public function __construct(
@@ -1297,9 +1297,9 @@ git commit -m "feat: add retry strategies (NoRetry, Fixed, ExponentialBackoff)"
 <?php
 // packages/kernel/src/Connection/Strategy/StrategyInterface.php
 
-namespace IndustrialProtocols\Connection\Strategy;
+namespace Erikwang2013\IndustrialProtocols\Connection\Strategy;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 interface StrategyInterface
 {
@@ -1316,9 +1316,9 @@ interface StrategyInterface
 <?php
 // packages/kernel/src/Connection/Strategy/LazyStrategy.php
 
-namespace IndustrialProtocols\Connection\Strategy;
+namespace Erikwang2013\IndustrialProtocols\Connection\Strategy;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class LazyStrategy implements StrategyInterface
 {
@@ -1364,16 +1364,16 @@ class LazyStrategy implements StrategyInterface
 <?php
 // packages/kernel/src/Connection/ConnectionManager.php
 
-namespace IndustrialProtocols\Connection;
+namespace Erikwang2013\IndustrialProtocols\Connection;
 
-use IndustrialProtocols\Config\ConfigRepositoryInterface;
-use IndustrialProtocols\Connection\Strategy\StrategyInterface;
-use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
-use IndustrialProtocols\Event\ConnectionConnectedEvent;
-use IndustrialProtocols\Event\ConnectionDisconnectedEvent;
-use IndustrialProtocols\Log\LogDriverInterface;
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Config\ConfigRepositoryInterface;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\StrategyInterface;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionConnectedEvent;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionDisconnectedEvent;
+use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 class ConnectionManager
@@ -1484,9 +1484,9 @@ git commit -m "feat: add ConnectionManager with LazyStrategy"
 <?php
 // packages/kernel/src/Connection/Strategy/EagerStrategy.php
 
-namespace IndustrialProtocols\Connection\Strategy;
+namespace Erikwang2013\IndustrialProtocols\Connection\Strategy;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class EagerStrategy implements StrategyInterface
 {
@@ -1558,7 +1558,7 @@ git commit -m "feat: add EagerStrategy for ConnectionManager"
 <?php
 // packages/kernel/src/Protocol/ProtocolRegistry.php
 
-namespace IndustrialProtocols\Protocol;
+namespace Erikwang2013\IndustrialProtocols\Protocol;
 
 class ProtocolRegistry
 {
@@ -1616,7 +1616,7 @@ class ProtocolRegistry
 <?php
 // packages/kernel/src/Framework/FrameworkAdapterInterface.php
 
-namespace IndustrialProtocols\Framework;
+namespace Erikwang2013\IndustrialProtocols\Framework;
 
 interface FrameworkAdapterInterface
 {
@@ -1634,7 +1634,7 @@ interface FrameworkAdapterInterface
 <?php
 // packages/kernel/src/Framework/PlainPhpAdapter.php
 
-namespace IndustrialProtocols\Framework;
+namespace Erikwang2013\IndustrialProtocols\Framework;
 
 class PlainPhpAdapter implements FrameworkAdapterInterface
 {
@@ -1658,18 +1658,18 @@ class PlainPhpAdapter implements FrameworkAdapterInterface
 
 namespace IndustrialProtocols;
 
-use IndustrialProtocols\Config\ConfigRepositoryInterface;
-use IndustrialProtocols\Config\FileConfigRepository;
-use IndustrialProtocols\Connection\ConnectionManager;
-use IndustrialProtocols\Connection\Strategy\LazyStrategy;
-use IndustrialProtocols\Coroutine\CoroutineFactory;
-use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
-use IndustrialProtocols\Event\KernelBootedEvent;
-use IndustrialProtocols\Framework\FrameworkAdapterInterface;
-use IndustrialProtocols\Framework\PlainPhpAdapter;
-use IndustrialProtocols\Log\LogDriverInterface;
-use IndustrialProtocols\Log\PsrLogDriver;
-use IndustrialProtocols\Protocol\ProtocolRegistry;
+use Erikwang2013\IndustrialProtocols\Config\ConfigRepositoryInterface;
+use Erikwang2013\IndustrialProtocols\Config\FileConfigRepository;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionManager;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\LazyStrategy;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineFactory;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Event\KernelBootedEvent;
+use Erikwang2013\IndustrialProtocols\Framework\FrameworkAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Framework\PlainPhpAdapter;
+use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
+use Erikwang2013\IndustrialProtocols\Log\PsrLogDriver;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolRegistry;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\NullLogger;
 
@@ -1814,9 +1814,9 @@ git commit -m "feat: add ProtocolRegistry, FrameworkAdapter, and Kernel"
 <?php
 // packages/modbus/src/Exception/ModbusException.php
 
-namespace IndustrialProtocols\Modbus\Exception;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Exception;
 
-use IndustrialProtocols\Exception\ProtocolException;
+use Erikwang2013\IndustrialProtocols\Exception\ProtocolException;
 
 class ModbusException extends ProtocolException
 {
@@ -1844,7 +1844,7 @@ class ModbusException extends ProtocolException
 <?php
 // packages/modbus/src/Frame/ModbusFrame.php
 
-namespace IndustrialProtocols\Modbus\Frame;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Frame;
 
 abstract class ModbusFrame
 {
@@ -1884,9 +1884,9 @@ abstract class ModbusFrame
 <?php
 // packages/modbus/src/Frame/ModbusRequest.php
 
-namespace IndustrialProtocols\Modbus\Frame;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Frame;
 
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class ModbusRequest extends ModbusFrame implements FrameInterface
 {
@@ -1961,10 +1961,10 @@ class ModbusRequest extends ModbusFrame implements FrameInterface
 <?php
 // packages/modbus/src/Frame/ModbusResponse.php
 
-namespace IndustrialProtocols\Modbus\Frame;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Frame;
 
-use IndustrialProtocols\Modbus\Exception\ModbusException;
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Modbus\Exception\ModbusException;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class ModbusResponse extends ModbusFrame implements FrameInterface
 {
@@ -2052,12 +2052,12 @@ git commit -m "feat: add Modbus frame encode/decode with CRC16"
 <?php
 // packages/modbus/src/Driver/ModbusTcpDriver.php
 
-namespace IndustrialProtocols\Modbus\Driver;
+namespace Erikwang2013\IndustrialProtocols\Modbus\Driver;
 
-use IndustrialProtocols\Exception\ConnectionTimeoutException;
-use IndustrialProtocols\Modbus\Exception\ModbusException;
-use IndustrialProtocols\Protocol\DriverInterface;
-use IndustrialProtocols\Protocol\FrameInterface;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionTimeoutException;
+use Erikwang2013\IndustrialProtocols\Modbus\Exception\ModbusException;
+use Erikwang2013\IndustrialProtocols\Protocol\DriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\FrameInterface;
 
 class ModbusTcpDriver implements DriverInterface
 {
@@ -2131,10 +2131,10 @@ class ModbusTcpDriver implements DriverInterface
 <?php
 // packages/modbus/src/ModbusProtocol.php
 
-namespace IndustrialProtocols\Modbus;
+namespace Erikwang2013\IndustrialProtocols\Modbus;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 
 class ModbusProtocol implements ProtocolInterface
 {
@@ -2156,14 +2156,14 @@ class ModbusProtocol implements ProtocolInterface
 <?php
 // packages/modbus/src/ModbusConnector.php
 
-namespace IndustrialProtocols\Modbus;
+namespace Erikwang2013\IndustrialProtocols\Modbus;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Connection\HealthStatus;
-use IndustrialProtocols\Exception\AddressOutOfRangeException;
-use IndustrialProtocols\Modbus\Driver\ModbusTcpDriver;
-use IndustrialProtocols\Modbus\Frame\ModbusRequest;
-use IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Connection\HealthStatus;
+use Erikwang2013\IndustrialProtocols\Exception\AddressOutOfRangeException;
+use Erikwang2013\IndustrialProtocols\Modbus\Driver\ModbusTcpDriver;
+use Erikwang2013\IndustrialProtocols\Modbus\Frame\ModbusRequest;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
 
 class ModbusConnector implements ConnectorInterface
 {
@@ -2261,11 +2261,11 @@ Test: Kernel boot → register ModbusProtocol → connect to mock TCP server →
 <?php
 // tests/Integration/KernelModbusIntegrationTest.php
 
-namespace IndustrialProtocols\Tests\Integration;
+namespace Erikwang2013\IndustrialProtocols\Tests\Integration;
 
-use IndustrialProtocols\Connection\ConnectionState;
-use IndustrialProtocols\Kernel;
-use IndustrialProtocols\Modbus\ModbusProtocol;
+use Erikwang2013\IndustrialProtocols\Connection\ConnectionState;
+use Erikwang2013\IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
 use PHPUnit\Framework\TestCase;
 
 class KernelModbusIntegrationTest extends TestCase
@@ -2348,7 +2348,7 @@ git commit -m "test: add kernel + modbus end-to-end integration tests and README
 
 - [ ] `vendor/bin/phpunit` — all tests pass
 - [ ] `vendor/bin/phpunit --coverage-text` — ≥80% coverage on kernel + modbus
-- [ ] `php -r "require 'vendor/autoload.php'; (new IndustrialProtocols\Kernel)->boot();"` — kernel boots without error
+- [ ] `php -r "require 'vendor/autoload.php'; (new Erikwang2013\IndustrialProtocols\Kernel)->boot();"` — kernel boots without error
 - [ ] `composer validate` — all composer.json files valid
 - [ ] Modbus protocol auto-discovery via `extra.industrial-protocols.protocol` works
 - [ ] PlainPhpAdapter serves as fallback when no framework detected

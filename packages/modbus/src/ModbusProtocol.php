@@ -1,9 +1,9 @@
 <?php
 
-namespace IndustrialProtocols\Modbus;
+namespace Erikwang2013\IndustrialProtocols\Modbus;
 
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 
 class ModbusProtocol implements ProtocolInterface
 {

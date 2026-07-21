@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Retry;
+namespace Erikwang2013\IndustrialProtocols\Retry;
 
 class FixedRetryStrategy implements RetryStrategyInterface
 {

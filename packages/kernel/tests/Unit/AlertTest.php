@@ -1,8 +1,8 @@
 <?php
-namespace IndustrialProtocols\Tests\Unit;
-use IndustrialProtocols\Alert\AlertManager;
-use IndustrialProtocols\Alert\LogAlertChannel;
-use IndustrialProtocols\Log\NullLogDriver;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
+use Erikwang2013\IndustrialProtocols\Alert\AlertManager;
+use Erikwang2013\IndustrialProtocols\Alert\LogAlertChannel;
+use Erikwang2013\IndustrialProtocols\Log\NullLogDriver;
 use PHPUnit\Framework\TestCase;
 
 class AlertTest extends TestCase

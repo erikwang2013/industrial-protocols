@@ -452,7 +452,7 @@ Framework adapter responsibilities (shrunk to): **config publish + container bin
 
 ```php
 // No-framework fallback
-$kernel = new IndustrialProtocols\Kernel([
+$kernel = new Erikwang2013\IndustrialProtocols\Kernel([
     'config_path' => __DIR__ . '/industrial-protocols.php',
 ]);
 $kernel->boot();

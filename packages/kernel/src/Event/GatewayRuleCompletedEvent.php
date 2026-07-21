@@ -1,6 +1,6 @@
 <?php
 
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 
 class GatewayRuleCompletedEvent
 {

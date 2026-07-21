@@ -1,5 +1,5 @@
 <?php
-namespace IndustrialProtocols\Event;
+namespace Erikwang2013\IndustrialProtocols\Event;
 class DataReadEvent {
     public function __construct(
         public readonly string $deviceId,

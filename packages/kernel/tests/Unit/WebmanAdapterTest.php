@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Framework\WebmanAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\WebmanAdapter;
 use PHPUnit\Framework\TestCase;
 
 class WebmanAdapterTest extends TestCase

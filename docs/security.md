@@ -5,7 +5,7 @@
 Use `InputValidator` for all public-facing API inputs. All methods are static.
 
 ```php
-use IndustrialProtocols\Security\InputValidator;
+use Erikwang2013\IndustrialProtocols\Security\InputValidator;
 
 // Device ID: alphanumeric, dash, underscore, dot; max 128 chars
 $deviceId = InputValidator::deviceId($userInput);

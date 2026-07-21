@@ -1,6 +1,6 @@
 <?php
-namespace IndustrialProtocols\Tests\Unit;
-use IndustrialProtocols\Security\InputValidator;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
+use Erikwang2013\IndustrialProtocols\Security\InputValidator;
 use PHPUnit\Framework\TestCase;
 
 class InputValidatorTest extends TestCase

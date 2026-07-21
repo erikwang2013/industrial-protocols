@@ -1,5 +1,5 @@
 <?php
 
-namespace IndustrialProtocols\Exception;
+namespace Erikwang2013\IndustrialProtocols\Exception;
 
 class DeviceBusyException extends DeviceException {}

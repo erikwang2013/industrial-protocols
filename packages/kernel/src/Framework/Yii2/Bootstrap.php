@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Framework\Yii2;
+namespace Erikwang2013\IndustrialProtocols\Framework\Yii2;
 
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 use yii\base\BootstrapInterface;
 
 class Bootstrap implements BootstrapInterface

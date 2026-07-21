@@ -1,12 +1,12 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Exception\ConnectionTimeoutException;
-use IndustrialProtocols\Exception\AddressOutOfRangeException;
-use IndustrialProtocols\Retry\ExponentialBackoffStrategy;
-use IndustrialProtocols\Retry\FixedRetryStrategy;
-use IndustrialProtocols\Retry\NoRetryStrategy;
+use Erikwang2013\IndustrialProtocols\Exception\ConnectionTimeoutException;
+use Erikwang2013\IndustrialProtocols\Exception\AddressOutOfRangeException;
+use Erikwang2013\IndustrialProtocols\Retry\ExponentialBackoffStrategy;
+use Erikwang2013\IndustrialProtocols\Retry\FixedRetryStrategy;
+use Erikwang2013\IndustrialProtocols\Retry\NoRetryStrategy;
 use PHPUnit\Framework\TestCase;
 
 class RetryStrategyTest extends TestCase

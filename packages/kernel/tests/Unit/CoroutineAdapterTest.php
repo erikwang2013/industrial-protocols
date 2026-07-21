@@ -1,10 +1,10 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
-use IndustrialProtocols\Coroutine\CoroutineFactory;
-use IndustrialProtocols\Coroutine\SyncCoroutineAdapter;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineFactory;
+use Erikwang2013\IndustrialProtocols\Coroutine\SyncCoroutineAdapter;
 use PHPUnit\Framework\TestCase;
 
 class CoroutineAdapterTest extends TestCase

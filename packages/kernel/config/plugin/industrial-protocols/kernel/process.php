@@ -1,10 +1,10 @@
 <?php
 
-use IndustrialProtocols\Kernel;
+use Erikwang2013\IndustrialProtocols\Kernel;
 
 return [
     'industrial_protocols' => [
-        'handler' => \IndustrialProtocols\Framework\Webman\ProtocolProcess::class,
+        'handler' => \Erikwang2013\IndustrialProtocols\Framework\Webman\ProtocolProcess::class,
         'count'   => 1,
     ],
 ];

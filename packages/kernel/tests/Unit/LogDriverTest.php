@@ -1,9 +1,9 @@
 <?php
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Event\DataReadEvent;
-use IndustrialProtocols\Log\NullLogDriver;
-use IndustrialProtocols\Log\PsrLogDriver;
+use Erikwang2013\IndustrialProtocols\Event\DataReadEvent;
+use Erikwang2013\IndustrialProtocols\Log\NullLogDriver;
+use Erikwang2013\IndustrialProtocols\Log\PsrLogDriver;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 

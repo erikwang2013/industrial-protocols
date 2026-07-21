@@ -1,15 +1,15 @@
 <?php
 
-namespace IndustrialProtocols\Connection;
+namespace Erikwang2013\IndustrialProtocols\Connection;
 
-use IndustrialProtocols\Config\ConfigRepositoryInterface;
-use IndustrialProtocols\Connection\Strategy\StrategyInterface;
-use IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
-use IndustrialProtocols\Event\ConnectionConnectedEvent;
-use IndustrialProtocols\Event\ConnectionDisconnectedEvent;
-use IndustrialProtocols\Log\LogDriverInterface;
-use IndustrialProtocols\Protocol\ConnectorInterface;
-use IndustrialProtocols\Protocol\ProtocolInterface;
+use Erikwang2013\IndustrialProtocols\Config\ConfigRepositoryInterface;
+use Erikwang2013\IndustrialProtocols\Connection\Strategy\StrategyInterface;
+use Erikwang2013\IndustrialProtocols\Coroutine\CoroutineAdapterInterface;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionConnectedEvent;
+use Erikwang2013\IndustrialProtocols\Event\ConnectionDisconnectedEvent;
+use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ConnectorInterface;
+use Erikwang2013\IndustrialProtocols\Protocol\ProtocolInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 class ConnectionManager

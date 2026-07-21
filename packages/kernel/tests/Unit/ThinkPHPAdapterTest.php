@@ -1,8 +1,8 @@
 <?php
 
-namespace IndustrialProtocols\Tests\Unit;
+namespace Erikwang2013\IndustrialProtocols\Tests\Unit;
 
-use IndustrialProtocols\Framework\ThinkPHPAdapter;
+use Erikwang2013\IndustrialProtocols\Framework\ThinkPHPAdapter;
 use PHPUnit\Framework\TestCase;
 
 class ThinkPHPAdapterTest extends TestCase
