@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  modbus-simulator:
+    build: ./modbus-simulator
+    ports:
+      - "5020:502"
+    restart: unless-stopped
+
+  opcua-simulator:
+    image: ghcr.io/industrial-protocols/opcua-simulator:latest
+    ports:
+      - "4840:4840"
+    profiles:
+      - opcua
