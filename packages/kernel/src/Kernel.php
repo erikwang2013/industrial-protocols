@@ -18,6 +18,8 @@ use Erikwang2013\IndustrialProtocols\Framework\Yii2Adapter;
 use Erikwang2013\IndustrialProtocols\Log\LogDriverInterface;
 use Erikwang2013\IndustrialProtocols\Log\PsrLogDriver;
 use Erikwang2013\IndustrialProtocols\Protocol\ProtocolRegistry;
+use Erikwang2013\IndustrialProtocols\Vendor\DefaultVendors;
+use Erikwang2013\IndustrialProtocols\Vendor\VendorBridgeFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\NullLogger;
 
@@ -29,6 +31,7 @@ class Kernel
     private CoroutineAdapterInterface $coroutine;
     private LogDriverInterface $log;
     private FrameworkAdapterInterface $framework;
+    private ?VendorBridgeFactory $vendorBridgeFactory = null;
     private bool $booted = false;
 
     public function __construct(
@@ -108,6 +111,15 @@ class Kernel
     public function getFramework(): FrameworkAdapterInterface
     {
         return $this->framework;
+    }
+
+    public function getVendorBridgeFactory(): VendorBridgeFactory
+    {
+        if ($this->vendorBridgeFactory === null) {
+            $this->vendorBridgeFactory = new VendorBridgeFactory();
+            DefaultVendors::register($this->vendorBridgeFactory);
+        }
+        return $this->vendorBridgeFactory;
     }
 
     private function detectFramework(): FrameworkAdapterInterface
