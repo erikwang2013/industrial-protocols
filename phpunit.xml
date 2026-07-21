@@ -19,6 +19,18 @@
         <testsuite name="OPCUA">
             <directory>packages/opcua/tests</directory>
         </testsuite>
+        <testsuite name="Profinet">
+            <directory>packages/profinet/tests</directory>
+        </testsuite>
+        <testsuite name="EtherCAT">
+            <directory>packages/ethercat/tests</directory>
+        </testsuite>
+        <testsuite name="POWERLINK">
+            <directory>packages/powerlink/tests</directory>
+        </testsuite>
+        <testsuite name="SERCOS">
+            <directory>packages/sercos/tests</directory>
+        </testsuite>
         <testsuite name="Integration">
             <directory>tests/Integration</directory>
         </testsuite>

@@ -457,7 +457,10 @@ industrial-protocols/
 | **BACnet/IP** | Phase 3 | IP (UDP) | 47808 | 纯 PHP UDP Socket | Who-Is/I-Am 设备发现、ReadProperty |
 | **EtherNet/IP** | Phase 3 | TCP | 44818 | 纯 PHP Socket | ENIP 会话管理、CIP Read Tag |
 | **OPC UA** | Phase 4 | Binary | 4840 | 纯 PHP UA Binary 协议栈 | CreateSession / ActivateSession / Read / Write / Browse |
-| **Profinet** | Phase 4 (NRT) | NRT | 34964 | 纯 PHP UDP/TCP | DCP 设备发现 / ReadRecord / WriteRecord / 诊断（RT 通道需专用硬件） |
+| **Profinet** | Phase 4 (NRT) | NRT, RT (Bridge) | 34964 | 纯 PHP UDP/TCP + BridgeConnector (RT) | DCP 设备发现 / ReadRecord / WriteRecord / 诊断（RT/IRT 需专用硬件桥接） |
+| **EtherCAT** | Phase 4 (Bridge) | N/A | 0 | ExternalProcessBridge / TcpGatewayBridge | 通过 C/C++ SDK 或网关硬件适配 |
+| **POWERLINK** | Phase 4 (Bridge) | N/A | 0 | ExternalProcessBridge / TcpGatewayBridge | 通过 C/C++ SDK 或网关硬件适配 |
+| **SERCOS III** | Phase 4 (Bridge) | N/A | 0 | ExternalProcessBridge / TcpGatewayBridge | 通过 C/C++ SDK 或网关硬件适配 |
 
 ---
 
