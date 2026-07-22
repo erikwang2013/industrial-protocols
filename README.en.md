@@ -1,40 +1,40 @@
 # EtherNet/IP 协议包 — ENIP 会话管理 + CIP Read Tag，TCP 通信
 
-> [English](README.en.md)
+> [中文](README.md)
 
-erikwang2013/industrial-protocols-ethernet-ip — 纯 PHP 实现，类别：工业以太网。
+erikwang2013/industrial-protocols-ethernet-ip — 纯 PHP implementation, category: Industrial Ethernet.
 
-## 安装
+## Installation
 
 ```bash
 composer require erikwang2013/industrial-protocols-ethernet-ip
 ```
 
-## 使用
+## Usage
 
 ```php
 use Erikwang2013\IndustrialProtocols\Kernel;
 $kernel = new Kernel(['config_path' => __DIR__ . '/industrial-protocols.php']);
 $kernel->boot();
 
-// 通过 ConnectionManager 连接设备
+// Connect via ConnectionManager
 $conn = $kernel->getConnectionManager()->connect('device-id');
 $result = $conn->read('address');
 ```
 
-## 功能
+## Features
 
 ENIP 会话注册/注销、CIP Read Tag 服务、TCP 通信
 
-## 架构
+## Architecture
 
 TCP Socket + ENIP 帧封装(24字节头) + CIP 协议，实现 6 个 SDK 接口
 
-## 协议支持
+## Protocol Support
 
 EtherNet/IP TCP (端口 44818)
 
-## 系统要求
+## Requirements
 
 - PHP >= 8.1
 - Composer
