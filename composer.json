@@ -19,5 +19,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Mqtt\\MqttProtocol"
         }
-    }
+    },
+    "description": "MQTT 3.1.1 协议包 — 轻量级 IoT 消息协议，支持发布/订阅和通配符",
+    "keywords": [
+        "mqtt",
+        "iot",
+        "publish-subscribe",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
