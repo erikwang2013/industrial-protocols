@@ -1,40 +1,40 @@
 # OPC UA Binary 协议包 — 完整 UA Binary 协议栈，支持 CreateSession/Read/Write/Browse
 
-> [English](README.en.md)
+> [中文](README.md)
 
-erikwang2013/industrial-protocols-opc-ua — 纯 PHP 实现，类别：工业以太网。
+erikwang2013/industrial-protocols-opc-ua — 纯 PHP implementation, category: Industrial Ethernet.
 
-## 安装
+## Installation
 
 ```bash
 composer require erikwang2013/industrial-protocols-opc-ua
 ```
 
-## 使用
+## Usage
 
 ```php
 use Erikwang2013\IndustrialProtocols\Kernel;
 $kernel = new Kernel(['config_path' => __DIR__ . '/industrial-protocols.php']);
 $kernel->boot();
 
-// 通过 ConnectionManager 连接设备
+// Connect via ConnectionManager
 $conn = $kernel->getConnectionManager()->connect('device-id');
 $result = $conn->read('address');
 ```
 
-## 功能
+## Features
 
 UA Binary 协议栈、NodeId(4种编码)、Variant(13种标量类型+数组)、BinaryEncoder/Decoder、Hello/Acknowledge 握手、SecureChannel(Open/Close)、Session(Create/Activate)、Read/Write/Browse 服务
 
-## 架构
+## Architecture
 
 TCP Socket → Hello/Acknowledge → SecureChannel(SecurityPolicy:None) → Session(Anonymous) → Read/Write/Browse。完整 UA Binary 类型系统(NodeId/StatusCode/Variant)+ 二进制编解码器
 
-## 协议支持
+## Protocol Support
 
 OPC UA Binary TCP (端口 4840)、Security Policy None、Anonymous 认证
 
-## 系统要求
+## Requirements
 
 - PHP >= 8.1
 - Composer
