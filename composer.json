@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Interbus\\InterbusProtocol"
         }
-    }
+    },
+    "description": "INTERBUS 协议包 — Phoenix Contact 环网，需环网接口桥接",
+    "keywords": [
+        "interbus",
+        "phoenix-contact",
+        "fieldbus",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
