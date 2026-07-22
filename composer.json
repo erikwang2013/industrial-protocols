@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\DeviceNet\\DeviceNetProtocol"
         }
-    }
+    },
+    "description": "DeviceNet 协议包 — 需 Anybus DeviceNet Scanner 网关桥接",
+    "keywords": [
+        "devicenet",
+        "can-bus",
+        "allen-bradley",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
