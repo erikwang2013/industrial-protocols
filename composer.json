@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\CcLinkIe\\CcLinkIeProtocol"
         }
-    }
+    },
+    "description": "CC-Link IE 协议包 — 工业以太网版本，需 CC-Link IE Field 网关桥接",
+    "keywords": [
+        "cc-link-ie",
+        "industrial-ethernet",
+        "mitsubishi",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
