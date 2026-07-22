@@ -14,5 +14,16 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\EtherCat\\EtherCatProtocol"
         }
-    }
+    },
+    "description": "EtherCAT 协议包 — 需 Beckhoff TwinCAT/SOEM 桥接",
+    "keywords": [
+        "ethercat",
+        "beckhoff",
+        "fieldbus",
+        "real-time",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
