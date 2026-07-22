@@ -106,7 +106,7 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | [lonworks](https://github.com/erikwang2013/industrial-protocols-lonworks) | [erikwang2013/industrial-protocols-lonworks](https://packagist.org/packages/erikwang2013/industrial-protocols-lonworks) | LonWorks, needs Neuron chip/interface |
 | [dali](https://github.com/erikwang2013/industrial-protocols-dali) | [erikwang2013/industrial-protocols-dali](https://packagist.org/packages/erikwang2013/industrial-protocols-dali) | DALI digital lighting, needs DALI gateway |
 
-### Hardware Bridge (11)
+### Hardware Bridge (13)
 
 | Package | Repository | Hardware Required |
 |---------|-----------|------------------|
@@ -121,6 +121,9 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | [modbusplus](https://github.com/erikwang2013/industrial-protocols-modbusplus) | [erikwang2013/industrial-protocols-modbusplus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbusplus) | Schneider Modbus Plus SA85/BM85 |
 | [isa100](https://github.com/erikwang2013/industrial-protocols-isa100) | [erikwang2013/industrial-protocols-isa100](https://packagist.org/packages/erikwang2013/industrial-protocols-isa100) | Yokogawa YFGW410 / Honeywell OneWireless |
 | [wirelesshart](https://github.com/erikwang2013/industrial-protocols-wirelesshart) | [erikwang2013/industrial-protocols-wirelesshart](https://packagist.org/packages/erikwang2013/industrial-protocols-wirelesshart) | Emerson 1410/1420 Smart Wireless Gateway |
+| [SERCOS I/II ](https://github.com/erikwang2013/industrial-protocols-sercos-i) | [erikwang2013/industrial-protocols-sercos-i](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos-i) | SERCOS I/II 协议包 |
+| [SAE J1850 ](https://github.com/erikwang2013/industrial-protocols-sae-j1850) | [erikwang2013/industrial-protocols-sae-j1850](https://packagist.org/packages/erikwang2013/industrial-protocols-sae-j1850) | SAE J1850 协议包 |
+
 
 ### System Bus (3)
 
