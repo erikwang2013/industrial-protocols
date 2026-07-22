@@ -7,8 +7,10 @@ erikwang2013/industrial-protocols-canopen — Bridge implementation, category: H
 ## Installation
 
 ```bash
-composer require erikwang2013/industrial-protocols-canopen
+composer require erikwang2013/industrial-protocols-kernel erikwang2013/industrial-protocols-canopen
 ```
+
+> This package depends on [erikwang2013/industrial-protocols-kernel](https://github.com/erikwang2013/industrial-protocols), which provides connection management, protocol registry, coroutine adaptation, event system and more.
 
 ## Usage
 
@@ -21,6 +23,8 @@ $kernel->boot();
 $conn = $kernel->getConnectionManager()->connect('device-id');
 $result = $conn->read('address');
 ```
+
+> This package depends on [erikwang2013/industrial-protocols-kernel](https://github.com/erikwang2013/industrial-protocols), which provides connection management, protocol registry, coroutine adaptation, event system and more.
 
 ## Features
 

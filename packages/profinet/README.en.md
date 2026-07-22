@@ -7,8 +7,10 @@ erikwang2013/industrial-protocols-profinet — 纯 PHP (NRT) implementation, cat
 ## Installation
 
 ```bash
-composer require erikwang2013/industrial-protocols-profinet
+composer require erikwang2013/industrial-protocols-kernel erikwang2013/industrial-protocols-profinet
 ```
+
+> This package depends on [erikwang2013/industrial-protocols-kernel](https://github.com/erikwang2013/industrial-protocols), which provides connection management, protocol registry, coroutine adaptation, event system and more.
 
 ## Usage
 
@@ -21,6 +23,8 @@ $kernel->boot();
 $conn = $kernel->getConnectionManager()->connect('device-id');
 $result = $conn->read('address');
 ```
+
+> This package depends on [erikwang2013/industrial-protocols-kernel](https://github.com/erikwang2013/industrial-protocols), which provides connection management, protocol registry, coroutine adaptation, event system and more.
 
 ## Features
 

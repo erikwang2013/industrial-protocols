@@ -7,8 +7,10 @@ erikwang2013/industrial-protocols-bacnet — 纯 PHP 实现，类别：工业以
 ## 安装
 
 ```bash
-composer require erikwang2013/industrial-protocols-bacnet
+composer require erikwang2013/industrial-protocols-kernel erikwang2013/industrial-protocols-bacnet
 ```
+
+> 本包依赖 [erikwang2013/industrial-protocols-kernel](https://github.com/erikwang2013/industrial-protocols)，内核提供连接管理、协议注册、协程适配、事件系统等基础设施。
 
 ## 使用
 
@@ -21,6 +23,8 @@ $kernel->boot();
 $conn = $kernel->getConnectionManager()->connect('device-id');
 $result = $conn->read('address');
 ```
+
+> 本包依赖 [erikwang2013/industrial-protocols-kernel](https://github.com/erikwang2013/industrial-protocols)，内核提供连接管理、协议注册、协程适配、事件系统等基础设施。
 
 ## 功能
 
