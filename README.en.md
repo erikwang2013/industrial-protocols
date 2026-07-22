@@ -1,22 +1,16 @@
 # Industrial Protocols PHP
 
-A PHP industrial communication protocol suite — micro-kernel + protocol SDK architecture covering 42 protocols, compatible with 6 PHP runtime environments.
+A PHP industrial communication protocol suite — micro-kernel + protocol SDK architecture covering 40 protocols, compatible with 6 PHP runtime environments.
 
 > [中文版](README.md)
-
----
 
 ## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
-- [Supported Protocols](#supported-protocols)
+- [All Protocol Packages](#all-protocol-packages)
 - [Supported Frameworks](#supported-frameworks)
 - [Quick Start](#quick-start)
-- [Core Features](#core-features)
-- [Protocol Examples](#protocol-examples)
-- [Framework Integration](#framework-integration)
-- [Vendor Adapters](#vendor-adapters)
 - [Configuration Reference](#configuration-reference)
 - [Documentation](#documentation)
 - [Requirements](#requirements)
@@ -26,131 +20,128 @@ A PHP industrial communication protocol suite — micro-kernel + protocol SDK ar
 
 ## Overview
 
-Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. The kernel provides infrastructure — connection management, configuration management, gateway engine, event system, coroutine adaptation — while protocol packages are independent Composer packages installed on-demand, plugging in by implementing unified SDK interfaces.
+Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. 40 protocol packages (15 pure PHP + 25 Bridge), each as an independent GitHub repository and Composer package, installed on-demand via Packagist.
 
-**Scale:** 42 protocol packages (15 pure PHP + 27 bridge implementations), 351 tests, 731 assertions; 12 pre-configured vendor profiles; 6 framework adapters; PHP >= 8.1.
+**Core philosophy:** The kernel only defines "what a protocol is" — it contains zero protocol implementations. Users install only what they need. The kernel auto-discovers installed protocol packages at boot via the `composer.json` `extra` field.
 
-**Core philosophy:** The kernel only defines "what a protocol is" — it contains zero protocol implementations. Users install only what they need. The kernel auto-discovers protocol packages at boot via Composer's `extra` field. Each protocol package depends solely on the kernel, with zero inter-protocol coupling.
+```bash
+composer require erikwang2013/industrial-protocols-kernel erikwang2013/industrial-protocols-modbus
+```
 
 ---
 
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                       User Application                        │
-├──────────────────────────────────────────────────────────────┤
-│   Framework Adapters: Laravel · Webman · Hyperf · ThinkPHP · Yii2 · Plain PHP
-├──────────────────────────────────────────────────────────────┤
-│                      Micro-Kernel                             │
-│  ┌──────────┬──────────┬──────────┬──────────┬────────────┐  │
-│  │ Protocol │Connection│  Config  │ Gateway  │ Events(13) │  │
-│  │ Registry │ Manager  │Repository│ Engine   │ PSR-14     │  │
-│  ├──────────┼──────────┼──────────┼──────────┼────────────┤  │
-│  │Coroutine │  Retry   │  Alert   │ Metrics  │ Security   │  │
-│  │(3-level) │ (4 types)│ Manager  │(Prometheus)│Validator  │  │
-│  ├──────────┼──────────┼──────────┼──────────┼────────────┤  │
-│  │  Vendor  │  Bridge  │  Logging │Exception │            │  │
-│  │Profiles  │  Layer   │(PSR-3/File)|(20+ types)│          │  │
-│  └──────────┴──────────┴──────────┴──────────┴────────────┘  │
-├──────────────────────────────────────────────────────────────┤
-│                Protocol SDK (6 Core Interfaces)               │
-├──────────────────────────────────────────────────────────────┤
-│  42 Protocol Packages: 15 Pure PHP + 27 Bridge               │
-└──────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────┐
+│                  User Application                │
+├─────────────────────────────────────────────────┤
+│  Framework Adapters: Laravel · Webman · Hyperf  │
+│                     ThinkPHP · Yii2 · Plain PHP  │
+├─────────────────────────────────────────────────┤
+│                  Micro-Kernel                    │
+│  ProtocolRegistry · ConnectionManager(3 strategies)│
+│  ConfigRepository · GatewayEngine · CircuitBreaker│
+│  CoroutineAdapter · Bridge Layer · Vendor Profiles│
+│  Event System(PSR-14) · Log(PSR-3) · Retry(4 types)│
+│  Metrics(Prometheus) · Alert · Security · Exception│
+├─────────────────────────────────────────────────┤
+│           Protocol SDK (6 Core Interfaces)        │
+├─────────────────────────────────────────────────┤
+│   40 Protocol Packages: 15 Pure PHP + 25 Bridge   │
+└─────────────────────────────────────────────────┘
 ```
-
-**Key Design Decisions:**
-
-| Decision | Choice |
-|----------|--------|
-| Architecture | Micro-kernel + Protocol SDK; protocol packages are independently installed, zero coupling |
-| Connection Strategies | Lazy (on-demand), Eager (connect at boot), Pooled (connection pool, round-robin) |
-| Coroutine Adaptation | Swoole → Fiber → Sync three-tier auto-degradation |
-| Retry Strategies | NoRetry / Fixed / ExponentialBackoff / ExponentialBackoff + Jitter |
-| Configuration | FileConfig / DatabaseConfig (PDO) / EnvConfig — three implementations |
-| Event System | 13 event types based on PSR-14 |
-| Gateway Triggers | poll (periodic), change (value-triggered), cron (schedule-based) |
-| Hardware Bridge | ExternalProcessBridge (local SDK subprocess) + TcpGatewayBridge (remote gateway TCP) |
 
 ---
 
-## Supported Protocols
+## All Protocol Packages
 
 ### Industrial Ethernet (5)
 
-| Protocol | Variant | Implementation | Operations |
-|----------|---------|---------------|------------|
-| Modbus TCP | TCP | Pure PHP Socket | FC 01/03/04/06/10 |
-| BACnet/IP | IP (UDP) | Pure PHP UDP | Who-Is/I-Am, ReadProperty |
-| EtherNet/IP | TCP | Pure PHP Socket | ENIP session, CIP Read Tag |
-| OPC UA | UA Binary/TCP | Pure PHP UA Binary Stack | CreateSession, Read, Write, Browse |
-| Profinet NRT | NRT (UDP/TCP) | Pure PHP Socket | DCP discovery, Record Data read/write |
+| Package | Repository | Description |
+|---------|-----------|-------------|
+| [modbus](https://github.com/erikwang2013/industrial-protocols-modbus) | [erikwang2013/industrial-protocols-modbus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbus) | Modbus TCP/RTU/ASCII, FC 01/03/04/06/10, port 502 |
+| [bacnet](https://github.com/erikwang2013/industrial-protocols-bacnet) | [erikwang2013/industrial-protocols-bacnet](https://packagist.org/packages/erikwang2013/industrial-protocols-bacnet) | BACnet/IP, Who-Is/I-Am discovery, ReadProperty, port 47808 |
+| [ethernetip](https://github.com/erikwang2013/industrial-protocols-ethernetip) | [erikwang2013/industrial-protocols-ethernetip](https://packagist.org/packages/erikwang2013/industrial-protocols-ethernetip) | EtherNet/IP, ENIP session + CIP Read Tag, port 44818 |
+| [opcua](https://github.com/erikwang2013/industrial-protocols-opcua) | [erikwang2013/industrial-protocols-opcua](https://packagist.org/packages/erikwang2013/industrial-protocols-opcua) | OPC UA Binary stack, Session + Read/Write/Browse, port 4840 |
+| [profinet](https://github.com/erikwang2013/industrial-protocols-profinet) | [erikwang2013/industrial-protocols-profinet](https://packagist.org/packages/erikwang2013/industrial-protocols-profinet) | Profinet NRT, DCP discovery + Record Data, port 34964 |
 
 ### Fieldbus (12)
 
-| Protocol | Variant | Implementation | Notes |
-|----------|---------|---------------|-------|
-| Modbus RTU/ASCII | RS-485 Serial | Pure PHP Serial | CRC16 checksum |
-| HART | 4-20mA FSK | Pure PHP Serial | HART modem, PV/loop current |
-| CC-Link RS-485 | RS-485 | Pure PHP Serial | Master-slave polling, CRC-16/XMODEM |
-| DNP3 | TCP/Serial | Pure PHP | Power automation, Class 0 poll |
-| IEC 61850 | MMS over TCP | Pure PHP | Substation automation, IED data paths |
-| PROFIBUS DP/PA/FMS | RS-485/MBP | Bridge (Anybus/Siemens CP) | Gateway or interface card required |
-| CANopen | CAN | Bridge (PCAN/SocketCAN) | CAN interface required |
-| DeviceNet | CAN | Bridge (Anybus) | DeviceNet Scanner required |
-| Foundation Fieldbus | H1/HSE | Bridge (NI/Softing) | FF interface required |
-| AS-Interface | AS-i | Bridge (Bihl+Wiedemann/P+F) | AS-i gateway required |
-| IO-Link | Point-to-Point | Bridge (ifm/Balluff) | IO-Link Master required |
-| CC-Link IE | Industrial Ethernet | Bridge | CC-Link IE Field gateway required |
+| Package | Repository | Description |
+|---------|-----------|-------------|
+| [hart](https://github.com/erikwang2013/industrial-protocols-hart) | [erikwang2013/industrial-protocols-hart](https://packagist.org/packages/erikwang2013/industrial-protocols-hart) | HART 4-20mA FSK, HART modem, PV/loop current |
+| [cclink](https://github.com/erikwang2013/industrial-protocols-cclink) | [erikwang2013/industrial-protocols-cclink](https://packagist.org/packages/erikwang2013/industrial-protocols-cclink) | CC-Link RS-485, master-slave polling, CRC-16/XMODEM |
+| [dnp3](https://github.com/erikwang2013/industrial-protocols-dnp3) | [erikwang2013/industrial-protocols-dnp3](https://packagist.org/packages/erikwang2013/industrial-protocols-dnp3) | DNP3 power automation, Class 0 poll, port 20000 |
+| [iec61850](https://github.com/erikwang2013/industrial-protocols-iec61850) | [erikwang2013/industrial-protocols-iec61850](https://packagist.org/packages/erikwang2013/industrial-protocols-iec61850) | IEC 61850 MMS substation automation, port 102 |
+| [profibus](https://github.com/erikwang2013/industrial-protocols-profibus) | [erikwang2013/industrial-protocols-profibus](https://packagist.org/packages/erikwang2013/industrial-protocols-profibus) | PROFIBUS DP/PA/FMS, needs Siemens CP 5611/Anybus |
+| [canopen](https://github.com/erikwang2013/industrial-protocols-canopen) | [erikwang2013/industrial-protocols-canopen](https://packagist.org/packages/erikwang2013/industrial-protocols-canopen) | CANopen, needs PCAN-USB/SocketCAN |
+| [devicenet](https://github.com/erikwang2013/industrial-protocols-devicenet) | [erikwang2013/industrial-protocols-devicenet](https://packagist.org/packages/erikwang2013/industrial-protocols-devicenet) | DeviceNet, needs Anybus DeviceNet Scanner |
+| [foundationfieldbus](https://github.com/erikwang2013/industrial-protocols-foundationfieldbus) | [erikwang2013/industrial-protocols-foundationfieldbus](https://packagist.org/packages/erikwang2013/industrial-protocols-foundationfieldbus) | Foundation Fieldbus H1/HSE, needs NI USB-8486/Softing |
+| [asinterface](https://github.com/erikwang2013/industrial-protocols-asinterface) | [erikwang2013/industrial-protocols-asinterface](https://packagist.org/packages/erikwang2013/industrial-protocols-asinterface) | AS-Interface, needs Bihl+Wiedemann/Pepperl+Fuchs |
+| [iolink](https://github.com/erikwang2013/industrial-protocols-iolink) | [erikwang2013/industrial-protocols-iolink](https://packagist.org/packages/erikwang2013/industrial-protocols-iolink) | IO-Link, needs ifm/Balluff IO-Link Master |
+| [cclinkie](https://github.com/erikwang2013/industrial-protocols-cclinkie) | [erikwang2013/industrial-protocols-cclinkie](https://packagist.org/packages/erikwang2013/industrial-protocols-cclinkie) | CC-Link IE Field Ethernet, needs gateway |
 
-### Automotive, Building & IoT (9)
+### IoT/Messaging (2)
 
-| Protocol | Category | Implementation | Notes |
-|----------|----------|---------------|-------|
-| LIN | Automotive body bus | Pure PHP Serial | 19200 bps, master-slave, PID parity |
-| K-Line | OBD-II diagnostics | Pure PHP Serial | ISO 9141/14230, 5-baud init |
-| FlexRay | Automotive high-speed | Bridge | 10 Mbps, FlexRay controller required |
-| LonWorks | Building automation | Bridge | Neuron chip / interface card required |
-| DALI | Digital lighting | Bridge | DALI gateway (Lunatone/Helvar) required |
-| MQTT | IoT messaging | Pure PHP TCP | Publish/Subscribe, Keep-Alive |
-| HART-IP | HART over IP | Pure PHP TCP | Port 5094 |
-| ISA100.11a | Industrial wireless | Bridge (802.15.4) | ISA100 gateway required |
-| WirelessHART | HART wireless | Bridge | WirelessHART gateway required |
+| Package | Repository | Description |
+|---------|-----------|-------------|
+| [mqtt](https://github.com/erikwang2013/industrial-protocols-mqtt) | [erikwang2013/industrial-protocols-mqtt](https://packagist.org/packages/erikwang2013/industrial-protocols-mqtt) | MQTT 3.1.1, publish/subscribe + wildcards, port 1883 |
+| [hartip](https://github.com/erikwang2013/industrial-protocols-hartip) | [erikwang2013/industrial-protocols-hartip](https://packagist.org/packages/erikwang2013/industrial-protocols-hartip) | HART-IP, HART over TCP/UDP, port 5094 |
 
-### Hardware Bridge (16)
+### Automotive (5)
 
-| Protocol | Hardware Required | Bridge Method |
-|----------|------------------|---------------|
-| EtherCAT | ESC chip (Beckhoff TwinCAT / SOEM) | ExternalProcessBridge |
-| POWERLINK | openMAC (openPOWERLINK / B&R) | ExternalProcessBridge |
-| SERCOS III | FPGA IP core (Bosch Rexroth / Hilscher) | TcpGatewayBridge |
-| SERCOS I/II | Fiber optic interface (legacy SERCOS) | Bridge |
-| MOST | Fiber optic multimedia interface | Bridge |
-| ControlNet | Coax token-ring interface (Allen-Bradley) | Bridge |
-| INTERBUS | Ring network interface (Phoenix Contact) | Bridge |
-| WorldFIP | FIP bus interface | Bridge |
-| Lightbus | Fiber optic interface (Beckhoff) | Bridge |
-| SAE J1850 | J1850 PWM/VPW interface | Bridge |
-| Modbus Plus | Token-ring interface (Schneider) | Bridge |
-| PCI/PCIe | Kernel driver/library bridge | Bridge |
-| VME/VPX | VME bridge | Bridge |
-| CPCI | CompactPCI interface | Bridge |
-| Profinet RT/IRT | ERTEC chip (Siemens / Hilscher) | Bridge (planned) |
-| TSN | TSN NIC (Intel I225 / NXP SJA1110) | Bridge (planned) |
+| Package | Repository | Description |
+|---------|-----------|-------------|
+| [lin](https://github.com/erikwang2013/industrial-protocols-lin) | [erikwang2013/industrial-protocols-lin](https://packagist.org/packages/erikwang2013/industrial-protocols-lin) | LIN body bus, 19200 bps UART, master-slave |
+| [kline](https://github.com/erikwang2013/industrial-protocols-kline) | [erikwang2013/industrial-protocols-kline](https://packagist.org/packages/erikwang2013/industrial-protocols-kline) | K-Line OBD-II, ISO 9141/14230, 5-baud init |
+| [flexray](https://github.com/erikwang2013/industrial-protocols-flexray) | [erikwang2013/industrial-protocols-flexray](https://packagist.org/packages/erikwang2013/industrial-protocols-flexray) | FlexRay high-speed, needs FlexRay controller |
+| [saej1850](https://github.com/erikwang2013/industrial-protocols-saej1850) | [erikwang2013/industrial-protocols-saej1850](https://packagist.org/packages/erikwang2013/industrial-protocols-saej1850) | SAE J1850 OBD-II, needs J1850 interface |
+| [most](https://github.com/erikwang2013/industrial-protocols-most) | [erikwang2013/industrial-protocols-most](https://packagist.org/packages/erikwang2013/industrial-protocols-most) | MOST fiber multimedia, needs MOST interface |
+
+### Building/Lighting (2)
+
+| Package | Repository | Description |
+|---------|-----------|-------------|
+| [lonworks](https://github.com/erikwang2013/industrial-protocols-lonworks) | [erikwang2013/industrial-protocols-lonworks](https://packagist.org/packages/erikwang2013/industrial-protocols-lonworks) | LonWorks, needs Neuron chip/interface |
+| [dali](https://github.com/erikwang2013/industrial-protocols-dali) | [erikwang2013/industrial-protocols-dali](https://packagist.org/packages/erikwang2013/industrial-protocols-dali) | DALI digital lighting, needs DALI gateway |
+
+### Hardware Bridge (11)
+
+| Package | Repository | Hardware Required |
+|---------|-----------|------------------|
+| [ethercat](https://github.com/erikwang2013/industrial-protocols-ethercat) | [erikwang2013/industrial-protocols-ethercat](https://packagist.org/packages/erikwang2013/industrial-protocols-ethercat) | Beckhoff TwinCAT 3 / SOEM |
+| [powerlink](https://github.com/erikwang2013/industrial-protocols-powerlink) | [erikwang2013/industrial-protocols-powerlink](https://packagist.org/packages/erikwang2013/industrial-protocols-powerlink) | openPOWERLINK / B&R Automation Studio |
+| [sercos](https://github.com/erikwang2013/industrial-protocols-sercos) | [erikwang2013/industrial-protocols-sercos](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos) | SERCOS III FPGA IP / Hilscher netX |
+| [sercos1](https://github.com/erikwang2013/industrial-protocols-sercos1) | [erikwang2013/industrial-protocols-sercos1](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos1) | SERCOS I/II fiber interface |
+| [controlnet](https://github.com/erikwang2013/industrial-protocols-controlnet) | [erikwang2013/industrial-protocols-controlnet](https://packagist.org/packages/erikwang2013/industrial-protocols-controlnet) | Allen-Bradley 1784-PCIC/S |
+| [interbus](https://github.com/erikwang2013/industrial-protocols-interbus) | [erikwang2013/industrial-protocols-interbus](https://packagist.org/packages/erikwang2013/industrial-protocols-interbus) | Phoenix Contact IBS |
+| [worldfip](https://github.com/erikwang2013/industrial-protocols-worldfip) | [erikwang2013/industrial-protocols-worldfip](https://packagist.org/packages/erikwang2013/industrial-protocols-worldfip) | WorldFIP/Fipio bus interface |
+| [lightbus](https://github.com/erikwang2013/industrial-protocols-lightbus) | [erikwang2013/industrial-protocols-lightbus](https://packagist.org/packages/erikwang2013/industrial-protocols-lightbus) | Beckhoff Lightbus fiber interface |
+| [modbusplus](https://github.com/erikwang2013/industrial-protocols-modbusplus) | [erikwang2013/industrial-protocols-modbusplus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbusplus) | Schneider Modbus Plus SA85/BM85 |
+| [isa100](https://github.com/erikwang2013/industrial-protocols-isa100) | [erikwang2013/industrial-protocols-isa100](https://packagist.org/packages/erikwang2013/industrial-protocols-isa100) | Yokogawa YFGW410 / Honeywell OneWireless |
+| [wirelesshart](https://github.com/erikwang2013/industrial-protocols-wirelesshart) | [erikwang2013/industrial-protocols-wirelesshart](https://packagist.org/packages/erikwang2013/industrial-protocols-wirelesshart) | Emerson 1410/1420 Smart Wireless Gateway |
+
+### System Bus (3)
+
+| Package | Repository | Description |
+|---------|-----------|-------------|
+| [pci](https://github.com/erikwang2013/industrial-protocols-pci) | [erikwang2013/industrial-protocols-pci](https://packagist.org/packages/erikwang2013/industrial-protocols-pci) | PCI/PCIe, needs kernel driver/library bridge |
+| [vme](https://github.com/erikwang2013/industrial-protocols-vme) | [erikwang2013/industrial-protocols-vme](https://packagist.org/packages/erikwang2013/industrial-protocols-vme) | VME/VPX backplane, needs VME bridge |
+| [cpci](https://github.com/erikwang2013/industrial-protocols-cpci) | [erikwang2013/industrial-protocols-cpci](https://packagist.org/packages/erikwang2013/industrial-protocols-cpci) | CompactPCI, needs CPCI interface |
 
 ---
 
 ## Supported Frameworks
 
-| Framework | Detection | Coroutine | Config Mechanism | CLI Commands |
-|-----------|-----------|-----------|------------------|-------------|
-| **Plain PHP** | Default fallback | Fiber (PHP 8.1+) | Manual config path | — |
-| **Laravel** | `Illuminate\Foundation\Application` | Octane (Swoole) | ServiceProvider + artisan vendor:publish | `industrial:connect` / `industrial:gateway:list` |
-| **Webman** | `Workerman\Worker` | Swoole / Fiber | config/plugin auto-discovery | — |
-| **Hyperf** | `Hyperf\Framework\ApplicationFactory` | Swoole native | ConfigProvider + config/autoload | `industrial:connect` / `gateway:list` |
-| **ThinkPHP** | `think\App` | think-swoole | services.php auto-discovery | — |
-| **Yii2** | `yii\base\Application` | swoole-yii2 | Bootstrap + component registration | — |
+| Framework | Detection | Coroutine | Integration |
+|-----------|-----------|-----------|-------------|
+| **Plain PHP** | Default fallback | Fiber | Kernel instantiation |
+| **Laravel** | `Illuminate\Foundation\Application` | Octane Swoole | ServiceProvider + Facade + artisan |
+| **Webman** | `Workerman\Worker` | Swoole/Fiber | config/plugin auto-discovery |
+| **Hyperf** | `Hyperf\Framework\ApplicationFactory` | Swoole native | ConfigProvider + DI |
+| **ThinkPHP** | `think\App` | think-swoole | services.php + singleton |
+| **Yii2** | `yii\base\Application` | swoole-yii2 | Bootstrap + component |
 
 Detection priority: `Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Plain PHP`
 
@@ -169,288 +160,21 @@ require 'vendor/autoload.php';
 use Erikwang2013\IndustrialProtocols\Kernel;
 use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
 
-// 1. Create config file
-$config = __DIR__ . '/industrial-protocols.php';
-file_put_contents($config, '<?php return ' . var_export([
-    'devices' => [
-        'plc-001' => [
-            'protocol' => 'modbus', 'variant' => 'tcp',
-            'host'     => '192.168.1.10', 'port' => 502,
-            'unit_id'  => 1, 'timeout' => 3000,
-        ],
-    ],
-    'gateway' => ['rules' => []],
-    'health_check_interval' => 30,
-], true) . ';');
-
-// 2. Boot kernel
-$kernel = new Kernel(['config_path' => $config]);
-$kernel->getProtocolRegistry()->register(new ModbusProtocol());
-$kernel->boot();
-
-// 3. Connect and read/write
-$conn = $kernel->getConnectionManager()->connect('plc-001');
-
-$result = $conn->read('40001');              // Read holding register
-echo "Temperature: " . $result['40001'] . "\n";
-
-$conn->write(['40001' => 25]);               // Write holding register
-
-// 4. Health check
-$health = $kernel->getConnectionManager()->health('plc-001');
-echo "State: {$health->state->value}, Latency: {$health->latencyMs}ms\n";
-
-$kernel->shutdown();
-```
-
----
-
-## Core Features
-
-### Kernel
-
-| Feature | Description |
-|---------|-------------|
-| Protocol Registry | Auto-scans Composer-installed protocol packages, zero-config loading |
-| Connection Manager | 3 strategies (Lazy/Eager/Pooled) with health checks and auto-reconnection |
-| Config Management | FileConfigRepository / DatabaseConfigRepository(PDO) / EnvConfigRepository |
-| Coroutine Adaptation | Swoole → Fiber → Sync three-tier auto-degradation |
-| Event System | 13 event types, PSR-14 EventDispatcher, custom listener support |
-| Log Drivers | PsrLogDriver / FileLogDriver / NullLogDriver |
-| Retry Strategies | NoRetry / Fixed / ExponentialBackoff / ExponentialBackoff + Jitter |
-| Exception Hierarchy | 20+ layered exceptions: Connection / Protocol / Device / Gateway |
-| Framework Adapters | 6 frameworks + plain PHP, auto-detected at boot |
-| Hardware Bridge | BridgeInterface → ExternalProcessBridge / TcpGatewayBridge → BridgeConnector |
-| Vendor Adapters | VendorProfile + VendorBridgeFactory, 12 pre-configured vendor profiles |
-
-### Gateway Engine
-
-| Feature | Description |
-|---------|-------------|
-| Rule Engine | poll (periodic), change (value-triggered), cron (schedule-based) trigger modes |
-| Data Pipeline | Source Frame → Parse → Transform → Encode → Target Frame |
-| Circuit Breaker | CLOSED → OPEN → HALF_OPEN state machine with configurable thresholds |
-| Concurrent Execution | Rules execute in parallel in coroutine environments |
-
-### Monitoring & Security
-
-| Feature | Description |
-|---------|-------------|
-| Metrics | Counter / Gauge / Histogram with Prometheus text format export |
-| Alert Channels | AlertManager + Webhook / Log channels, multi-channel push |
-| Input Validation | Device ID, host, port, register address, frame size, timeout validation |
-
----
-
-## Protocol Examples
-
-### Modbus TCP
-
-```php
-use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
-
-$kernel->getProtocolRegistry()->register(new ModbusProtocol());
-$kernel->boot();
-
-$conn = $kernel->getConnectionManager()->connect('plc-001');
-
-$result = $conn->read('40001');                         // Single register read
-$batch  = $conn->read(['40001', '40002']);              // Batch read
-$conn->write(['40001' => 100]);                          // Single register write
-$conn->write(['40001' => 200, '40002' => 300]);          // Batch write
-
-// Address: 40001-49999 Holding Register, 30001-39999 Input Register, 0-9999 raw offset
-```
-
-### Modbus RTU (Serial)
-
-```php
-$conn = $kernel->getConnectionManager()->connect('plc-rtu', [
-    'protocol' => 'modbus', 'variant' => 'rtu',
-    'device'   => '/dev/ttyUSB0', 'baud_rate' => 19200,
-    'unit_id'  => 1,
-]);
-$result = $conn->read('40001');
-```
-
-### BACnet/IP
-
-```php
-use Erikwang2013\IndustrialProtocols\Bacnet\BacnetProtocol;
-
-$kernel->getProtocolRegistry()->register(new BacnetProtocol());
-$kernel->boot();
-
-$conn = $kernel->getConnectionManager()->connect('bacnet-device');
-
-$devices = $conn->discoverDevices(5);     // Who-Is broadcast discovery
-$result = $conn->read('0:1:85');          // AnalogInput 1, PresentValue
-```
-
-### OPC UA Binary
-
-```php
-use Erikwang2013\IndustrialProtocols\OpcUa\OpcUaProtocol;
-
-$kernel->getProtocolRegistry()->register(new OpcUaProtocol());
-$kernel->boot();
-
-$conn = $kernel->getConnectionManager()->connect('opcua-server');
-
-$time = $conn->read('i=2258');               // Read CurrentTime node
-$children = $conn->browse('i=85');           // Browse Objects node
-$conn->write(['ns=2;s=SetPoint' => 100.0]);  // Write node
-```
-
-### MQTT
-
-```php
-use Erikwang2013\IndustrialProtocols\Mqtt\MqttProtocol;
-
-$kernel->getProtocolRegistry()->register(new MqttProtocol());
-$kernel->boot();
-
-$conn = $kernel->getConnectionManager()->connect('mqtt-broker', [
-    'protocol' => 'mqtt', 'host' => '192.168.1.100',
-    'port' => 1883, 'client_id' => 'php-client', 'keep_alive' => 60,
-]);
-
-$conn->write(['sensors/temperature' => '23.5']);   // publish
-$result = $conn->read('sensors/#');                 // subscribe wildcard
-```
-
-### DNP3
-
-```php
-use Erikwang2013\IndustrialProtocols\Dnp3\Dnp3Protocol;
-
-$kernel->getProtocolRegistry()->register(new Dnp3Protocol());
-$kernel->boot();
-
-$conn = $kernel->getConnectionManager()->connect('rtu-001', [
-    'protocol' => 'dnp3', 'host' => '10.0.1.50', 'port' => 20000,
-]);
-
-$result = $conn->read('30:1:5');         // Class 0: Group 30, Var 1, Index 5
-$conn->write(['10:2:1' => 1]);           // Select-before-operate: Binary Output
-```
-
-### HART
-
-```php
-use Erikwang2013\IndustrialProtocols\Hart\HartProtocol;
-
-$kernel->getProtocolRegistry()->register(new HartProtocol());
-$kernel->boot();
-
-$conn = $kernel->getConnectionManager()->connect('hart-device', [
-    'protocol' => 'hart', 'device' => '/dev/ttyUSB1',
-]);
-
-$pv = $conn->read('pv');                // Primary Variable
-$current = $conn->read('loop_current'); // Loop current (mA)
-```
-
-### Bridge (EtherCAT via Vendor Factory)
-
-```php
-use Erikwang2013\IndustrialProtocols\Bridge\BridgeConnector;
-
-// One-click bridge creation via vendor factory
-$bridge = $kernel->getVendorBridgeFactory()->create('beckhoff', 'CX2030', '3.1');
-
-$conn = new BridgeConnector($bridge, 'ethercat');
-$conn->connect();
-$result = $conn->read('0x6000:0x01');   // CoE SDO read
-```
-
----
-
-## Framework Integration
-
-### Laravel
-
-```bash
-php artisan vendor:publish --tag=industrial-protocols-config
-php artisan industrial:connect plc-001
-php artisan industrial:gateway:list
-```
-
-```php
-use Erikwang2013\IndustrialProtocols\Framework\Laravel\IndustrialProtocolsFacade;
-
-$result = IndustrialProtocolsFacade::connect('plc-001')->read('40001');
-```
-
-### Webman
-
-Works out of the box after installation. Create `config/plugin/erikwang2013/industrial-protocols-kernel/config/industrial-protocols.php`. ProtocolProcess auto-initializes the Kernel, registers protocol packages, and establishes connections on worker start — no extra code required.
-
-```php
-// config/plugin/erikwang2013/industrial-protocols-kernel/config/industrial-protocols.php
-return [
-    'devices' => [
-        'plc-001' => [
-            'protocol' => 'modbus', 'variant' => 'tcp',
-            'host' => '192.168.1.10', 'port' => 502, 'unit_id' => 1, 'timeout' => 3000,
-        ],
-    ],
-];
-```
-
-### Plain PHP (no framework)
-
-```php
-use Erikwang2013\IndustrialProtocols\Kernel;
-use Erikwang2013\IndustrialProtocols\Modbus\ModbusProtocol;
-
 $kernel = new Kernel(['config_path' => __DIR__ . '/industrial-protocols.php']);
 $kernel->getProtocolRegistry()->register(new ModbusProtocol());
 $kernel->boot();
 
 $conn = $kernel->getConnectionManager()->connect('plc-001');
 $result = $conn->read('40001');
+echo $result['40001'];
+
+$conn->write(['40001' => 25]);
+
+$health = $kernel->getConnectionManager()->health('plc-001');
+echo "{$health->state->value}, {$health->latencyMs}ms";
+
 $kernel->shutdown();
 ```
-
----
-
-## Vendor Adapters
-
-The kernel includes pre-configured profiles for 12 major industrial hardware vendors, eliminating the need to manually look up SDK paths and port numbers.
-
-| Vendor | Protocol | Bridge Type | Device Count |
-|--------|----------|------------|-------------|
-| Beckhoff | EtherCAT | ExternalProcessBridge | 6 |
-| Siemens | PROFINET | TcpGatewayBridge | 5 |
-| B&R | POWERLINK | ExternalProcessBridge | 4 |
-| Bosch Rexroth | SERCOS III | TcpGatewayBridge | 4 |
-| Hilscher | Multi-protocol | TcpGatewayBridge | 4 |
-| HMS/Anybus | Multi-protocol | TcpGatewayBridge | 4 |
-| Moxa | Multi-protocol | TcpGatewayBridge | 4 |
-| Phoenix Contact | PROFINET/EIP | TcpGatewayBridge | 4 |
-| Bihl+Wiedemann | AS-Interface | TcpGatewayBridge | 2 |
-| ifm electronic | IO-Link | TcpGatewayBridge | 2 |
-| Pepperl+Fuchs | AS-i / HART | TcpGatewayBridge | 2 |
-| Softing | FF / PROFIBUS | ExternalProcessBridge | 2 |
-
-**Usage:**
-
-```php
-// List all vendors
-$vendors = $kernel->getVendorBridgeFactory()->listVendors();
-
-// View a vendor's device models
-$devices = $kernel->getVendorBridgeFactory()->getDevices('siemens');
-// → [S7-1200 V4.x, S7-1500 V3.x, ET 200SP V2.x, ET 200MP V2.x, S7-400 V6.x]
-
-// One-click bridge creation (SDK path auto-filled)
-$bridge = $kernel->getVendorBridgeFactory()->create('siemens', 'S7-1500', 'V3.x', [
-    'host' => '192.168.1.50',
-]);
-```
-
-Configuration merge priority: `Vendor defaults → Device model overrides → User custom parameters`
 
 ---
 
@@ -458,41 +182,18 @@ Configuration merge priority: `Vendor defaults → Device model overrides → Us
 
 ```php
 <?php
-// industrial-protocols.php
 return [
     'devices' => [
         'plc-001' => [
-            'protocol'  => 'modbus',
-            'variant'   => 'tcp',
-            'host'      => '192.168.1.10',
-            'port'      => 502,
-            'unit_id'   => 1,
-            'timeout'   => 3000,
-            'strategy'  => 'lazy',       // lazy | eager | pooled
-            'pool_size' => 4,             // Effective with pooled strategy
-            'points'    => [
-                ['address' => '40001', 'name' => 'temperature', 'type' => 'FLOAT32', 'access' => 'RW'],
-                ['address' => '40003', 'name' => 'pressure',    'type' => 'FLOAT32', 'access' => 'RO'],
-            ],
+            'protocol' => 'modbus', 'variant' => 'tcp',
+            'host' => '192.168.1.10', 'port' => 502,
+            'unit_id' => 1, 'timeout' => 3000,
         ],
     ],
-    'gateway' => [
-        'rules' => [
-            [
-                'id'            => 'gw-001',
-                'source_device' => 'plc-001',
-                'source_point'  => '40001',
-                'target_device' => 'opcua-server',
-                'target_point'  => 'ns=1;s=Temperature',
-                'trigger'       => 'poll',    // poll | change | cron
-                'interval'      => 1000,
-            ],
-        ],
-    ],
+    'gateway' => ['rules' => []],
     'health_check_interval' => 30,
-    'default_retry_max'     => 3,
-    'default_retry_backoff' => 'exponential',    // exponential | fixed | none
-    'default_timeout'       => 3000,
+    'default_retry_max' => 3,
+    'default_retry_backoff' => 'exponential',
 ];
 ```
 
@@ -500,26 +201,17 @@ return [
 
 ## Documentation
 
-- [Protocol API Reference](docs/en/protocols.md) — Connection config, read/write ops, address formats for 42 protocols
-- [Framework Integration Guide](docs/en/framework-integration.md) — Detailed integration for 6 frameworks
-- [Gateway Engine Guide](docs/en/gateway.md) — Rules, trigger modes, circuit breaker configuration
-- [Security Guide](docs/en/security.md) — Input validation, best practices, exception reference
-- [Vendor Adapters Reference](docs/en/vendors.md) — Pre-configured profiles, device models, SDK paths for 12 vendors
-
----
+- [Protocol API Reference](docs/en/protocols.md)
+- [Framework Integration Guide](docs/en/framework-integration.md)
+- [Gateway Engine Guide](docs/en/gateway.md)
+- [Security Guide](docs/en/security.md)
+- [Vendor Adapter Reference](docs/en/vendors.md)
 
 ## Requirements
 
 - PHP >= 8.1
-- Composer 2.x
-- Optional: ext-swoole (Swoole coroutine acceleration)
-- Optional: ext-pdo (database config storage)
-- Optional: serial port permissions (Modbus RTU / HART / LIN / K-Line / CC-Link)
-- Optional: C/C++ SDK (EtherCAT / POWERLINK / FlexRay bridge)
-- Optional: gateway hardware (PROFIBUS / SERCOS / DALI / IO-Link / fieldbus bridging)
-
----
+- Composer
 
 ## License
 
-MIT
+MIT — Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
