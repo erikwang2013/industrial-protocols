@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Bacnet\\BacnetProtocol"
         }
-    }
+    },
+    "description": "BACnet/IP 协议包 — 支持 Who-Is/I-Am 设备发现和 ReadProperty，UDP 通信",
+    "keywords": [
+        "bacnet",
+        "building-automation",
+        "bacnet-ip",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
