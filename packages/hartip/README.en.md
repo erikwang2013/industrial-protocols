@@ -47,3 +47,13 @@ HART-IP TCP (端口 5094)
 ## License
 
 MIT — Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
+
+
+---
+
+## Related Links
+
+- [Industrial Protocols Main Project](https://github.com/erikwang2013/industrial-protocols)
+- [Kernel](https://github.com/erikwang2013/industrial-protocols-kernel)
+- [All 42 Protocol Packages](https://github.com/erikwang2013/industrial-protocols#supported-protocols)
+
