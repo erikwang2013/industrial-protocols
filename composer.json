@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Sercos\\SercosProtocol"
         }
-    }
+    },
+    "description": "SERCOS III 协议包 — 需 Bosch Rexroth/Hilscher netX 桥接",
+    "keywords": [
+        "sercos",
+        "sercos-iii",
+        "bosch-rexroth",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
