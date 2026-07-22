@@ -14,5 +14,16 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\EtherNetIP\\EtherNetIPProtocol"
         }
-    }
+    },
+    "description": "EtherNet/IP 协议包 — ENIP 会话管理 + CIP Read Tag，TCP 通信",
+    "keywords": [
+        "ethernet-ip",
+        "cip",
+        "allen-bradley",
+        "plc",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
