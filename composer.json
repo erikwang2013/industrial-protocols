@@ -19,5 +19,16 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Iec61850\\Iec61850Protocol"
         }
-    }
+    },
+    "description": "IEC 61850 协议包 — 变电站自动化，MMS over TCP，IED 数据路径解析",
+    "keywords": [
+        "iec61850",
+        "substation",
+        "power-automation",
+        "mms",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
