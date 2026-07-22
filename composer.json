@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\CcLink\\CcLinkProtocol"
         }
-    }
+    },
+    "description": "CC-Link RS-485 协议包 — 主从轮询，CRC-16/XMODEM 校验",
+    "keywords": [
+        "cc-link",
+        "mitsubishi",
+        "fieldbus",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
