@@ -14,5 +14,14 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\AsInterface\\AsInterfaceProtocol"
         }
-    }
+    },
+    "description": "AS-Interface 协议包 — 需 Bihl+Wiedemann/Pepperl+Fuchs 网关桥接",
+    "keywords": [
+        "as-interface",
+        "fieldbus",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
