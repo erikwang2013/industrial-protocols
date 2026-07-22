@@ -1,0 +1,160 @@
+[submodule "packages/kernel"]
+	path = packages/kernel
+	url = https://github.com/erikwang2013/industrial-protocols-kernel.git
+	branch = main
+[submodule "packages/modbus"]
+	path = packages/modbus
+	url = https://github.com/erikwang2013/industrial-protocols-modbus.git
+	branch = main
+[submodule "packages/bacnet"]
+	path = packages/bacnet
+	url = https://github.com/erikwang2013/industrial-protocols-bacnet.git
+	branch = main
+[submodule "packages/ethernetip"]
+	path = packages/ethernetip
+	url = https://github.com/erikwang2013/industrial-protocols-ethernetip.git
+	branch = main
+[submodule "packages/opcua"]
+	path = packages/opcua
+	url = https://github.com/erikwang2013/industrial-protocols-opcua.git
+	branch = main
+[submodule "packages/profinet"]
+	path = packages/profinet
+	url = https://github.com/erikwang2013/industrial-protocols-profinet.git
+	branch = main
+[submodule "packages/hart"]
+	path = packages/hart
+	url = https://github.com/erikwang2013/industrial-protocols-hart.git
+	branch = main
+[submodule "packages/cclink"]
+	path = packages/cclink
+	url = https://github.com/erikwang2013/industrial-protocols-cclink.git
+	branch = main
+[submodule "packages/dnp3"]
+	path = packages/dnp3
+	url = https://github.com/erikwang2013/industrial-protocols-dnp3.git
+	branch = main
+[submodule "packages/iec61850"]
+	path = packages/iec61850
+	url = https://github.com/erikwang2013/industrial-protocols-iec61850.git
+	branch = main
+[submodule "packages/mqtt"]
+	path = packages/mqtt
+	url = https://github.com/erikwang2013/industrial-protocols-mqtt.git
+	branch = main
+[submodule "packages/hartip"]
+	path = packages/hartip
+	url = https://github.com/erikwang2013/industrial-protocols-hartip.git
+	branch = main
+[submodule "packages/profibus"]
+	path = packages/profibus
+	url = https://github.com/erikwang2013/industrial-protocols-profibus.git
+	branch = main
+[submodule "packages/canopen"]
+	path = packages/canopen
+	url = https://github.com/erikwang2013/industrial-protocols-canopen.git
+	branch = main
+[submodule "packages/devicenet"]
+	path = packages/devicenet
+	url = https://github.com/erikwang2013/industrial-protocols-devicenet.git
+	branch = main
+[submodule "packages/foundationfieldbus"]
+	path = packages/foundationfieldbus
+	url = https://github.com/erikwang2013/industrial-protocols-foundationfieldbus.git
+	branch = main
+[submodule "packages/asinterface"]
+	path = packages/asinterface
+	url = https://github.com/erikwang2013/industrial-protocols-asinterface.git
+	branch = main
+[submodule "packages/iolink"]
+	path = packages/iolink
+	url = https://github.com/erikwang2013/industrial-protocols-iolink.git
+	branch = main
+[submodule "packages/cclinkie"]
+	path = packages/cclinkie
+	url = https://github.com/erikwang2013/industrial-protocols-cclinkie.git
+	branch = main
+[submodule "packages/lin"]
+	path = packages/lin
+	url = https://github.com/erikwang2013/industrial-protocols-lin.git
+	branch = main
+[submodule "packages/kline"]
+	path = packages/kline
+	url = https://github.com/erikwang2013/industrial-protocols-kline.git
+	branch = main
+[submodule "packages/flexray"]
+	path = packages/flexray
+	url = https://github.com/erikwang2013/industrial-protocols-flexray.git
+	branch = main
+[submodule "packages/saej1850"]
+	path = packages/saej1850
+	url = https://github.com/erikwang2013/industrial-protocols-saej1850.git
+	branch = main
+[submodule "packages/most"]
+	path = packages/most
+	url = https://github.com/erikwang2013/industrial-protocols-most.git
+	branch = main
+[submodule "packages/lonworks"]
+	path = packages/lonworks
+	url = https://github.com/erikwang2013/industrial-protocols-lonworks.git
+	branch = main
+[submodule "packages/dali"]
+	path = packages/dali
+	url = https://github.com/erikwang2013/industrial-protocols-dali.git
+	branch = main
+[submodule "packages/ethercat"]
+	path = packages/ethercat
+	url = https://github.com/erikwang2013/industrial-protocols-ethercat.git
+	branch = main
+[submodule "packages/powerlink"]
+	path = packages/powerlink
+	url = https://github.com/erikwang2013/industrial-protocols-powerlink.git
+	branch = main
+[submodule "packages/sercos"]
+	path = packages/sercos
+	url = https://github.com/erikwang2013/industrial-protocols-sercos.git
+	branch = main
+[submodule "packages/sercos1"]
+	path = packages/sercos1
+	url = https://github.com/erikwang2013/industrial-protocols-sercos1.git
+	branch = main
+[submodule "packages/controlnet"]
+	path = packages/controlnet
+	url = https://github.com/erikwang2013/industrial-protocols-controlnet.git
+	branch = main
+[submodule "packages/interbus"]
+	path = packages/interbus
+	url = https://github.com/erikwang2013/industrial-protocols-interbus.git
+	branch = main
+[submodule "packages/worldfip"]
+	path = packages/worldfip
+	url = https://github.com/erikwang2013/industrial-protocols-worldfip.git
+	branch = main
+[submodule "packages/lightbus"]
+	path = packages/lightbus
+	url = https://github.com/erikwang2013/industrial-protocols-lightbus.git
+	branch = main
+[submodule "packages/modbusplus"]
+	path = packages/modbusplus
+	url = https://github.com/erikwang2013/industrial-protocols-modbusplus.git
+	branch = main
+[submodule "packages/isa100"]
+	path = packages/isa100
+	url = https://github.com/erikwang2013/industrial-protocols-isa100.git
+	branch = main
+[submodule "packages/wirelesshart"]
+	path = packages/wirelesshart
+	url = https://github.com/erikwang2013/industrial-protocols-wirelesshart.git
+	branch = main
+[submodule "packages/pci"]
+	path = packages/pci
+	url = https://github.com/erikwang2013/industrial-protocols-pci.git
+	branch = main
+[submodule "packages/vme"]
+	path = packages/vme
+	url = https://github.com/erikwang2013/industrial-protocols-vme.git
+	branch = main
+[submodule "packages/cpci"]
+	path = packages/cpci
+	url = https://github.com/erikwang2013/industrial-protocols-cpci.git
+	branch = main
