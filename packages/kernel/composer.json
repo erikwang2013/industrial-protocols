@@ -15,5 +15,18 @@
         "industrial-protocols": {
             "type": "kernel"
         }
-    }
+    },
+    "description": "Industrial Protocols 微内核 — 连接管理、配置管理、网关引擎、事件系统、协程适配、框架适配、硬件桥接、厂商配置",
+    "keywords": [
+        "industrial-protocols",
+        "kernel",
+        "industrial-automation",
+        "plc",
+        "modbus",
+        "opc-ua",
+        "fieldbus"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

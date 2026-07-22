@@ -14,5 +14,14 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Sercos1\\Sercos1Protocol"
         }
-    }
+    },
+    "description": "SERCOS I/II 协议包 — 早期光纤版本（与 SERCOS III 不同），需光纤接口桥接",
+    "keywords": [
+        "sercos",
+        "fiber-optic",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

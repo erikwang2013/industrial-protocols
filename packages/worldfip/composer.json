@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\WorldFip\\WorldFipProtocol"
         }
-    }
+    },
+    "description": "WorldFIP/Fipio 协议包 — 法国标准工业现场总线，需 FIP 接口桥接",
+    "keywords": [
+        "worldfip",
+        "fipio",
+        "fieldbus",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

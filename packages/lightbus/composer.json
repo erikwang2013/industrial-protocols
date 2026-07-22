@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Lightbus\\LightbusProtocol"
         }
-    }
+    },
+    "description": "Lightbus 协议包 — Beckhoff 光纤总线，需光纤接口桥接",
+    "keywords": [
+        "lightbus",
+        "beckhoff",
+        "fiber-optic",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

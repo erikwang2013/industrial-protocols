@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\ControlNet\\ControlNetProtocol"
         }
-    }
+    },
+    "description": "ControlNet 协议包 — Allen-Bradley 同轴令牌环，需专用接口桥接",
+    "keywords": [
+        "controlnet",
+        "allen-bradley",
+        "rockwell",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Lin\\LinProtocol"
         }
-    }
+    },
+    "description": "LIN 协议包 — 汽车车身总线，19200 bps UART，主从模式",
+    "keywords": [
+        "lin",
+        "automotive",
+        "lin-bus",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

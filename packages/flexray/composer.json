@@ -14,5 +14,14 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\FlexRay\\FlexRayProtocol"
         }
-    }
+    },
+    "description": "FlexRay 协议包 — 汽车高速确定性总线，10 Mbps，需 FlexRay 控制器桥接",
+    "keywords": [
+        "flexray",
+        "automotive",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

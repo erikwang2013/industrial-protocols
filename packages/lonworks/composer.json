@@ -14,5 +14,14 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\LonWorks\\LonWorksProtocol"
         }
-    }
+    },
+    "description": "LonWorks 协议包 — 楼宇自动化，自由拓扑，需 Neuron 芯片/接口卡桥接",
+    "keywords": [
+        "lonworks",
+        "building-automation",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

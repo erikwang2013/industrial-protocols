@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Vme\\VmeProtocol"
         }
-    }
+    },
+    "description": "VME/VPX 协议包 — 工控背板总线，需 VME 桥接",
+    "keywords": [
+        "vme",
+        "vpx",
+        "backplane",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

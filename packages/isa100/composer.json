@@ -19,5 +19,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Isa100\\Isa100Protocol"
         }
-    }
+    },
+    "description": "ISA100.11a 协议包 — 工业无线 mesh，需 ISA100 网关桥接",
+    "keywords": [
+        "isa100",
+        "wireless",
+        "industrial-wireless",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

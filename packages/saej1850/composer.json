@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\SaeJ1850\\SaeJ1850Protocol"
         }
-    }
+    },
+    "description": "SAE J1850 协议包 — OBD-II 早期标准，PWM/VPW，需 J1850 接口桥接",
+    "keywords": [
+        "sae-j1850",
+        "obd2",
+        "automotive",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

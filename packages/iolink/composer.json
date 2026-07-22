@@ -14,5 +14,14 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\IoLink\\IoLinkProtocol"
         }
-    }
+    },
+    "description": "IO-Link 协议包 — 需 ifm/Balluff IO-Link Master 桥接",
+    "keywords": [
+        "io-link",
+        "sensor",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }

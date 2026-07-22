@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Powerlink\\PowerlinkProtocol"
         }
-    }
+    },
+    "description": "POWERLINK 协议包 — 需 openPOWERLINK/B&R Automation Studio 桥接",
+    "keywords": [
+        "powerlink",
+        "ethernet-powerlink",
+        "real-time",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
