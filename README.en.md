@@ -1,40 +1,40 @@
 # Modbus TCP/RTU/ASCII 协议包 — 支持 FC 01/03/04/06/10，纯 PHP Socket 实现
 
-> [English](README.en.md)
+> [中文](README.md)
 
-erikwang2013/industrial-protocols-modbus — 纯 PHP 实现，类别：工业以太网 / 现场总线。
+erikwang2013/industrial-protocols-modbus — 纯 PHP implementation, category: Industrial Ethernet / Fieldbus.
 
-## 安装
+## Installation
 
 ```bash
 composer require erikwang2013/industrial-protocols-modbus
 ```
 
-## 使用
+## Usage
 
 ```php
 use Erikwang2013\IndustrialProtocols\Kernel;
 $kernel = new Kernel(['config_path' => __DIR__ . '/industrial-protocols.php']);
 $kernel->boot();
 
-// 通过 ConnectionManager 连接设备
+// Connect via ConnectionManager
 $conn = $kernel->getConnectionManager()->connect('device-id');
 $result = $conn->read('address');
 ```
 
-## 功能
+## Features
 
 Modbus TCP (FC 01/03/04/06/10)、Modbus RTU (RS-485 串口 + CRC16)、Modbus ASCII、保持寄存器/输入寄存器/线圈读写、地址解析(40001-49999/30001-39999)
 
-## 架构
+## Architecture
 
 TCP 驱动(stream_socket_client) + RTU 驱动(串口 fopen + stty) + 帧编解码(ModbusFrame/ModbusRequest/ModbusResponse)，实现 6 个 SDK 接口
 
-## 协议支持
+## Protocol Support
 
 Modbus TCP (端口 502)、Modbus RTU (RS-485)、Modbus ASCII
 
-## 系统要求
+## Requirements
 
 - PHP >= 8.1
 - Composer
