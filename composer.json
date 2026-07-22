@@ -14,5 +14,15 @@
         "industrial-protocols": {
             "protocol": "Erikwang2013\\IndustrialProtocols\\Most\\MostProtocol"
         }
-    }
+    },
+    "description": "MOST 协议包 — 光纤多媒体总线，需 MOST 接口桥接",
+    "keywords": [
+        "most",
+        "automotive",
+        "fiber-optic",
+        "industrial-protocols"
+    ],
+    "authors": [
+        {"name": "erik", "email": "erik@erik.xyz", "homepage": "https://erik.xyz"}
+    ]
 }
