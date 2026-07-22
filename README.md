@@ -498,6 +498,21 @@ return [
 
 ---
 
+## 包仓库
+
+42 个包均为独立 GitHub 仓库，按需安装。
+
+| 类别 | 包 |
+|------|-----|
+| 内核 | [kernel](https://github.com/erikwang2013/industrial-protocols-kernel) |
+| 工业以太网 | [modbus](https://github.com/erikwang2013/industrial-protocols-modbus) · [bacnet](https://github.com/erikwang2013/industrial-protocols-bacnet) · [ethernet-ip](https://github.com/erikwang2013/industrial-protocols-ethernetip) · [opc-ua](https://github.com/erikwang2013/industrial-protocols-opcua) · [profinet](https://github.com/erikwang2013/industrial-protocols-profinet) |
+| 现场总线 | [hart](https://github.com/erikwang2013/industrial-protocols-hart) · [cc-link](https://github.com/erikwang2013/industrial-protocols-cclink) · [dnp3](https://github.com/erikwang2013/industrial-protocols-dnp3) · [iec61850](https://github.com/erikwang2013/industrial-protocols-iec61850) · [profibus](https://github.com/erikwang2013/industrial-protocols-profibus) · [canopen](https://github.com/erikwang2013/industrial-protocols-canopen) · [devicenet](https://github.com/erikwang2013/industrial-protocols-devicenet) · [ff](https://github.com/erikwang2013/industrial-protocols-foundationfieldbus) · [as-i](https://github.com/erikwang2013/industrial-protocols-asinterface) · [io-link](https://github.com/erikwang2013/industrial-protocols-iolink) · [cc-link-ie](https://github.com/erikwang2013/industrial-protocols-cclinkie) |
+| IoT | [mqtt](https://github.com/erikwang2013/industrial-protocols-mqtt) · [hart-ip](https://github.com/erikwang2013/industrial-protocols-hartip) |
+| 汽车 | [lin](https://github.com/erikwang2013/industrial-protocols-lin) · [k-line](https://github.com/erikwang2013/industrial-protocols-kline) · [flexray](https://github.com/erikwang2013/industrial-protocols-flexray) · [j1850](https://github.com/erikwang2013/industrial-protocols-saej1850) · [most](https://github.com/erikwang2013/industrial-protocols-most) |
+| 楼宇 | [lonworks](https://github.com/erikwang2013/industrial-protocols-lonworks) · [dali](https://github.com/erikwang2013/industrial-protocols-dali) |
+| Bridge | [ethercat](https://github.com/erikwang2013/industrial-protocols-ethercat) · [powerlink](https://github.com/erikwang2013/industrial-protocols-powerlink) · [sercos](https://github.com/erikwang2013/industrial-protocols-sercos) · [sercos-i](https://github.com/erikwang2013/industrial-protocols-sercos1) · [controlnet](https://github.com/erikwang2013/industrial-protocols-controlnet) · [interbus](https://github.com/erikwang2013/industrial-protocols-interbus) · [worldfip](https://github.com/erikwang2013/industrial-protocols-worldfip) · [lightbus](https://github.com/erikwang2013/industrial-protocols-lightbus) · [mb+](https://github.com/erikwang2013/industrial-protocols-modbusplus) · [isa100](https://github.com/erikwang2013/industrial-protocols-isa100) · [wirelesshart](https://github.com/erikwang2013/industrial-protocols-wirelesshart) |
+| 系统总线 | [pci](https://github.com/erikwang2013/industrial-protocols-pci) · [vme](https://github.com/erikwang2013/industrial-protocols-vme) · [cpci](https://github.com/erikwang2013/industrial-protocols-cpci) |
+
 ## 文档链接
 
 - [协议 API 参考](docs/protocols.md) -- 42 个协议的连接配置、读写操作、地址格式
