@@ -31,3 +31,13 @@ $conn = $kernel->getConnectionManager()->connect('device-id');
 ## License
 
 MIT — Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
+
+
+---
+
+## 相关链接
+
+- [Industrial Protocols 主项目](https://github.com/erikwang2013/industrial-protocols)
+- [Kernel 内核](https://github.com/erikwang2013/industrial-protocols-kernel)
+- [全部 42 个协议包](https://github.com/erikwang2013/industrial-protocols#支持的协议)
+
