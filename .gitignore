@@ -3,4 +3,8 @@ vendor/
 .env
 *.log
 .claude
+.claude-flow
+.swarm
+.mcp.json
+ruvector.db
 composer.lock
