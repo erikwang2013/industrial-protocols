@@ -215,6 +215,16 @@ return [
 - PHP >= 8.1
 - Composer
 
+---
+
+## Support
+
+If this project is helpful to you, feel free to support the developer ☕
+
+|<img src="docs/weixinpay.png" width="130" alt="WeChat Pay">|<img src="docs/alipay.png" width="130" alt="Alipay">|
+|:-:|:-:|
+|WeChat Pay|Alipay|
+
 ## License
 
 MIT — Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz

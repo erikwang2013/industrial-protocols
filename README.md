@@ -214,6 +214,16 @@ return [
 - PHP >= 8.1
 - Composer
 
+---
+
+## 欢迎支持
+
+如果这个项目对您有帮助，欢迎扫码支持开发者 ☕
+
+|<img src="docs/weixinpay.png" width="130" alt="微信支付">|<img src="docs/alipay.png" width="130" alt="支付宝">|
+|:-:|:-:|
+|微信支付|支付宝|
+
 ## License
 
 MIT — Copyright (c) 2026 erik <erik@erik.xyz> — https://erik.xyz
