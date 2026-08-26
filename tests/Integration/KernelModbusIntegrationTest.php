@@ -31,10 +31,13 @@ class KernelModbusIntegrationTest extends TestCase
             'health_check_interval' => 30,
         ], true) . ';');
 
-        $server = stream_socket_server('tcp://127.0.0.1:15030');
-        $pid = pcntl_fork();
-        if ($pid === 0) {
-            $client = @stream_socket_accept($server, 2);
+        // Fake Modbus server runs in a separate process (proc_open) so tests
+        // work even when pcntl_fork is unavailable (e.g. with swoole loaded)
+        $proc = proc_open([PHP_BINARY, '-r', <<<'STUB'
+            $server = stream_socket_server('tcp://127.0.0.1:15030');
+            echo "READY\n";
+            flush();
+            $client = @stream_socket_accept($server, 5);
             if ($client) {
                 fread($client, 256);
                 $tid = "\x00\x01";
@@ -43,9 +46,8 @@ class KernelModbusIntegrationTest extends TestCase
                 fclose($client);
             }
             fclose($server);
-            exit(0);
-        }
-        usleep(50000);
+STUB, ], [1 => ['pipe', 'w']], $pipes);
+        fgets($pipes[1]);
 
         try {
             $kernel = new Kernel(['config_path' => $configPath]);
@@ -63,8 +65,7 @@ class KernelModbusIntegrationTest extends TestCase
 
             $kernel->shutdown();
         } finally {
-            fclose($server);
-            pcntl_waitpid($pid, $status);
+            proc_close($proc);
             if (file_exists($configPath)) unlink($configPath);
         }
     }

@@ -131,6 +131,11 @@
             <directory>tests/E2E</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory>packages</directory>
+        </include>
+    </source>
     <coverage>
         <report>
             <html outputDirectory="build/coverage"/>

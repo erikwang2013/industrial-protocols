@@ -8,3 +8,4 @@ vendor/
 .mcp.json
 ruvector.db
 composer.lock
+build/
