@@ -124,7 +124,16 @@ $conn = $kernel->getConnectionManager()->connect('plc-001');
 
 ### ConfigProvider
 
-ConfigProvider 自动注册 DI 绑定。在 `config/autoload/` 下创建 `industrial-protocols.php`。
+内核通过 `composer.json` 的 `extra.hyperf.config` 声明 `ConfigProvider`，`composer require` 后 Hyperf 会自动读取并合并，**无需手动绑定**：
+
+```php
+'dependencies' => [
+    Kernel::class => static fn (): Kernel => KernelFactory::create(),
+],
+'commands' => [ConnectCommand::class, GatewayListCommand::class],
+```
+
+配置放在 Hyperf 约定的合并目录 `config/autoload/industrial-protocols.php`。该文件不存在时回退到内核自带的默认配置，因此 `composer require` 后即可启动。
 
 ### DI 容器访问
 
@@ -191,12 +200,59 @@ Bootstrap 类自动从 `vendor/composer/installed.json` 发现协议，并将 Ke
 
 ---
 
+## Yii3
+
+Yii3 没有 `Yii::$app` 这样的全局应用对象，Kernel 通过 DI 容器构建。
+
+### 注册 Kernel
+
+在 `config/common/di.php` 中把 `Kernel` 指向工厂类：
+
+```php
+use Erikwang2013\IndustrialProtocols\Framework\Yii3\KernelFactory;
+use Erikwang2013\IndustrialProtocols\Kernel;
+
+return [
+    Kernel::class => [KernelFactory::class, 'create'],
+];
+```
+
+Yii3 容器默认共享实例，因此 `$container->get(Kernel::class)` 拿到的就是同一个已启动的 Kernel。
+
+### 使用
+
+```php
+$kernel = $container->get(Kernel::class);
+$conn = $kernel->getConnectionManager()->connect('plc-001');
+$result = $conn->read('40001');
+```
+
+工厂默认按**工作目录**定位 `config/industrial-protocols.php` 与 `vendor/composer/installed.json`。
+若应用根目录不是工作目录（例如 Web 入口在 `public/`），显式传入路径：
+
+```php
+use Erikwang2013\IndustrialProtocols\Framework\Yii3\KernelFactory;
+use Erikwang2013\IndustrialProtocols\Kernel;
+
+return [
+    Kernel::class => static fn (): Kernel => KernelFactory::create(
+        dirname(__DIR__, 2) . '/config/industrial-protocols.php',
+    ),
+];
+```
+
+### 常驻进程
+
+RoadRunner 下适配器通过 `RR_MODE` 环境变量识别常驻 Worker，Swoole 下通过扩展探测，`isLongRunning()` 返回 `true`。
+
+---
+
 ## 框架检测
 
 内核按以下优先级自动检测运行的框架：
 
 ```
-Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Plain PHP
+Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Yii3 → Plain PHP
 ```
 
 每个适配器实现 `FrameworkAdapterInterface`：

@@ -37,7 +37,7 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 │                  User Application                │
 ├─────────────────────────────────────────────────┤
 │  Framework Adapters: Laravel · Webman · Hyperf  │
-│                     ThinkPHP · Yii2 · Plain PHP  │
+│             ThinkPHP · Yii2 · Yii3 · Plain PHP  │
 ├─────────────────────────────────────────────────┤
 │                  Micro-Kernel                    │
 │  ProtocolRegistry · ConnectionManager(3策略)      │
@@ -144,8 +144,9 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | **Hyperf** | `Hyperf\Framework\ApplicationFactory` | Swoole 原生 | ConfigProvider + DI |
 | **ThinkPHP** | `think\App` | think-swoole | services.php + 单例 |
 | **Yii2** | `yii\base\Application` | swoole-yii2 | Bootstrap + 组件 |
+| **Yii3** | `Yiisoft\Yii\Runner\ApplicationRunner` | RoadRunner / Swoole | config/common/di.php + KernelFactory |
 
-检测优先级：`Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Plain PHP`
+检测优先级：`Laravel → Webman → Hyperf → ThinkPHP → Yii2 → Yii3 → Plain PHP`
 
 ---
 
