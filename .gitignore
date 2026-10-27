@@ -9,3 +9,6 @@ vendor/
 ruvector.db
 composer.lock
 build/
+
+# Generated static site, deployed separately
+/site/
