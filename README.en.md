@@ -1,6 +1,6 @@
 # Industrial Protocols PHP
 
-A PHP industrial communication protocol suite — micro-kernel + protocol SDK architecture covering 40 protocols, compatible with 6 PHP runtime environments.
+A PHP industrial communication protocol suite — micro-kernel + protocol SDK architecture covering 39 protocols, compatible with 6 PHP runtime environments.
 
 > [中文版](README.md)
 
@@ -20,7 +20,7 @@ A PHP industrial communication protocol suite — micro-kernel + protocol SDK ar
 
 ## Overview
 
-Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. 40 protocol packages (15 pure PHP + 25 Bridge), each as an independent GitHub repository and Composer package, installed on-demand via Packagist.
+Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. 40 Composer packages (39 protocol packages + micro-kernel), each as an independent GitHub repository and Composer package, installed on-demand via Packagist.
 
 **Core philosophy:** The kernel only defines "what a protocol is" — it contains zero protocol implementations. Users install only what they need. The kernel auto-discovers installed protocol packages at boot via the `composer.json` `extra` field.
 
@@ -48,7 +48,7 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 ├─────────────────────────────────────────────────┤
 │           Protocol SDK (6 Core Interfaces)        │
 ├─────────────────────────────────────────────────┤
-│   40 Protocol Packages: 15 Pure PHP + 25 Bridge   │
+│   40 Composer Packages: 39 Protocols + Kernel   │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -62,11 +62,11 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 |---------|-----------|-------------|
 | [modbus](https://github.com/erikwang2013/industrial-protocols-modbus) | [erikwang2013/industrial-protocols-modbus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbus) | Modbus TCP/RTU/ASCII, FC 01/03/04/06/10, port 502 |
 | [bacnet](https://github.com/erikwang2013/industrial-protocols-bacnet) | [erikwang2013/industrial-protocols-bacnet](https://packagist.org/packages/erikwang2013/industrial-protocols-bacnet) | BACnet/IP, Who-Is/I-Am discovery, ReadProperty, port 47808 |
-| [ethernetip](https://github.com/erikwang2013/industrial-protocols-ethernetip) | [erikwang2013/industrial-protocols-ethernetip](https://packagist.org/packages/erikwang2013/industrial-protocols-ethernetip) | EtherNet/IP, ENIP session + CIP Read Tag, port 44818 |
-| [opcua](https://github.com/erikwang2013/industrial-protocols-opcua) | [erikwang2013/industrial-protocols-opcua](https://packagist.org/packages/erikwang2013/industrial-protocols-opcua) | OPC UA Binary stack, Session + Read/Write/Browse, port 4840 |
+| [ethernetip](https://github.com/erikwang2013/industrial-protocols-ethernetip) | [erikwang2013/industrial-protocols-ethernet-ip](https://packagist.org/packages/erikwang2013/industrial-protocols-ethernet-ip) | EtherNet/IP, ENIP session + CIP Read Tag, port 44818 |
+| [opcua](https://github.com/erikwang2013/industrial-protocols-opcua) | [erikwang2013/industrial-protocols-opc-ua](https://packagist.org/packages/erikwang2013/industrial-protocols-opc-ua) | OPC UA Binary stack, Session + Read/Write/Browse, port 4840 |
 | [profinet](https://github.com/erikwang2013/industrial-protocols-profinet) | [erikwang2013/industrial-protocols-profinet](https://packagist.org/packages/erikwang2013/industrial-protocols-profinet) | Profinet NRT, DCP discovery + Record Data, port 34964 |
 
-### Fieldbus (12)
+### Fieldbus (11)
 
 | Package | Repository | Description |
 |---------|-----------|-------------|
@@ -87,16 +87,16 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | Package | Repository | Description |
 |---------|-----------|-------------|
 | [mqtt](https://github.com/erikwang2013/industrial-protocols-mqtt) | [erikwang2013/industrial-protocols-mqtt](https://packagist.org/packages/erikwang2013/industrial-protocols-mqtt) | MQTT 3.1.1, publish/subscribe + wildcards, port 1883 |
-| [hartip](https://github.com/erikwang2013/industrial-protocols-hartip) | [erikwang2013/industrial-protocols-hartip](https://packagist.org/packages/erikwang2013/industrial-protocols-hartip) | HART-IP, HART over TCP/UDP, port 5094 |
+| [hartip](https://github.com/erikwang2013/industrial-protocols-hartip) | [erikwang2013/industrial-protocols-hart-ip](https://packagist.org/packages/erikwang2013/industrial-protocols-hart-ip) | HART-IP, HART over TCP/UDP, port 5094 |
 
 ### Automotive (5)
 
 | Package | Repository | Description |
 |---------|-----------|-------------|
 | [lin](https://github.com/erikwang2013/industrial-protocols-lin) | [erikwang2013/industrial-protocols-lin](https://packagist.org/packages/erikwang2013/industrial-protocols-lin) | LIN body bus, 19200 bps UART, master-slave |
-| [kline](https://github.com/erikwang2013/industrial-protocols-kline) | [erikwang2013/industrial-protocols-kline](https://packagist.org/packages/erikwang2013/industrial-protocols-kline) | K-Line OBD-II, ISO 9141/14230, 5-baud init |
+| [kline](https://github.com/erikwang2013/industrial-protocols-kline) | [erikwang2013/industrial-protocols-k-line](https://packagist.org/packages/erikwang2013/industrial-protocols-k-line) | K-Line OBD-II, ISO 9141/14230, 5-baud init |
 | [flexray](https://github.com/erikwang2013/industrial-protocols-flexray) | [erikwang2013/industrial-protocols-flexray](https://packagist.org/packages/erikwang2013/industrial-protocols-flexray) | FlexRay high-speed, needs FlexRay controller |
-| [saej1850](https://github.com/erikwang2013/industrial-protocols-saej1850) | [erikwang2013/industrial-protocols-saej1850](https://packagist.org/packages/erikwang2013/industrial-protocols-saej1850) | SAE J1850 OBD-II, needs J1850 interface |
+| [saej1850](https://github.com/erikwang2013/industrial-protocols-saej1850) | [erikwang2013/industrial-protocols-sae-j1850](https://packagist.org/packages/erikwang2013/industrial-protocols-sae-j1850) | SAE J1850 OBD-II, needs J1850 interface |
 | [most](https://github.com/erikwang2013/industrial-protocols-most) | [erikwang2013/industrial-protocols-most](https://packagist.org/packages/erikwang2013/industrial-protocols-most) | MOST fiber multimedia, needs MOST interface |
 
 ### Building/Lighting (2)
@@ -106,14 +106,14 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | [lonworks](https://github.com/erikwang2013/industrial-protocols-lonworks) | [erikwang2013/industrial-protocols-lonworks](https://packagist.org/packages/erikwang2013/industrial-protocols-lonworks) | LonWorks, needs Neuron chip/interface |
 | [dali](https://github.com/erikwang2013/industrial-protocols-dali) | [erikwang2013/industrial-protocols-dali](https://packagist.org/packages/erikwang2013/industrial-protocols-dali) | DALI digital lighting, needs DALI gateway |
 
-### Hardware Bridge (13)
+### Hardware Bridge (11)
 
 | Package | Repository | Hardware Required |
 |---------|-----------|------------------|
 | [ethercat](https://github.com/erikwang2013/industrial-protocols-ethercat) | [erikwang2013/industrial-protocols-ethercat](https://packagist.org/packages/erikwang2013/industrial-protocols-ethercat) | Beckhoff TwinCAT 3 / SOEM |
 | [powerlink](https://github.com/erikwang2013/industrial-protocols-powerlink) | [erikwang2013/industrial-protocols-powerlink](https://packagist.org/packages/erikwang2013/industrial-protocols-powerlink) | openPOWERLINK / B&R Automation Studio |
 | [sercos](https://github.com/erikwang2013/industrial-protocols-sercos) | [erikwang2013/industrial-protocols-sercos](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos) | SERCOS III FPGA IP / Hilscher netX |
-| [sercos1](https://github.com/erikwang2013/industrial-protocols-sercos1) | [erikwang2013/industrial-protocols-sercos1](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos1) | SERCOS I/II fiber interface |
+| [sercos1](https://github.com/erikwang2013/industrial-protocols-sercos1) | [erikwang2013/industrial-protocols-sercos-i](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos-i) | SERCOS I/II fiber interface |
 | [controlnet](https://github.com/erikwang2013/industrial-protocols-controlnet) | [erikwang2013/industrial-protocols-controlnet](https://packagist.org/packages/erikwang2013/industrial-protocols-controlnet) | Allen-Bradley 1784-PCIC/S |
 | [interbus](https://github.com/erikwang2013/industrial-protocols-interbus) | [erikwang2013/industrial-protocols-interbus](https://packagist.org/packages/erikwang2013/industrial-protocols-interbus) | Phoenix Contact IBS |
 | [worldfip](https://github.com/erikwang2013/industrial-protocols-worldfip) | [erikwang2013/industrial-protocols-worldfip](https://packagist.org/packages/erikwang2013/industrial-protocols-worldfip) | WorldFIP/Fipio bus interface |
@@ -121,9 +121,6 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | [modbusplus](https://github.com/erikwang2013/industrial-protocols-modbusplus) | [erikwang2013/industrial-protocols-modbusplus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbusplus) | Schneider Modbus Plus SA85/BM85 |
 | [isa100](https://github.com/erikwang2013/industrial-protocols-isa100) | [erikwang2013/industrial-protocols-isa100](https://packagist.org/packages/erikwang2013/industrial-protocols-isa100) | Yokogawa YFGW410 / Honeywell OneWireless |
 | [wirelesshart](https://github.com/erikwang2013/industrial-protocols-wirelesshart) | [erikwang2013/industrial-protocols-wirelesshart](https://packagist.org/packages/erikwang2013/industrial-protocols-wirelesshart) | Emerson 1410/1420 Smart Wireless Gateway |
-| [SERCOS I/II ](https://github.com/erikwang2013/industrial-protocols-sercos-i) | [erikwang2013/industrial-protocols-sercos-i](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos-i) | SERCOS I/II 协议包 |
-| [SAE J1850 ](https://github.com/erikwang2013/industrial-protocols-sae-j1850) | [erikwang2013/industrial-protocols-sae-j1850](https://packagist.org/packages/erikwang2013/industrial-protocols-sae-j1850) | SAE J1850 协议包 |
-
 
 ### System Bus (3)
 
@@ -210,6 +207,8 @@ return [
 - [Gateway Engine Guide](docs/en/gateway.md)
 - [Security Guide](docs/en/security.md)
 - [Vendor Adapter Reference](docs/en/vendors.md)
+- Site build: `scripts/build-site.sh` (expects a sibling `.site-builder`, or set `SITE_BUILDER`)
+- Submodule release: `scripts/release-submodules.sh --help` (dry-run by default)
 
 ## Requirements
 

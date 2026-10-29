@@ -1,6 +1,6 @@
 {
     "name": "erikwang2013/industrial-protocols",
-    "description": "Industrial Protocols 是一个面向 PHP 生态的工业通信协议集，采用微内核 + 协议 SDK架构。内核提供连接管理、配置管理、网关引擎、事件系统、协程适配等基础设施，协议包作为独立 Composer 包按需安装，通过实现统一 SDK 接口接入内核。 42 个协议包（15 个纯 PHP 实现 + 27 个 Bridge 桥接），764 个测试用例，2109 个断言；12 家厂商预置配置；7 种框架适配器；PHP >= 8.1 en:Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. The kernel provides infrastructure — connection management, configuration management, gateway engine, event system, coroutine adaptation — while protocol packages are independent Composer packages installed on-demand, plugging in by implementing unified SDK interfaces.42 protocol packages (15 pure PHP + 27 bridge implementations), 764 tests, 2109 assertions; 12 pre-configured vendor profiles; 7 framework adapters; PHP >= 8.1.",
+    "description": "Industrial Protocols 是一个面向 PHP 生态的工业通信协议集，采用微内核 + 协议 SDK架构。内核提供连接管理、配置管理、网关引擎、事件系统、协程适配等基础设施，协议包作为独立 Composer 包按需安装，通过实现统一 SDK 接口接入内核。 40 个 Composer 包（39 个协议包 + 内核），764 个测试用例，2109 个断言；12 家厂商预置配置；7 种框架适配器；PHP >= 8.1 en:Industrial Protocols is an industrial communication protocol suite for the PHP ecosystem, built on a **micro-kernel + protocol SDK** architecture. The kernel provides infrastructure — connection management, configuration management, gateway engine, event system, coroutine adaptation — while protocol packages are independent Composer packages installed on-demand, plugging in by implementing unified SDK interfaces. 40 Composer packages (39 protocol packages + kernel), 764 tests, 2109 assertions; 12 pre-configured vendor profiles; 7 framework adapters; PHP >= 8.1.",
     "homepage": "https://package.erik.xyz/industrial/",
     "license": "MIT",
     "keywords": ["工业网络通信协议插件", "industrial protocols",  "主流工业协议", "laravel", "thinkphp", "webman", "hyperf"],
@@ -22,13 +22,16 @@
         "erikwang2013/industrial-protocols-devicenet": "^1.1",
         "erikwang2013/industrial-protocols-dnp3": "^1.1",
         "erikwang2013/industrial-protocols-ethercat": "^1.1",
+        "erikwang2013/industrial-protocols-ethernet-ip": "^1.1",
         "erikwang2013/industrial-protocols-flexray": "^1.1",
         "erikwang2013/industrial-protocols-foundationfieldbus": "^1.1",
         "erikwang2013/industrial-protocols-hart": "^1.1",
+        "erikwang2013/industrial-protocols-hart-ip": "^1.1",
         "erikwang2013/industrial-protocols-iec61850": "^1.1",
         "erikwang2013/industrial-protocols-interbus": "^1.1",
         "erikwang2013/industrial-protocols-iolink": "^1.1",
         "erikwang2013/industrial-protocols-isa100": "^1.1",
+        "erikwang2013/industrial-protocols-k-line": "^1.1",
         "erikwang2013/industrial-protocols-lightbus": "^1.1",
         "erikwang2013/industrial-protocols-lin": "^1.1",
         "erikwang2013/industrial-protocols-lonworks": "^1.1",
@@ -36,11 +39,14 @@
         "erikwang2013/industrial-protocols-modbusplus": "^1.1",
         "erikwang2013/industrial-protocols-most": "^1.1",
         "erikwang2013/industrial-protocols-mqtt": "^1.1",
+        "erikwang2013/industrial-protocols-opc-ua": "^1.1",
         "erikwang2013/industrial-protocols-pci": "^1.1",
         "erikwang2013/industrial-protocols-powerlink": "^1.1",
         "erikwang2013/industrial-protocols-profibus": "^1.1",
         "erikwang2013/industrial-protocols-profinet": "^1.1",
+        "erikwang2013/industrial-protocols-sae-j1850": "^1.1",
         "erikwang2013/industrial-protocols-sercos": "^1.1",
+        "erikwang2013/industrial-protocols-sercos-i": "^1.1",
         "erikwang2013/industrial-protocols-vme": "^1.1",
         "erikwang2013/industrial-protocols-wirelesshart": "^1.1",
         "erikwang2013/industrial-protocols-worldfip": "^1.1"
@@ -48,7 +54,8 @@
     "require-dev": {
         "phpunit/phpunit": "^10.0",
         "psr/log": "^3.0",
-        "psr/event-dispatcher": "^1.0"
+        "psr/event-dispatcher": "^1.0",
+        "phpstan/phpstan": "^2.1"
     },
     "autoload": {
         "psr-4": {

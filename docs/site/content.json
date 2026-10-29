@@ -1,0 +1,397 @@
+{
+  "slug": "industrial-protocols",
+  "name": "industrial-protocols",
+  "title": "PHP 工业通信协议集",
+  "category": "工业通信协议",
+  "tagline": "39 个协议包共享一颗微内核",
+  "description": "面向 PHP 的工业通信协议集，采用微内核加协议 SDK 架构，覆盖 39 个协议包与 7 种运行时，内置连接管理、网关引擎、熔断、重试、Prometheus 指标与安全策略。",
+  "github": "https://github.com/erikwang2013/industrial-protocols",
+  "siteUrl": "https://package.erik.xyz/industrial/",
+  "accent": "#ea580c",
+  "pet": {
+    "name": "齿小轮",
+    "title": "工控小齿轮齿小轮",
+    "desc": "一只戴安全帽、拖着网线的齿轮小精灵，胸口信号灯对应 39 个工业协议包。",
+    "quote": "协议的事，交给我的齿轮。",
+    "source": "docs/pet.svg",
+    "expressions": "docs/pet-expressions"
+  },
+  "hero": {
+    "eyebrow": "Industrial / PHP",
+    "title1": "一颗微内核",
+    "title2": "装下 39 个协议",
+    "sub": "协议包按需安装，连接管理、健康检查与网关规则由内核统一接管。",
+    "chips": [
+      "39 个协议包",
+      "7 种运行时",
+      "PSR-14 事件"
+    ]
+  },
+  "stats": [
+    {
+      "value": "39",
+      "label": "协议包"
+    },
+    {
+      "value": "764",
+      "label": "测试用例"
+    },
+    {
+      "value": "7",
+      "label": "框架接入"
+    }
+  ],
+  "about": {
+    "heading": "内核只定义协议是什么",
+    "body": [
+      "内核不含具体协议实现，只提供 ProtocolRegistry、ConnectionManager 与六个核心接口。协议包通过 extra 字段自动发现并注册。",
+      "连接管理提供三种策略，网关引擎、断路器、四种重试、Prometheus 指标、PSR-14 事件与 PSR-3 日志都在内核统一处理。"
+    ],
+    "points": [
+      "微内核与协议 SDK 分离",
+      "15 个纯 PHP 实现",
+      "25 个 Bridge 桥接"
+    ]
+  },
+  "features": {
+    "heading": "协议之外，内核兜底",
+    "sub": "发现、连接、网关、重试、指标与安全，六件事一次配好。",
+    "items": [
+      {
+        "icon": "layers",
+        "title": "微内核发现",
+        "body": "composer extra 自动发现协议包，启动时注册进 ProtocolRegistry。",
+        "pet": "smile"
+      },
+      {
+        "icon": "share",
+        "title": "连接管理",
+        "body": "三种连接策略统一管理设备连接，健康检查给出状态与延迟。",
+        "pet": "cute"
+      },
+      {
+        "icon": "globe",
+        "title": "网关引擎",
+        "body": "在网关层编排跨协议读写规则，业务不必直连每台设备。",
+        "pet": "joy"
+      },
+      {
+        "icon": "shield",
+        "title": "熔断与重试",
+        "body": "四种重试策略配合断路器，异常设备不会拖垮整条链路。",
+        "pet": "knocking"
+      },
+      {
+        "icon": "terminal",
+        "title": "Prometheus",
+        "body": "连接、请求与错误指标可直接暴露给 Prometheus 抓取。",
+        "pet": "pleasing"
+      },
+      {
+        "icon": "check",
+        "title": "七种运行时",
+        "body": "六框架加原生 PHP，共用一套 Kernel 与连接管理。",
+        "pet": "tongue"
+      }
+    ]
+  },
+  "iterations": {
+    "heading": "从协议铺开到内核补测",
+    "sub": "每个版本都对应真实提交，覆盖缺陷修复与测试补齐。",
+    "items": [
+      {
+        "version": "v1.1.4",
+        "date": "2026-09-29",
+        "title": "发布收口",
+        "body": "发布 v1.1.4，作为 1.1 系列的最新版本。"
+      },
+      {
+        "version": "v1.1.3",
+        "date": "2026-08-27",
+        "title": "全模块单元测试",
+        "body": "补充 752 用例、2092 断言，修复 8 处协议 bug，新增测试报告与发布脚本。"
+      },
+      {
+        "version": "v1.1.2",
+        "date": "2026-07-26",
+        "title": "代码审查修 31 个 bug",
+        "body": "跨内核与 39 个协议包完成代码审查，修复 31 个缺陷。"
+      },
+      {
+        "version": "v1.1.1",
+        "date": "2026-07-22",
+        "title": "包名统一",
+        "body": "包重命名为 erikwang2013/industrial-protocols-*，统一 Composer 厂商前缀。"
+      }
+    ]
+  },
+  "versions": {
+    "heading": "版本日志",
+    "sub": "最近的发布记录，完整列表在 GitHub Releases。",
+    "items": [
+      {
+        "version": "v1.1.4",
+        "date": "2026-09-29",
+        "summary": "发布 v1.1.4，作为 1.1 系列的最新版本。",
+        "url": "https://github.com/erikwang2013/industrial-protocols/releases/tag/v1.1.4"
+      },
+      {
+        "version": "v1.1.3",
+        "date": "2026-08-27",
+        "summary": "补充 752 用例与 2092 断言，修复 8 处协议 bug。",
+        "url": "https://github.com/erikwang2013/industrial-protocols/releases/tag/v1.1.3"
+      },
+      {
+        "version": "v1.1.2",
+        "date": "2026-07-26",
+        "summary": "代码审查修复内核与 39 个协议包的 31 个 bug。",
+        "url": "https://github.com/erikwang2013/industrial-protocols/releases/tag/v1.1.2"
+      },
+      {
+        "version": "v1.1.1",
+        "date": "2026-07-22",
+        "summary": "包名与 Composer 厂商前缀统一为 erikwang2013。",
+        "url": "https://github.com/erikwang2013/industrial-protocols/releases/tag/v1.1.1"
+      },
+      {
+        "version": "v1.1.0-worldfip",
+        "date": "2026-07-22",
+        "summary": "WorldFIP 协议包发布，README 补充内核依赖说明。",
+        "url": "https://github.com/erikwang2013/industrial-protocols/releases/tag/v1.1.0-worldfip"
+      },
+      {
+        "version": "v1.1.0-wirelesshart",
+        "date": "2026-07-22",
+        "summary": "WirelessHART 协议包发布，README 补充内核依赖说明。",
+        "url": "https://github.com/erikwang2013/industrial-protocols/releases/tag/v1.1.0-wirelesshart"
+      }
+    ]
+  },
+  "pets": {
+    "heading": "齿小轮的十二种表情",
+    "sub": "鼠标停一停，它会换一种心情。"
+  },
+  "en": {
+    "category": "Industrial protocols",
+    "tagline": "One kernel, 39 protocols",
+    "description": "A PHP industrial communication protocol suite built on a micro-kernel and protocol SDK, with 39 protocol packages, seven runtimes, connection management, a gateway engine, circuit breaking, retries, Prometheus metrics and security policies.",
+    "hero": {
+      "eyebrow": "Industrial / PHP",
+      "title1": "One micro-kernel",
+      "title2": "for 39 protocols",
+      "sub": "Install protocol packages on demand while the kernel handles connections, health checks and gateway rules.",
+      "chips": [
+        "39 protocol packages",
+        "Seven runtimes",
+        "PSR-14 events"
+      ]
+    },
+    "stats": [
+      "Protocol packages",
+      "Test cases",
+      "Framework runtimes"
+    ],
+    "about": {
+      "heading": "Kernel defines a protocol",
+      "body": [
+        "The kernel contains no protocol implementations; it provides ProtocolRegistry, ConnectionManager and six core interfaces, while packages are discovered and registered through the extra field.",
+        "Connection management offers three strategies; the gateway engine, circuit breaker, four retry policies, Prometheus metrics, PSR-14 events and PSR-3 logging are all handled by the kernel."
+      ],
+      "points": [
+        "Kernel and SDK split",
+        "15 pure PHP packages",
+        "25 Bridge packages"
+      ]
+    },
+    "features": {
+      "heading": "Beyond protocols",
+      "sub": "Six kernel duties, configured once.",
+      "items": [
+        {
+          "title": "Micro-kernel discovery",
+          "body": "Composer extra discovers protocol packages and registers them in ProtocolRegistry at boot."
+        },
+        {
+          "title": "Connection management",
+          "body": "Three connection strategies manage device links, with health checks returning state and latency."
+        },
+        {
+          "title": "Gateway engine",
+          "body": "Orchestrate cross-protocol read and write rules so business code need not reach every device."
+        },
+        {
+          "title": "Circuit breaker and retries",
+          "body": "Four retry policies plus a circuit breaker keep a failing device from taking down the chain."
+        },
+        {
+          "title": "Prometheus",
+          "body": "Connection, request and error metrics are exposed for Prometheus to scrape."
+        },
+        {
+          "title": "Seven runtimes",
+          "body": "Six frameworks plus plain PHP share one Kernel and connection manager."
+        }
+      ]
+    },
+    "ports": {
+      "heading": "Same capability, Rust and Go",
+      "sub": "Beyond PHP, separate Rust and Go implementations cover their own protocol sets.",
+      "items": [
+        {
+          "tagline": "38 protocols in Rust",
+          "description": "Rust micro-kernel and SDK covering 38 protocols, with 45 crates pulled in on demand.",
+          "highlights": [
+            "38 industrial protocols",
+            "45 on-demand crates",
+            "Optional tokio layer"
+          ]
+        },
+        {
+          "tagline": "40 protocols in Go",
+          "description": "Go micro-kernel and SDK covering 40 protocols, with 14 pure software and 26 hardware SDKs.",
+          "highlights": [
+            "40 industrial protocols",
+            "14 pure software",
+            "26 hardware SDKs"
+          ]
+        }
+      ]
+    },
+    "iterations": {
+      "heading": "From protocol coverage to tests",
+      "sub": "Every version maps to real commits, covering bug fixes and added tests.",
+      "items": [
+        {
+          "title": "Release wrap-up",
+          "body": "Release v1.1.4 as the latest version in the 1.1 series."
+        },
+        {
+          "title": "Unit tests for every module",
+          "body": "Add 752 cases and 2,092 assertions and fix 8 protocol bugs."
+        },
+        {
+          "title": "Code review fixes 31 bugs",
+          "body": "Review the kernel and 39 protocol packages and fix 31 defects."
+        },
+        {
+          "title": "Package name unification",
+          "body": "Rename packages to erikwang2013/industrial-protocols-* and unify the prefix."
+        }
+      ]
+    },
+    "versions": {
+      "heading": "Changelog",
+      "sub": "Recent releases; the full list is on GitHub Releases.",
+      "items": [
+        {
+          "summary": "Release v1.1.4 as the latest version in the 1.1 series."
+        },
+        {
+          "summary": "Add 752 cases and 2,092 assertions and fix 8 protocol bugs."
+        },
+        {
+          "summary": "Code review fixes 31 bugs across the kernel and 39 packages."
+        },
+        {
+          "summary": "Unify package names and vendor prefix as erikwang2013."
+        },
+        {
+          "summary": "Release the WorldFIP package and document kernel dependencies."
+        },
+        {
+          "summary": "Release WirelessHART and document kernel dependencies."
+        }
+      ]
+    },
+    "docs": {
+      "heading": "Install and use",
+      "sub": "Install the kernel and a protocol package, then read a register.",
+      "tabs": [
+        {
+          "meta": "PHP >= 8.1"
+        },
+        {
+          "meta": "Rust 1.75 / workspace"
+        },
+        {
+          "meta": "Go 1.24 / go.work"
+        }
+      ]
+    },
+    "pets": {
+      "heading": "Chixiaolun expressions",
+      "sub": "Hover and it changes mood."
+    },
+    "pet": {
+      "name": "Chixiaolun",
+      "title": "Chixiaolun the gear mascot",
+      "desc": "A gear sprite wearing a hard hat and trailing a network cable, with chest signal lights that correspond to 39 industrial protocol packages.",
+      "quote": "Leave the protocols to my gears."
+    }
+  },
+  "docs": {
+    "heading": "安装与使用",
+    "sub": "先安装内核与协议包，再读一个设备寄存器。",
+    "tabs": [
+      {
+        "id": "php",
+        "label": "PHP",
+        "meta": "PHP >= 8.1",
+        "install": "composer require erikwang2013/industrial-protocols-kernel erikwang2013/industrial-protocols-modbus",
+        "usage": "use Erikwang2013\\IndustrialProtocols\\Kernel;\nuse Erikwang2013\\IndustrialProtocols\\Modbus\\ModbusProtocol;\n\n$kernel = new Kernel(['config_path' => __DIR__ . '/industrial-protocols.php']);\n$kernel->getProtocolRegistry()->register(new ModbusProtocol());\n$kernel->boot();\n\n$conn = $kernel->getConnectionManager()->connect('plc-001');\n$result = $conn->read('40001');\necho $result['40001'];",
+        "readme": "https://github.com/erikwang2013/industrial-protocols#readme"
+      },
+      {
+        "id": "rust",
+        "label": "Rust",
+        "meta": "Rust 1.75 / workspace",
+        "install": "cargo add industrial-protocols-kernel industrial-protocols-modbus",
+        "usage": "use industrial_protocols_kernel::*;\nuse industrial_protocols_modbus::ModbusProtocol;\n\nlet mut kernel = Kernel::builder()\n    .config_from_str(r#\"\n        [devices.plc-001]\n        protocol = \"modbus\"\n        variant = \"tcp\"\n        host = \"192.168.1.10\"\n        port = 502\n        unit_id = 1\n    \"#)\n    .with_protocol(Box::new(ModbusProtocol::tcp()))\n    .build();\n\nkernel.boot().expect(\"boot failed\");\nkernel.shutdown().expect(\"shutdown failed\");",
+        "readme": "https://github.com/erikwang2013/industrial-protocols-rust#readme"
+      },
+      {
+        "id": "go",
+        "label": "Go",
+        "meta": "Go 1.24 / go.work",
+        "install": "go get github.com/erikwang2013/industrial-protocols-go/kernel@v1.1.4\ngo get github.com/erikwang2013/industrial-protocols-go/protocols/ethernet/modbus@v1.1.4",
+        "usage": "import (\n    \"github.com/erikwang2013/industrial-protocols-go/kernel\"\n    \"github.com/erikwang2013/industrial-protocols-go/kernel/transport\"\n    \"github.com/erikwang2013/industrial-protocols-go/protocols/ethernet/modbus\"\n)\n\ntr, _ := transport.DialTCP(\"192.168.1.10:502\")\ndefer tr.Close()\n\ncodec, _ := modbus.NewCodec(\"tcp\")\nreq := &kernel.Request{Function: \"read_holding_registers\", Address: \"40001\", Count: 2}\nreq.Metadata[\"unit_id\"] = byte(1)\n\nraw, _ := codec.Encode(req)\ntr.Write(raw)\nbuf := make([]byte, 256)\nn, _ := tr.Read(buf)\nresp, _ := codec.Decode(buf[:n])\n_ = resp",
+        "readme": "https://github.com/erikwang2013/industrial-protocols-go#readme"
+      }
+    ]
+  },
+  "ports": {
+    "heading": "同一能力，Rust 与 Go",
+    "sub": "PHP 版之外，另有 Rust 与 Go 实现，协议覆盖各自独立。",
+    "items": [
+      {
+        "language": "rust",
+        "name": "industrial-protocols-rust",
+        "repo": "https://github.com/erikwang2013/industrial-protocols-rust",
+        "version": "v1.1.2",
+        "meta": "Rust 1.75 / workspace",
+        "tagline": "38 种协议的 Rust 实现",
+        "description": "按 Rust 生态重写微内核与协议 SDK，覆盖 38 种工业协议，45 个 crate 按需依赖。",
+        "highlights": [
+          "38 种工业协议",
+          "45 个 crate 按需依赖",
+          "可选 tokio 异步层"
+        ]
+      },
+      {
+        "language": "go",
+        "name": "industrial-protocols-go",
+        "repo": "https://github.com/erikwang2013/industrial-protocols-go",
+        "version": "v1.1.4",
+        "meta": "Go 1.24 / go.work",
+        "tagline": "40 种协议的 Go 实现",
+        "description": "Go 版微内核与协议 SDK，覆盖 40 种工业协议，14 个纯软实现与 26 个带驱动的硬件 SDK。",
+        "highlights": [
+          "40 种工业协议",
+          "14 个纯软实现",
+          "26 个硬件 SDK"
+        ]
+      }
+    ]
+  },
+  "download": null
+}

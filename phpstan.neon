@@ -1,0 +1,17 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 5
+    phpVersion: 80100
+    paths:
+        - packages
+    excludePaths:
+        analyse:
+            - packages/*/tests/*
+            # optional framework integrations whose packages are not installed
+            - packages/kernel/src/Framework/Hyperf/Console/*
+            - packages/kernel/src/Framework/Laravel/Console/*
+            - packages/kernel/src/Framework/Laravel/IndustrialProtocolsFacade.php
+            - packages/kernel/src/Framework/Laravel/IndustrialProtocolsServiceProvider.php
+            - packages/kernel/src/Framework/Yii2/Bootstrap.php

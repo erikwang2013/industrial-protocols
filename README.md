@@ -2,7 +2,7 @@
 
 > 官网 / Website: [https://package.erik.xyz/industrial/](https://package.erik.xyz/industrial/)
 
-PHP 工业网络通信协议集 —— 微内核 + 协议 SDK 架构，覆盖 40 种工业协议，兼容 6 种 PHP 运行时环境。
+PHP 工业网络通信协议集 —— 微内核 + 协议 SDK 架构，覆盖 39 种工业协议，兼容 6 种 PHP 运行时环境。
 
 > [English](README.en.md)
 
@@ -22,7 +22,7 @@ PHP 工业网络通信协议集 —— 微内核 + 协议 SDK 架构，覆盖 40
 
 ## 项目简介
 
-Industrial Protocols 是一个面向 PHP 生态的工业通信协议集，采用 **微内核 + 协议 SDK** 架构。40 个协议包（15 个纯 PHP 实现 + 25 个 Bridge 桥接），每个包都是独立 GitHub 仓库和 Composer 包，通过 Packagist 按需安装。
+Industrial Protocols 是一个面向 PHP 生态的工业通信协议集，采用 **微内核 + 协议 SDK** 架构。40 个 Composer 包（39 个协议包 + 微内核），每个包都是独立 GitHub 仓库和 Composer 包，通过 Packagist 按需安装。
 
 **核心理念：** 内核只定义「协议是什么」，不包含任何具体协议实现。用户按需安装协议包，内核启动时通过 `composer.json` 的 `extra` 字段自动发现并注册。
 
@@ -50,7 +50,7 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 ├─────────────────────────────────────────────────┤
 │           Protocol SDK (6 Core Interfaces)        │
 ├─────────────────────────────────────────────────┤
-│   40 Protocol Packages: 15 Pure PHP + 25 Bridge   │
+│   40 Composer Packages: 39 Protocols + Kernel   │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -64,11 +64,11 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 |----|------|------|
 | [modbus](https://github.com/erikwang2013/industrial-protocols-modbus) | [erikwang2013/industrial-protocols-modbus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbus) | Modbus TCP/RTU/ASCII，FC 01/03/04/06/10，端口 502 |
 | [bacnet](https://github.com/erikwang2013/industrial-protocols-bacnet) | [erikwang2013/industrial-protocols-bacnet](https://packagist.org/packages/erikwang2013/industrial-protocols-bacnet) | BACnet/IP，Who-Is/I-Am 设备发现，ReadProperty，端口 47808 |
-| [ethernetip](https://github.com/erikwang2013/industrial-protocols-ethernetip) | [erikwang2013/industrial-protocols-ethernetip](https://packagist.org/packages/erikwang2013/industrial-protocols-ethernetip) | EtherNet/IP，ENIP 会话管理 + CIP Read Tag，端口 44818 |
-| [opcua](https://github.com/erikwang2013/industrial-protocols-opcua) | [erikwang2013/industrial-protocols-opcua](https://packagist.org/packages/erikwang2013/industrial-protocols-opcua) | OPC UA Binary 协议栈，Session + Read/Write/Browse，端口 4840 |
+| [ethernetip](https://github.com/erikwang2013/industrial-protocols-ethernetip) | [erikwang2013/industrial-protocols-ethernet-ip](https://packagist.org/packages/erikwang2013/industrial-protocols-ethernet-ip) | EtherNet/IP，ENIP 会话管理 + CIP Read Tag，端口 44818 |
+| [opcua](https://github.com/erikwang2013/industrial-protocols-opcua) | [erikwang2013/industrial-protocols-opc-ua](https://packagist.org/packages/erikwang2013/industrial-protocols-opc-ua) | OPC UA Binary 协议栈，Session + Read/Write/Browse，端口 4840 |
 | [profinet](https://github.com/erikwang2013/industrial-protocols-profinet) | [erikwang2013/industrial-protocols-profinet](https://packagist.org/packages/erikwang2013/industrial-protocols-profinet) | Profinet NRT，DCP 设备发现 + Record Data 读写，端口 34964 |
 
-### 现场总线（12）
+### 现场总线（11）
 
 | 包 | 仓库 | 说明 |
 |----|------|------|
@@ -89,16 +89,16 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | 包 | 仓库 | 说明 |
 |----|------|------|
 | [mqtt](https://github.com/erikwang2013/industrial-protocols-mqtt) | [erikwang2013/industrial-protocols-mqtt](https://packagist.org/packages/erikwang2013/industrial-protocols-mqtt) | MQTT 3.1.1，发布/订阅 + 通配符，端口 1883 |
-| [hartip](https://github.com/erikwang2013/industrial-protocols-hartip) | [erikwang2013/industrial-protocols-hartip](https://packagist.org/packages/erikwang2013/industrial-protocols-hartip) | HART-IP，HART over TCP/UDP，端口 5094 |
+| [hartip](https://github.com/erikwang2013/industrial-protocols-hartip) | [erikwang2013/industrial-protocols-hart-ip](https://packagist.org/packages/erikwang2013/industrial-protocols-hart-ip) | HART-IP，HART over TCP/UDP，端口 5094 |
 
 ### 汽车总线（5）
 
 | 包 | 仓库 | 说明 |
 |----|------|------|
 | [lin](https://github.com/erikwang2013/industrial-protocols-lin) | [erikwang2013/industrial-protocols-lin](https://packagist.org/packages/erikwang2013/industrial-protocols-lin) | LIN 车身总线，19200 bps UART，主从模式 |
-| [kline](https://github.com/erikwang2013/industrial-protocols-kline) | [erikwang2013/industrial-protocols-kline](https://packagist.org/packages/erikwang2013/industrial-protocols-kline) | K-Line OBD-II，ISO 9141/14230，5-baud 初始化 |
+| [kline](https://github.com/erikwang2013/industrial-protocols-kline) | [erikwang2013/industrial-protocols-k-line](https://packagist.org/packages/erikwang2013/industrial-protocols-k-line) | K-Line OBD-II，ISO 9141/14230，5-baud 初始化 |
 | [flexray](https://github.com/erikwang2013/industrial-protocols-flexray) | [erikwang2013/industrial-protocols-flexray](https://packagist.org/packages/erikwang2013/industrial-protocols-flexray) | FlexRay 汽车高速总线，需 FlexRay 控制器 |
-| [saej1850](https://github.com/erikwang2013/industrial-protocols-saej1850) | [erikwang2013/industrial-protocols-saej1850](https://packagist.org/packages/erikwang2013/industrial-protocols-saej1850) | SAE J1850 OBD-II 早期标准，需 J1850 接口 |
+| [saej1850](https://github.com/erikwang2013/industrial-protocols-saej1850) | [erikwang2013/industrial-protocols-sae-j1850](https://packagist.org/packages/erikwang2013/industrial-protocols-sae-j1850) | SAE J1850 OBD-II 早期标准，需 J1850 接口 |
 | [most](https://github.com/erikwang2013/industrial-protocols-most) | [erikwang2013/industrial-protocols-most](https://packagist.org/packages/erikwang2013/industrial-protocols-most) | MOST 光纤多媒体，需 MOST 接口 |
 
 ### 楼宇/照明（2）
@@ -108,14 +108,14 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | [lonworks](https://github.com/erikwang2013/industrial-protocols-lonworks) | [erikwang2013/industrial-protocols-lonworks](https://packagist.org/packages/erikwang2013/industrial-protocols-lonworks) | LonWorks 楼宇自动化，需 Neuron 芯片/接口卡 |
 | [dali](https://github.com/erikwang2013/industrial-protocols-dali) | [erikwang2013/industrial-protocols-dali](https://packagist.org/packages/erikwang2013/industrial-protocols-dali) | DALI 数字照明，需 DALI 网关 |
 
-### 硬件桥接（13）
+### 硬件桥接（11）
 
 | 包 | 仓库 | 所需硬件 |
 |----|------|---------|
 | [ethercat](https://github.com/erikwang2013/industrial-protocols-ethercat) | [erikwang2013/industrial-protocols-ethercat](https://packagist.org/packages/erikwang2013/industrial-protocols-ethercat) | Beckhoff TwinCAT 3 / SOEM |
 | [powerlink](https://github.com/erikwang2013/industrial-protocols-powerlink) | [erikwang2013/industrial-protocols-powerlink](https://packagist.org/packages/erikwang2013/industrial-protocols-powerlink) | openPOWERLINK / B&R Automation Studio |
 | [sercos](https://github.com/erikwang2013/industrial-protocols-sercos) | [erikwang2013/industrial-protocols-sercos](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos) | SERCOS III FPGA IP / Hilscher netX |
-| [sercos1](https://github.com/erikwang2013/industrial-protocols-sercos1) | [erikwang2013/industrial-protocols-sercos1](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos1) | SERCOS I/II 光纤接口 |
+| [sercos1](https://github.com/erikwang2013/industrial-protocols-sercos1) | [erikwang2013/industrial-protocols-sercos-i](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos-i) | SERCOS I/II 光纤接口 |
 | [controlnet](https://github.com/erikwang2013/industrial-protocols-controlnet) | [erikwang2013/industrial-protocols-controlnet](https://packagist.org/packages/erikwang2013/industrial-protocols-controlnet) | Allen-Bradley 1784-PCIC/S |
 | [interbus](https://github.com/erikwang2013/industrial-protocols-interbus) | [erikwang2013/industrial-protocols-interbus](https://packagist.org/packages/erikwang2013/industrial-protocols-interbus) | Phoenix Contact IBS |
 | [worldfip](https://github.com/erikwang2013/industrial-protocols-worldfip) | [erikwang2013/industrial-protocols-worldfip](https://packagist.org/packages/erikwang2013/industrial-protocols-worldfip) | WorldFIP/Fipio 总线接口 |
@@ -123,8 +123,6 @@ composer require erikwang2013/industrial-protocols-kernel erikwang2013/industria
 | [modbusplus](https://github.com/erikwang2013/industrial-protocols-modbusplus) | [erikwang2013/industrial-protocols-modbusplus](https://packagist.org/packages/erikwang2013/industrial-protocols-modbusplus) | Schneider Modbus Plus SA85/BM85 |
 | [isa100](https://github.com/erikwang2013/industrial-protocols-isa100) | [erikwang2013/industrial-protocols-isa100](https://packagist.org/packages/erikwang2013/industrial-protocols-isa100) | Yokogawa YFGW410 / Honeywell OneWireless |
 | [wirelesshart](https://github.com/erikwang2013/industrial-protocols-wirelesshart) | [erikwang2013/industrial-protocols-wirelesshart](https://packagist.org/packages/erikwang2013/industrial-protocols-wirelesshart) | Emerson 1410/1420 Smart Wireless Gateway |
-| [SERCOS I/II ](https://github.com/erikwang2013/industrial-protocols-sercos-i) | [erikwang2013/industrial-protocols-sercos-i](https://packagist.org/packages/erikwang2013/industrial-protocols-sercos-i) | SERCOS I/II 协议包 |
-| [SAE J1850 ](https://github.com/erikwang2013/industrial-protocols-sae-j1850) | [erikwang2013/industrial-protocols-sae-j1850](https://packagist.org/packages/erikwang2013/industrial-protocols-sae-j1850) | SAE J1850 协议包 |
 
 ### 系统总线（3）
 
@@ -211,6 +209,8 @@ return [
 - [网关引擎指南](docs/gateway.md)
 - [安全指南](docs/security.md)
 - [厂商适配参考](docs/vendors.md)
+- 站点构建：`scripts/build-site.sh`（需同级 `.site-builder`，可用 `SITE_BUILDER` 指定）
+- 子模块发版：`scripts/release-submodules.sh --help`（默认 dry-run）
 
 ## 系统要求
 

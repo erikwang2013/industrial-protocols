@@ -1,0 +1,445 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: packages/bacnet/src/BacnetConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Bacnet\\Frame\\BacnetFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Bacnet\\Frame\\BacnetFrame\) but returns Erikwang2013\\IndustrialProtocols\\Bacnet\\Frame\\BacnetFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/bacnet/src/Frame/BacnetFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/cclink/src/CcLinkConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\CcLink\\Frame\\CcLinkFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\CcLink\\Frame\\CcLinkFrame\) but returns Erikwang2013\\IndustrialProtocols\\CcLink\\Frame\\CcLinkFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/cclink/src/Frame/CcLinkFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/dnp3/src/Dnp3Connector.php
+
+		-
+			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: packages/dnp3/src/Dnp3Connector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Dnp3\\Frame\\Dnp3Frame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Dnp3\\Frame\\Dnp3Frame\) but returns Erikwang2013\\IndustrialProtocols\\Dnp3\\Frame\\Dnp3Frame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/dnp3/src/Frame/Dnp3Frame.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\EtherNetIP\\Frame\\EtherNetIPFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\EtherNetIP\\Frame\\EtherNetIPFrame\) but returns Erikwang2013\\IndustrialProtocols\\EtherNetIP\\Frame\\EtherNetIPFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/ethernetip/src/Frame/EtherNetIPFrame.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\Hart\\Driver\\HartDriver\:\:\$preambleCount is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/hart/src/Driver/HartDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Hart\\Frame\\HartFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Hart\\Frame\\HartFrame\) but returns Erikwang2013\\IndustrialProtocols\\Hart\\Frame\\HartFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/hart/src/Frame/HartFrame.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getFieldDeviceInfo\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/hart/src/HartConnector.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getLoopCurrent\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/hart/src/HartConnector.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getPV\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/hart/src/HartConnector.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/hart/src/HartConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Hart\\HartConnector\:\:command\(\) should return Erikwang2013\\IndustrialProtocols\\Hart\\Frame\\HartFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/hart/src/HartConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\HartIp\\Frame\\HartIpFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\HartIp\\Frame\\HartIpFrame\) but returns Erikwang2013\\IndustrialProtocols\\HartIp\\Frame\\HartIpFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/hartip/src/Frame/HartIpFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/hartip/src/HartIpConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\HartIp\\HartIpConnector\:\:command\(\) should return Erikwang2013\\IndustrialProtocols\\HartIp\\Frame\\HartIpFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/hartip/src/HartIpConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Iec61850\\Frame\\Iec61850Frame\:\:decodeMms\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Iec61850\\Frame\\Iec61850Frame\) but returns Erikwang2013\\IndustrialProtocols\\Iec61850\\Frame\\Iec61850Frame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/iec61850/src/Frame/Iec61850Frame.php
+
+		-
+			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: packages/iec61850/src/Frame/Iec61850Frame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/iec61850/src/Iec61850Connector.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\Bridge\\BridgeConnector\:\:\$protocolName is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/kernel/src/Bridge/BridgeConnector.php
+
+		-
+			message: '#^Offset ''running'' on array\{command\: string, pid\: int, running\: bool, signaled\: bool, stopped\: bool, exitcode\: int, termsig\: int, stopsig\: int\} on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 1
+			path: packages/kernel/src/Bridge/ExternalProcessBridge.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\Connection\\ConnectionManager\:\:\$coroutine is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/kernel/src/Connection/ConnectionManager.php
+
+		-
+			message: '#^Binary operation "\+" between Erikwang2013\\IndustrialProtocols\\Protocol\\ConnectorInterface and 1 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: packages/kernel/src/Connection/Strategy/PooledStrategy.php
+
+		-
+			message: '#^Invalid array key type Erikwang2013\\IndustrialProtocols\\Protocol\\ConnectorInterface\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: packages/kernel/src/Connection/Strategy/PooledStrategy.php
+
+		-
+			message: '#^Function base_path not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: packages/kernel/src/Framework/LaravelAdapter.php
+
+		-
+			message: '#^Function app not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: packages/kernel/src/Framework/ThinkPHP/IndustrialProtocolsService.php
+
+		-
+			message: '#^Function app not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: packages/kernel/src/Framework/ThinkPHPAdapter.php
+
+		-
+			message: '#^Function base_path not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: packages/kernel/src/Framework/Webman/ProtocolProcess.php
+
+		-
+			message: '#^Function config_path not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: packages/kernel/src/Framework/Webman/ProtocolProcess.php
+
+		-
+			message: '#^Parameter \$worker of method Erikwang2013\\IndustrialProtocols\\Framework\\Webman\\ProtocolProcess\:\:onWorkerStart\(\) has invalid type Workerman\\Worker\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/kernel/src/Framework/Webman/ProtocolProcess.php
+
+		-
+			message: '#^Parameter \$worker of method Erikwang2013\\IndustrialProtocols\\Framework\\Webman\\ProtocolProcess\:\:onWorkerStop\(\) has invalid type Workerman\\Worker\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/kernel/src/Framework/Webman/ProtocolProcess.php
+
+		-
+			message: '#^Function base_path not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: packages/kernel/src/Framework/WebmanAdapter.php
+
+		-
+			message: '#^Call to static method getAlias\(\) on an unknown class Yii\.$#'
+			identifier: class.notFound
+			count: 1
+			path: packages/kernel/src/Framework/Yii2Adapter.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\Gateway\\CircuitBreaker\:\:\$lastFailureTime is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/kernel/src/Gateway/CircuitBreaker.php
+
+		-
+			message: '#^While loop condition is always true\.$#'
+			identifier: while.alwaysTrue
+			count: 1
+			path: packages/kernel/src/Gateway/GatewayEngine.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>configOverrides" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/kernel/src/Vendor/VendorBridgeFactory.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>devices" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: packages/kernel/src/Vendor/VendorBridgeFactory.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between non\-falsy\-string and '''' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: packages/kline/src/Driver/KLineDriver.php
+
+		-
+			message: '#^Comparison operation "\<\=" between int\<4, max\> and 3 is always false\.$#'
+			identifier: smallerOrEqual.alwaysFalse
+			count: 1
+			path: packages/kline/src/Frame/KLineFrame.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\KLine\\Frame\\KLineFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\KLine\\Frame\\KLineFrame\) but returns Erikwang2013\\IndustrialProtocols\\KLine\\Frame\\KLineFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/kline/src/Frame/KLineFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/kline/src/KLineConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\KLine\\KLineConnector\:\:diagnostics\(\) should return Erikwang2013\\IndustrialProtocols\\KLine\\Frame\\KLineFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/kline/src/KLineConnector.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<1, max\> and 0 is always true\.$#'
+			identifier: greater.alwaysTrue
+			count: 1
+			path: packages/lin/src/Driver/LinDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Lin\\Frame\\LinFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Lin\\Frame\\LinFrame\) but returns Erikwang2013\\IndustrialProtocols\\Lin\\Frame\\LinFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/lin/src/Frame/LinFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/lin/src/LinConnector.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Lin\\LinConnector\:\:sendFrame\(\) should return Erikwang2013\\IndustrialProtocols\\Lin\\Frame\\LinFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/lin/src/LinConnector.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\Modbus\\Driver\\ModbusRtuDriver\:\:\$stopBits is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/modbus/src/Driver/ModbusRtuDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Modbus\\Frame\\ModbusResponse\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Modbus\\Frame\\ModbusResponse\) but returns Erikwang2013\\IndustrialProtocols\\Modbus\\Frame\\ModbusResponse\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/modbus/src/Frame/ModbusResponse.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\DriverInterface\:\:connect\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/modbus/src/ModbusConnector.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\DriverInterface\:\:disconnect\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/modbus/src/ModbusConnector.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\DriverInterface\:\:isConnected\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/modbus/src/ModbusConnector.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getRegisters\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/modbus/src/ModbusConnector.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/modbus/src/ModbusConnector.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getQos\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getReturnCode\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getType\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:getTypeName\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:isConnAck\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Call to an undefined method Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\:\:isPublish\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Mqtt\\Driver\\MqttDriver\:\:publish\(\) should return Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Mqtt\\Driver\\MqttDriver\:\:subscribe\(\) should return Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Mqtt\\Driver\\MqttDriver\:\:unsubscribe\(\) should return Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame but returns Erikwang2013\\IndustrialProtocols\\Protocol\\FrameInterface\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/mqtt/src/Driver/MqttDriver.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame\) but returns Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/mqtt/src/Frame/MqttFrame.php
+
+		-
+			message: '#^Parameter &\$offset by\-ref type of method Erikwang2013\\IndustrialProtocols\\Mqtt\\Frame\\MqttFrame\:\:decodeString\(\) expects int, \(float\|int\) given\.$#'
+			identifier: parameterByRef.type
+			count: 1
+			path: packages/mqtt/src/Frame/MqttFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/mqtt/src/MqttConnector.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\Mqtt\\MqttConnector\:\:\$subscribeTimeout is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/mqtt/src/MqttConnector.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<string, mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/opcua/src/OpcUaConnector.php
+
+		-
+			message: '#^Property Erikwang2013\\IndustrialProtocols\\OpcUa\\Transport\\SecureChannel\:\:\$receiveBufferSize is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: packages/opcua/src/Transport/SecureChannel.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: int\<4, 255\>$#'
+			identifier: match.unhandled
+			count: 1
+			path: packages/opcua/src/Types/NodeId.php
+
+		-
+			message: '#^Method Erikwang2013\\IndustrialProtocols\\Profinet\\Frame\\ProfinetFrame\:\:fromBytes\(\) should return static\(Erikwang2013\\IndustrialProtocols\\Profinet\\Frame\\ProfinetFrame\) but returns Erikwang2013\\IndustrialProtocols\\Profinet\\Frame\\ProfinetFrame\.$#'
+			identifier: return.type
+			count: 1
+			path: packages/profinet/src/Frame/ProfinetFrame.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\<mixed\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: packages/profinet/src/ProfinetConnector.php
+
+		-
+			message: '#^Offset 0 on non\-empty\-list\<string\> on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.offset
+			count: 2
+			path: packages/profinet/src/ProfinetConnector.php
