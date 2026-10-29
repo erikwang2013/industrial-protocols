@@ -4,6 +4,8 @@ includes:
 parameters:
     level: 5
     phpVersion: 80100
+    scanFiles:
+        - phpstan-stubs/Swoole.php
     paths:
         - packages
     excludePaths:
