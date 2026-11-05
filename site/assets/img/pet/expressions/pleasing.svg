@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 360" role="img" aria-labelledby="petTitle petDesc">
+  <title id="petTitle">齿小轮 · 讨好 · industrial-protocols 项目宠物</title>
+  <desc id="petDesc">齿小轮把眼睛变成两颗星，希望协议一次跑通。</desc>
+
+  <defs>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5B7A9E"/>
+      <stop offset="1" stop-color="#2B3A55"/>
+    </linearGradient>
+    <linearGradient id="helmetGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FDBA74"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <style>
+      .pet-bob { animation: petBob 5.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+      .tear { animation: petTear 2.1s ease-in infinite; }
+      .spark { animation: petSpark 2.4s ease-in-out infinite; }
+      .anger { animation: petShake .55s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+      .knock { animation: petKnock .9s ease-in-out infinite; }
+      @keyframes petBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+      @keyframes petTear { 0% { opacity: 0; transform: translateY(-4px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(18px); } }
+      @keyframes petSpark { 0%, 100% { opacity: .35; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.08); } }
+      @keyframes petShake { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+      @keyframes petKnock { 0%, 100% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(4px, -3px) rotate(9deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        .pet-bob, .tear, .spark, .anger, .knock { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <g class="pet-bob">
+    <ellipse cx="160" cy="326" rx="88" ry="13" fill="#0f172a" opacity=".16"/>
+
+    <!-- feet -->
+    <rect x="110" y="282" width="40" height="28" rx="14" fill="#26364F" stroke="#0F172A" stroke-width="4"/>
+    <rect x="170" y="282" width="40" height="28" rx="14" fill="#26364F" stroke="#0F172A" stroke-width="4"/>
+
+    <!-- gear teeth -->
+    <g fill="#3D5675" stroke="#0F172A" stroke-width="3">
+      <rect x="148" y="82" width="24" height="28" rx="8"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(45 160 190)"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(90 160 190)"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(135 160 190)"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(180 160 190)"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(225 160 190)"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(270 160 190)"/>
+      <rect x="148" y="82" width="24" height="28" rx="8" transform="rotate(315 160 190)"/>
+    </g>
+
+    <!-- body -->
+    <circle cx="160" cy="190" r="92" fill="url(#bodyGrad)" stroke="#0F172A" stroke-width="4"/>
+
+    <!-- arms -->
+    <path d="M82 206 Q54 218 46 246" fill="none" stroke="#3D5675" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="45" cy="251" r="14" fill="#5B9BFF" stroke="#0F172A" stroke-width="4"/>
+    <path d="M238 206 Q266 218 274 242" fill="none" stroke="#3D5675" stroke-width="22" stroke-linecap="round"/>
+    <path d="M274 242 Q282 248 281 258" fill="none" stroke="#22C55E" stroke-width="7" stroke-linecap="round"/>
+    <rect x="268" y="250" width="30" height="22" rx="7" fill="#22C55E" stroke="#0F172A" stroke-width="4"/>
+    <path d="M274 250 v-7 M286 250 v-7" fill="none" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- helmet -->
+    <path d="M86 136 A74 74 0 0 1 234 136 L234 146 Q160 164 86 146 Z" fill="url(#helmetGrad)" stroke="#0F172A" stroke-width="4"/>
+    <rect x="76" y="136" width="168" height="16" rx="8" fill="#EA580C" stroke="#0F172A" stroke-width="4"/>
+    <circle cx="160" cy="100" r="8" fill="#FDE68A" stroke="#0F172A" stroke-width="3"/>
+    <path d="M160 108 V72" fill="none" stroke="#0F172A" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="160" cy="64" r="10" fill="#F97316" stroke="#0F172A" stroke-width="3"/>
+    <path d="M146 52 A20 20 0 0 1 174 52" fill="none" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
+    <path d="M138 44 A30 30 0 0 1 182 44" fill="none" stroke="#FBBF24" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+
+    <!-- face panel -->
+    <rect x="102" y="150" width="116" height="90" rx="42" fill="#FFF6E6" stroke="#0F172A" stroke-width="4"/>
+    <path d="M136 170 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#F59E0B"/><path d="M184 170 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#F59E0B"/><path d="M146 208 Q160 219 174 208" fill="none" stroke="#0F172A" stroke-width="4.5" stroke-linecap="round"/><ellipse cx="120" cy="202" rx="10" ry="5.5" fill="#FDA4AF" opacity=".72"/><ellipse cx="200" cy="202" rx="10" ry="5.5" fill="#FDA4AF" opacity=".72"/>
+
+    <!-- chest signal lights -->
+    <circle cx="130" cy="262" r="5.5" fill="#22C55E" stroke="#0F172A" stroke-width="2.5"/>
+    <circle cx="160" cy="262" r="5.5" fill="#FBBF24" stroke="#0F172A" stroke-width="2.5"/>
+    <circle cx="190" cy="262" r="5.5" fill="#EF4444" stroke="#0F172A" stroke-width="2.5"/>
+    <path class="spark" d="M238 132 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4z" fill="#FBBF24"/><path class="spark" d="M84 118 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#FBBF24" style="animation-delay:-.9s"/>
+  </g>
+</svg>
