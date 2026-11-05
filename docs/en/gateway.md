@@ -22,13 +22,15 @@ $engine->addRule(new GatewayRule(
 | `change` | Write only when value changes |
 | `cron` | Cron-scheduled batch sync |
 
+`cron` uses a standard 5-field expression: `minute hour day month weekday`, supporting `*`, `a-b`, `a,b`, `*/n`, with minute resolution.
+
 ## Engine Lifecycle
 
 ```php
 $engine = new GatewayEngine($connectionManager, $eventDispatcher, $coroutine, $log);
 $engine->addRule($rule);
 $result = $engine->executeOnce('rule-id');  // single
-$results = $engine->tick();                 // all poll rules
+$results = $engine->tick();                 // all due rules (poll / change / cron)
 $engine->run(tickIntervalMs: 100);          // continuous
 $engine->stop();
 ```

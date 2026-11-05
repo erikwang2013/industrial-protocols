@@ -55,6 +55,8 @@ $rule = new GatewayRule(
 
 `change` 模式下，引擎记录每条规则上次读取的值，值与上次相同时跳过写入。
 
+`cron` 使用标准 5 段表达式：`分 时 日 月 周`，支持 `*`、`a-b`、`a,b`、`*/n`，精度为分钟。
+
 ## 引擎生命周期
 
 ### 实例化
@@ -93,7 +95,7 @@ $engine->removeRule('temp-fwd');
 $result = $engine->executeOnce('temp-fwd');
 // 返回：['status' => 'ok', 'rule' => 'temp-fwd', 'value' => 42, 'latency_ms' => 3.2]
 
-// 批量执行所有 poll 规则
+// 批量执行所有到期规则（poll / change / cron）
 $results = $engine->tick();
 // 返回按规则 ID 索引的结果数组
 
@@ -175,7 +177,7 @@ $eventDispatcher->addListener(
 
 ## 协程并发
 
-在支持协程的环境（Swoole、Fiber）中，`tick()` 调用时所有 poll 规则并发执行。同步环境则顺序执行。
+在支持协程的环境（Swoole、Fiber）中，`tick()` 调用时所有到期规则并发执行。同步环境则顺序执行。
 
 ## 使用案例
 
