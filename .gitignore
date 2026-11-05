@@ -10,5 +10,5 @@ ruvector.db
 composer.lock
 build/
 
-# Generated static site, deployed separately
-/site/
+# site/ is tracked so a fresh clone can deploy without the external .site-builder.
+# Regenerate with scripts/build-site.sh when the builder is available.
